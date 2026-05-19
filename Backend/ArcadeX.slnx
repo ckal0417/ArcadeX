@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="ArcadeX.API/ArcadeX.API.csproj" />
+  <Project Path="ArcadeX.Application/ArcadeX.Application.csproj" />
+  <Project Path="ArcadeX.Domain/ArcadeX.Domain.csproj" />
+  <Project Path="ArcadeX.Infrastructure/ArcadeX.Infrastructure.csproj" />
+  <Project Path="ArcadeX.Persistence/ArcadeX.Persistence.csproj" />
+</Solution>
