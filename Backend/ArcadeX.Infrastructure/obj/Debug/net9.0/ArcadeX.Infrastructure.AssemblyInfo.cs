@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ArcadeX.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f6cf7c762dfca078f210f65caf9d48214232b993")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+16ccf1bf9d196096f4f703a4610ee85fa0c622f1")]
 [assembly: System.Reflection.AssemblyProductAttribute("ArcadeX.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ArcadeX.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

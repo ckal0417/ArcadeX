@@ -1,33 +1,39 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Persistence\\ArcadeX.Persistence.csproj": {}
+    "C:\\Users\\Usuario\\OneDrive\\Escritorio\\Boocamp V\\ArcadeX\\Backend\\ArcadeX.Persistence\\ArcadeX.Persistence.csproj": {}
   },
   "projects": {
-    "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Application\\ArcadeX.Application.csproj": {
+    "C:\\Users\\Usuario\\OneDrive\\Escritorio\\Boocamp V\\ArcadeX\\Backend\\ArcadeX.Application\\ArcadeX.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Application\\ArcadeX.Application.csproj",
+        "projectUniqueName": "C:\\Users\\Usuario\\OneDrive\\Escritorio\\Boocamp V\\ArcadeX\\Backend\\ArcadeX.Application\\ArcadeX.Application.csproj",
         "projectName": "ArcadeX.Application",
-        "projectPath": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Application\\ArcadeX.Application.csproj",
-        "packagesPath": "C:\\Users\\CRIS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Application\\obj\\",
+        "projectPath": "C:\\Users\\Usuario\\OneDrive\\Escritorio\\Boocamp V\\ArcadeX\\Backend\\ArcadeX.Application\\ArcadeX.Application.csproj",
+        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Usuario\\OneDrive\\Escritorio\\Boocamp V\\ArcadeX\\Backend\\ArcadeX.Application\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\CRIS\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Domain\\ArcadeX.Domain.csproj": {
-                "projectPath": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Domain\\ArcadeX.Domain.csproj"
+              "C:\\Users\\Usuario\\OneDrive\\Escritorio\\Boocamp V\\ArcadeX\\Backend\\ArcadeX.Domain\\ArcadeX.Domain.csproj": {
+                "projectPath": "C:\\Users\\Usuario\\OneDrive\\Escritorio\\Boocamp V\\ArcadeX\\Backend\\ArcadeX.Domain\\ArcadeX.Domain.csproj"
               }
             }
           }
@@ -42,7 +48,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net9.0": {
@@ -63,26 +69,32 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.314/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Domain\\ArcadeX.Domain.csproj": {
+    "C:\\Users\\Usuario\\OneDrive\\Escritorio\\Boocamp V\\ArcadeX\\Backend\\ArcadeX.Domain\\ArcadeX.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Domain\\ArcadeX.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\Usuario\\OneDrive\\Escritorio\\Boocamp V\\ArcadeX\\Backend\\ArcadeX.Domain\\ArcadeX.Domain.csproj",
         "projectName": "ArcadeX.Domain",
-        "projectPath": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Domain\\ArcadeX.Domain.csproj",
-        "packagesPath": "C:\\Users\\CRIS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Domain\\obj\\",
+        "projectPath": "C:\\Users\\Usuario\\OneDrive\\Escritorio\\Boocamp V\\ArcadeX\\Backend\\ArcadeX.Domain\\ArcadeX.Domain.csproj",
+        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Usuario\\OneDrive\\Escritorio\\Boocamp V\\ArcadeX\\Backend\\ArcadeX.Domain\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\CRIS\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -101,7 +113,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net9.0": {
@@ -122,37 +134,43 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.314/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Persistence\\ArcadeX.Persistence.csproj": {
+    "C:\\Users\\Usuario\\OneDrive\\Escritorio\\Boocamp V\\ArcadeX\\Backend\\ArcadeX.Persistence\\ArcadeX.Persistence.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Persistence\\ArcadeX.Persistence.csproj",
+        "projectUniqueName": "C:\\Users\\Usuario\\OneDrive\\Escritorio\\Boocamp V\\ArcadeX\\Backend\\ArcadeX.Persistence\\ArcadeX.Persistence.csproj",
         "projectName": "ArcadeX.Persistence",
-        "projectPath": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Persistence\\ArcadeX.Persistence.csproj",
-        "packagesPath": "C:\\Users\\CRIS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Persistence\\obj\\",
+        "projectPath": "C:\\Users\\Usuario\\OneDrive\\Escritorio\\Boocamp V\\ArcadeX\\Backend\\ArcadeX.Persistence\\ArcadeX.Persistence.csproj",
+        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Usuario\\OneDrive\\Escritorio\\Boocamp V\\ArcadeX\\Backend\\ArcadeX.Persistence\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\CRIS\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Application\\ArcadeX.Application.csproj": {
-                "projectPath": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Application\\ArcadeX.Application.csproj"
+              "C:\\Users\\Usuario\\OneDrive\\Escritorio\\Boocamp V\\ArcadeX\\Backend\\ArcadeX.Application\\ArcadeX.Application.csproj": {
+                "projectPath": "C:\\Users\\Usuario\\OneDrive\\Escritorio\\Boocamp V\\ArcadeX\\Backend\\ArcadeX.Application\\ArcadeX.Application.csproj"
               },
-              "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Domain\\ArcadeX.Domain.csproj": {
-                "projectPath": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Domain\\ArcadeX.Domain.csproj"
+              "C:\\Users\\Usuario\\OneDrive\\Escritorio\\Boocamp V\\ArcadeX\\Backend\\ArcadeX.Domain\\ArcadeX.Domain.csproj": {
+                "projectPath": "C:\\Users\\Usuario\\OneDrive\\Escritorio\\Boocamp V\\ArcadeX\\Backend\\ArcadeX.Domain\\ArcadeX.Domain.csproj"
               }
             }
           }
@@ -167,7 +185,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net9.0": {
@@ -204,7 +222,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.314/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
