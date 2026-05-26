@@ -1,0 +1,20 @@
+import { Routes } from '@angular/router';
+
+
+
+export const routes: Routes = [
+  {path: '', redirectTo: 'home', pathMatch: 'full' },
+  {path: 'home', loadChildren: () =>
+    import('./feactures/routes/public/home.route').then(m => m.homeRoute)
+  },
+  {path: 'contact', loadChildren: () =>
+    import('./feactures/routes/public/contact.ruote').then(m => m.contactRoute)
+  },
+  {path: 'about', loadChildren: () =>
+    import('./feactures/routes/public/about.route').then(m => m.aboutRoute)
+  },
+  {path: 'login', loadChildren: () =>
+    import('./feactures/routes/private/login.route').then(m => m.loginRoute)
+  },
+
+];

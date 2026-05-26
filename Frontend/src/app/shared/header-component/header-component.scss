@@ -1,0 +1,56 @@
+.topbar {
+  height: 80px;
+  background: #0b1622;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30px;
+  border-bottom: 1px solid #1d2a3a;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.login {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 10px;
+  padding: 10px;
+  background: white;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #4ea1ff;
+}
+
+.search-box {
+  width: 40%;
+  height: 50px;
+  background: #101d2b;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 10px;
+}
+
+.search-box input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 15px;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-radius: 10%;
+}
