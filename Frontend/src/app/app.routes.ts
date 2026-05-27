@@ -16,5 +16,9 @@ export const routes: Routes = [
   {path: 'login', loadChildren: () =>
     import('./feactures/routes/private/login.route').then(m => m.loginRoute)
   },
+  {
+    path: 'games', loadChildren: () =>
+      import('./feactures/routes/public/game.route').then(m => m.gameRoute)
+  }
 
 ];
