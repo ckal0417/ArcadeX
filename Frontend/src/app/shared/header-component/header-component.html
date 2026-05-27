@@ -6,7 +6,12 @@
 
   <div class="search-box">
     <mat-icon>search</mat-icon>
-    <input type="text" placeholder="Buscar juegos, DLC, categorías..." />
+    <input
+      (focus)="searchFocused = true"
+      (blur)="searchFocused = false"
+      type="text"
+      placeholder="Buscar juegos, DLC, categorías..."
+    />
   </div>
 
   <div class="topbar-actions">
