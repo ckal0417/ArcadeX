@@ -13,9 +13,6 @@ export const routes: Routes = [
   {path: 'about', loadChildren: () =>
     import('./feactures/routes/public/about.route').then(m => m.aboutRoute)
   },
-  {path: 'login', loadChildren: () =>
-    import('./feactures/routes/private/login.route').then(m => m.loginRoute)
-  },
   {
     path: 'games', loadChildren: () =>
       import('./feactures/routes/public/game.route').then(m => m.gameRoute)
@@ -25,8 +22,20 @@ export const routes: Routes = [
       import('./feactures/routes/public/register.route').then(m => m.regiterRoute)
   },
   {
+    path: 'login', loadChildren: () =>
+    import('./feactures/routes/private/login.route').then(m => m.loginRoute)
+  },
+  {
     path:'admin', loadComponent: () =>
       import('./feactures/pages/private/dashboard-component/dashboard-component').then(m => m.DashboardComponent)
-  }
+  },
+  {
+    path: 'users', loadComponent: () =>
+      import('./feactures/pages/private/user-component/user-component').then(m => m.UserComponent)
+  },
+  {
+    path: 'game', loadComponent: () =>
+      import('./feactures/pages/private/game-component/game-component').then(m => m.GameComponent)
+  },
 
 ];
