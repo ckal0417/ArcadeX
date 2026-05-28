@@ -55,6 +55,21 @@ public class UserRepository : IUserRepository
 
     public async Task<UserResponseDto> CreateAsync(CreateUserDto dto)
     {
+        var requestedRoles = dto.Roles
+            .Select(role => role.Trim())
+            .Where(role => !string.IsNullOrWhiteSpace(role))
+            .Distinct()
+            .ToList();
+
+        if (!requestedRoles.Any())
+        {
+            requestedRoles = new List<string> { "User" };
+        }
+
+        var roles = await _context.Roles
+            .Where(role => requestedRoles.Contains(role.Name))
+            .ToListAsync();
+
         var user = new User
         {
             Id = Guid.NewGuid(),
@@ -65,15 +80,6 @@ public class UserRepository : IUserRepository
             CreatedAt = DateTime.UtcNow,
             LastLogin = DateTime.UtcNow
         };
-
-        var requestedRoles = dto.Roles
-            .Select(role => role.Trim())
-            .Where(role => !string.IsNullOrWhiteSpace(role))
-            .ToList();
-
-        var roles = await _context.Roles
-            .Where(role => requestedRoles.Contains(role.Name))
-            .ToListAsync();
 
         _context.Users.Add(user);
 
@@ -99,4 +105,29 @@ public class UserRepository : IUserRepository
             Roles = roles.Select(role => role.Name).ToList()
         };
     }
+
+    public async Task<bool> ExistsByUsernameOrEmailAsync(string username, string email)
+    {
+        return await _context.Users
+            .AnyAsync(user =>
+                user.Username == username ||
+                user.Email == email
+            );
+    }
+
+
+    public async Task<bool> RolesExistAsync(List<string> roles)
+    {
+        var normalizedRoles = roles
+            .Select(role => role.Trim())
+            .Where(role => !string.IsNullOrWhiteSpace(role))
+            .Distinct()
+            .ToList();
+
+        var existingRolesCount = await _context.Roles
+            .CountAsync(role => normalizedRoles.Contains(role.Name));
+
+        return existingRolesCount == normalizedRoles.Count;
+    }
+
 }

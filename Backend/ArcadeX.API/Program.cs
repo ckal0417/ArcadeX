@@ -5,6 +5,12 @@ using Scalar.AspNetCore;
 using ArcadeX.Application.Features.Users.Interfaces;
 using ArcadeX.Application.Features.Users.Services;
 using ArcadeX.Persistence.Features.Users.Repositories;
+using ArcadeX.API.Middlewares;
+using ArcadeX.Application.Features.Auth.Interfaces;
+using ArcadeX.Infrastructure.Features.Auth.Services;
+using ArcadeX.Application.Features.Auth.Services;
+using ArcadeX.Persistence.Features.Auth.Repositories;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,9 +42,15 @@ builder.Services.AddCors(options =>
         .AllowAnyMethod();
     });
 });
+builder.Services.AddScoped<IAuthService, AuthService>();
+
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+
+builder.Services.AddScoped<IJwtService, JwtService>();
 
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseCors("AllowFrontend");
 app.MapOpenApi();
 app.MapScalarApiReference();

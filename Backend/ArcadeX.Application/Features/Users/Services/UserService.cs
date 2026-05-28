@@ -1,5 +1,6 @@
 using ArcadeX.Application.Features.Users.DTOs;
 using ArcadeX.Application.Features.Users.Interfaces;
+using ArcadeX.Application.Common.Exceptions;
 
 namespace ArcadeX.Application.Features.Users.Services;
 
@@ -23,6 +24,36 @@ public class UserService : IUserService
     }
     public async Task<UserResponseDto> CreateAsync(CreateUserDto dto)
     {
+        var exists = await _userRepository.ExistsByUsernameOrEmailAsync(
+            dto.Username,
+            dto.Email
+        );
+
+        if (exists)
+        {
+            throw new BadRequestException("Username or email already exists");
+        }
+
+        var requestedRoles = dto.Roles
+        .Select(role => role.Trim())
+        .Where(role => !string.IsNullOrWhiteSpace(role))
+        .Distinct()
+        .ToList();
+
+        if (!requestedRoles.Any())
+        {
+            requestedRoles = new List<string> { "User" };
+        }
+
+        var rolesExist = await _userRepository.RolesExistAsync(requestedRoles);
+
+        if (!rolesExist)
+        {
+            throw new BadRequestException("One or more roles do not exist");
+        }
+
         return await _userRepository.CreateAsync(dto);
     }
+
+
 }
