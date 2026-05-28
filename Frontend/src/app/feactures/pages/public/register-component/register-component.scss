@@ -1,0 +1,139 @@
+.register-container {
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.8)),
+    url('https://images.unsplash.com/photo-1542751371-adc38448a05e');
+
+  background-size: cover;
+  background-position: center;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 650px;
+
+  background: rgba(20, 20, 20, 0.95);
+  backdrop-filter: blur(12px);
+
+  border-radius: 24px;
+  padding: 2rem;
+
+  box-shadow:
+    0 0 25px rgba(0, 255, 255, 0.2),
+    0 0 60px rgba(0, 0, 0, 0.6);
+
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.logo-section {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #00e5ff;
+    margin-bottom: .5rem;
+  }
+
+  p {
+    color: #bdbdbd;
+    font-size: 1rem;
+  }
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper {
+  background: rgba(255,255,255,0.03) !important;
+  border-radius: 12px !important;
+}
+
+::ng-deep .mdc-notched-outline__leading,
+::ng-deep .mdc-notched-outline__notch,
+::ng-deep .mdc-notched-outline__trailing {
+  border-color: rgba(255,255,255,.15) !important;
+}
+
+input {
+  color: white !important;
+}
+
+mat-label {
+  color: #bdbdbd !important;
+}
+
+mat-icon {
+  color: #00e5ff;
+}
+
+.terms {
+  margin-top: 1rem;
+  color: fuchsia;
+
+  a{
+    color: fuchsia;
+  }
+}
+
+.register-btn {
+  width: 100%;
+  margin-top: 1.5rem;
+  height: 52px;
+
+  border-radius: 14px;
+
+  font-size: 1rem;
+  font-weight: 600;
+
+  background: linear-gradient(90deg, #00e5ff, #2979ff) !important;
+
+  transition: .3s;
+}
+
+.register-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,229,255,.3);
+}
+
+.login-link {
+  margin-top: 1.5rem;
+  text-align: center;
+  color: #bdbdbd;
+
+  a {
+    color: #00e5ff;
+    text-decoration: none;
+    margin-left: .3rem;
+    font-weight: 600;
+  }
+}
+
+@media(max-width: 768px) {
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .register-card {
+    padding: 1.5rem;
+  }
+
+  .logo-section h1 {
+    font-size: 2.3rem;
+  }
+
+}

@@ -1,0 +1,68 @@
+<div class="register-container">
+  <mat-card class="register-card">
+    <div class="logo-section">
+      <h1>ArcadeX</h1>
+      <p>Crea tu cuenta gamer</p>
+    </div>
+
+    <form>
+      <div class="form-grid">
+        <!-- Username -->
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username" />
+          <mat-icon matSuffix>person</mat-icon>
+        </mat-form-field>
+
+        <!-- Email -->
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" />
+          <mat-icon matSuffix>mail</mat-icon>
+        </mat-form-field>
+
+        <!-- Password -->
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" />
+
+          <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
+            <mat-icon>
+              {{ hidePassword ? 'visibility_off' : 'visibility' }}
+            </mat-icon>
+          </button>
+        </mat-form-field>
+
+        <!-- Confirm Password -->
+        <mat-form-field appearance="outline">
+          <mat-label>Confirm Password</mat-label>
+          <input
+            matInput
+            [type]="hideConfirmPassword ? 'password' : 'text'"
+            formControlName="confirmPassword"
+          />
+
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="hideConfirmPassword = !hideConfirmPassword"
+          >
+            <mat-icon>
+              {{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}
+            </mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <!-- Checkbox -->
+      <mat-checkbox class="terms"></mat-checkbox>
+      <a matButton>Acepto los términos y condiciones</a>
+
+      <!-- Button -->
+      <button mat-raised-button color="primary" class="register-btn" type="submit">
+        Crear Cuenta
+      </button>
+    </form>
+  </mat-card>
+</div>
