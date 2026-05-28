@@ -23,6 +23,10 @@ export const routes: Routes = [
   {
     path: 'register', loadChildren: () =>
       import('./feactures/routes/public/register.route').then(m => m.regiterRoute)
+  },
+  {
+    path:'admin', loadComponent: () =>
+      import('./feactures/pages/private/dashboard-component/dashboard-component').then(m => m.DashboardComponent)
   }
 
 ];
