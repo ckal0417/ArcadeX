@@ -1,0 +1,21 @@
+.navbar {
+  width: 100%;
+}
+
+.sidebar {
+  display: flex;
+  gap: 12px;
+  padding: 0 1rem;
+  background: #0b1622;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin: 10px;
+  gap: 6px;
+  border-radius: 8px;
+  transition: 0.3s ease;
+}
+
