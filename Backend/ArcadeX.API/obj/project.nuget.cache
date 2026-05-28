@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "D8vnF9eHCok=",
+  "dgSpecHash": "74+HGIwrSqk=",
   "success": true,
-  "projectFilePath": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.API\\ArcadeX.API.csproj",
+  "projectFilePath": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\backend\\ArcadeX.API\\ArcadeX.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\CRIS\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\CRIS\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

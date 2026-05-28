@@ -50,11 +50,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Infrastructure\\ArcadeX.Infrastructure.csproj",
+      "projectUniqueName": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\backend\\ArcadeX.Infrastructure\\ArcadeX.Infrastructure.csproj",
       "projectName": "ArcadeX.Infrastructure",
-      "projectPath": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Infrastructure\\ArcadeX.Infrastructure.csproj",
+      "projectPath": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\backend\\ArcadeX.Infrastructure\\ArcadeX.Infrastructure.csproj",
       "packagesPath": "C:\\Users\\CRIS\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Infrastructure\\obj\\",
+      "outputPath": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\backend\\ArcadeX.Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\CRIS\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -69,8 +69,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Application\\ArcadeX.Application.csproj": {
-              "projectPath": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Application\\ArcadeX.Application.csproj"
+            "C:\\Users\\CRIS\\Desktop\\ArcadeX\\backend\\ArcadeX.Application\\ArcadeX.Application.csproj": {
+              "projectPath": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\backend\\ArcadeX.Application\\ArcadeX.Application.csproj"
             }
           }
         }

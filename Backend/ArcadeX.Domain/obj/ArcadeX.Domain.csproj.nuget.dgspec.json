@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Domain\\ArcadeX.Domain.csproj": {}
+    "C:\\Users\\CRIS\\Desktop\\ArcadeX\\backend\\ArcadeX.Domain\\ArcadeX.Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Domain\\ArcadeX.Domain.csproj": {
+    "C:\\Users\\CRIS\\Desktop\\ArcadeX\\backend\\ArcadeX.Domain\\ArcadeX.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Domain\\ArcadeX.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\backend\\ArcadeX.Domain\\ArcadeX.Domain.csproj",
         "projectName": "ArcadeX.Domain",
-        "projectPath": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Domain\\ArcadeX.Domain.csproj",
+        "projectPath": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\backend\\ArcadeX.Domain\\ArcadeX.Domain.csproj",
         "packagesPath": "C:\\Users\\CRIS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Domain\\obj\\",
+        "outputPath": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\backend\\ArcadeX.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\CRIS\\AppData\\Roaming\\NuGet\\NuGet.Config"

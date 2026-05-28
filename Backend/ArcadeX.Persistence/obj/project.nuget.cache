@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "N6w9+fP1+Mc=",
+  "dgSpecHash": "11WY2aZ9KkM=",
   "success": true,
-  "projectFilePath": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\Backend\\ArcadeX.Persistence\\ArcadeX.Persistence.csproj",
+  "projectFilePath": "C:\\Users\\CRIS\\Desktop\\ArcadeX\\backend\\ArcadeX.Persistence\\ArcadeX.Persistence.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\CRIS\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\CRIS\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
