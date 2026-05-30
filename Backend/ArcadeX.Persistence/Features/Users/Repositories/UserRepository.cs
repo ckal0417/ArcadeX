@@ -130,4 +130,80 @@ public class UserRepository : IUserRepository
         return existingRolesCount == normalizedRoles.Count;
     }
 
+
+
+    public async Task<bool> ExistsByUsernameOrEmailForOtherUserAsync(Guid userId,string username,string email)
+    {
+        return await _context.Users.AnyAsync(user =>
+            user.Id != userId &&
+            (
+                user.Username == username ||
+                user.Email == email
+            )
+        );
+    }
+
+    public async Task<UserResponseDto?> UpdateAsync(Guid id, UpdateUserDto dto)
+    {
+        var user = await _context.Users
+            .Include(user => user.UserRoles)
+            .FirstOrDefaultAsync(user => user.Id == id);
+
+        if (user is null)
+        {
+            return null;
+        }
+
+        user.Username = dto.Username;
+        user.Email = dto.Email;
+        user.Country = dto.Country;
+
+        var requestedRoles = dto.Roles
+            .Select(role => role.Trim())
+            .Where(role => !string.IsNullOrWhiteSpace(role))
+            .Distinct()
+            .ToList();
+
+        if (!requestedRoles.Any())
+        {
+            requestedRoles = new List<string> { "User" };
+        }
+
+        var roles = await _context.Roles
+            .Where(role => requestedRoles.Contains(role.Name))
+            .ToListAsync();
+
+        _context.UserRoles.RemoveRange(user.UserRoles);
+
+        foreach (var role in roles)
+        {
+            user.UserRoles.Add(new UserRole
+            {
+                UserId = user.Id,
+                RoleId = role.Id
+            });
+        }
+
+        await _context.SaveChangesAsync();
+
+        return await GetByIdAsync(user.Id);
+    }
+
+    public async Task<bool> DeleteAsync(Guid id)
+    {
+        var user = await _context.Users
+            .FirstOrDefaultAsync(user => user.Id == id);
+
+        if (user is null)
+        {
+            return false;
+        }
+
+        _context.Users.Remove(user);
+
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+
 }

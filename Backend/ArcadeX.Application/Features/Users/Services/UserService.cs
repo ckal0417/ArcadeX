@@ -2,6 +2,8 @@ using ArcadeX.Application.Features.Users.DTOs;
 using ArcadeX.Application.Features.Users.Interfaces;
 using ArcadeX.Application.Common.Exceptions;
 
+
+
 namespace ArcadeX.Application.Features.Users.Services;
 
 public class UserService : IUserService
@@ -53,6 +55,45 @@ public class UserService : IUserService
         }
 
         return await _userRepository.CreateAsync(dto);
+    }
+
+    public async Task<UserResponseDto?> UpdateAsync(Guid id, UpdateUserDto dto)
+    {
+        var exists = await _userRepository.ExistsByUsernameOrEmailForOtherUserAsync(
+            id,
+            dto.Username,
+            dto.Email
+        );
+
+        if (exists)
+        {
+            throw new BadRequestException("Username or email already exists");
+        }
+
+        var requestedRoles = dto.Roles
+            .Select(role => role.Trim())
+            .Where(role => !string.IsNullOrWhiteSpace(role))
+            .Distinct()
+            .ToList();
+
+        if (!requestedRoles.Any())
+        {
+            requestedRoles = new List<string> { "User" };
+        }
+
+        var rolesExist = await _userRepository.RolesExistAsync(requestedRoles);
+
+        if (!rolesExist)
+        {
+            throw new BadRequestException("One or more roles do not exist");
+        }
+
+        return await _userRepository.UpdateAsync(id, dto);
+    }
+
+    public async Task<bool> DeleteAsync(Guid id)
+    {
+        return await _userRepository.DeleteAsync(id);
     }
 
 

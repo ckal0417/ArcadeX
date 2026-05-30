@@ -10,6 +10,19 @@ using ArcadeX.Application.Features.Auth.Interfaces;
 using ArcadeX.Infrastructure.Features.Auth.Services;
 using ArcadeX.Application.Features.Auth.Services;
 using ArcadeX.Persistence.Features.Auth.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using ArcadeX.API.OpenApi;
+using ArcadeX.Application.Features.Games.Interfaces;
+using ArcadeX.Application.Features.Games.Services;
+using ArcadeX.Persistence.Features.Games.Repositories;
+using ArcadeX.Application.Features.Genres.Interfaces;
+using ArcadeX.Application.Features.Genres.Services;
+using ArcadeX.Persistence.Features.Genres.Repositories;
+using ArcadeX.Application.Features.Library.Interfaces;
+using ArcadeX.Application.Features.Library.Services;
+using ArcadeX.Persistence.Features.Library.Repositories;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,8 +42,10 @@ builder.Services.AddDbContext<ArcadeXDbContext>(options =>
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(options =>
+{
+    options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCors(options =>
 {
@@ -42,16 +57,39 @@ builder.Services.AddCors(options =>
         .AllowAnyMethod();
     });
 });
+
 builder.Services.AddScoped<IAuthService, AuthService>();
-
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
-
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey( Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+        };
+    });
+
+builder.Services.AddAuthorization();
+builder.Services.AddScoped<IGameService, GameService>();
+builder.Services.AddScoped<IGameRepository, GameRepository>();
+builder.Services.AddScoped<IGenreService, GenreService>();
+builder.Services.AddScoped<IGenreRepository, GenreRepository>();
+builder.Services.AddScoped<ILibraryService, LibraryService>();
+builder.Services.AddScoped<ILibraryRepository, LibraryRepository>();
 
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseCors("AllowFrontend");
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapOpenApi();
 app.MapScalarApiReference();
 app.MapControllers();
