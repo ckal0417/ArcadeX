@@ -1,28 +1,27 @@
-using System.Text.Json.Serialization;
-using ArcadeX.Persistence.Context;
-using Microsoft.EntityFrameworkCore;
-using Scalar.AspNetCore;
-using ArcadeX.Application.Features.Users.Interfaces;
-using ArcadeX.Application.Features.Users.Services;
-using ArcadeX.Persistence.Features.Users.Repositories;
 using ArcadeX.API.Middlewares;
-using ArcadeX.Application.Features.Auth.Interfaces;
-using ArcadeX.Infrastructure.Features.Auth.Services;
-using ArcadeX.Application.Features.Auth.Services;
-using ArcadeX.Persistence.Features.Auth.Repositories;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using ArcadeX.API.OpenApi;
+using ArcadeX.Application.Features.Auth.Interfaces;
+using ArcadeX.Application.Features.Auth.Services;
 using ArcadeX.Application.Features.Games.Interfaces;
 using ArcadeX.Application.Features.Games.Services;
-using ArcadeX.Persistence.Features.Games.Repositories;
 using ArcadeX.Application.Features.Genres.Interfaces;
 using ArcadeX.Application.Features.Genres.Services;
-using ArcadeX.Persistence.Features.Genres.Repositories;
 using ArcadeX.Application.Features.Library.Interfaces;
 using ArcadeX.Application.Features.Library.Services;
+using ArcadeX.Application.Features.Users.Interfaces;
+using ArcadeX.Application.Features.Users.Services;
+using ArcadeX.Infrastructure.Features.Auth.Services;
+using ArcadeX.Persistence.Context;
+using ArcadeX.Persistence.Features.Auth.Repositories;
+using ArcadeX.Persistence.Features.Games.Repositories;
+using ArcadeX.Persistence.Features.Genres.Repositories;
 using ArcadeX.Persistence.Features.Library.Repositories;
+using ArcadeX.Persistence.Features.Users.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Scalar.AspNetCore;
+using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,7 +36,7 @@ builder.Services
 
 builder.Services.AddDbContext<ArcadeXDbContext>(options =>
 {
-    options.UseSqlServer( builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
 builder.Services.AddScoped<IUserService, UserService>();
@@ -72,7 +71,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey( Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
         };
     });
 
@@ -85,6 +84,11 @@ builder.Services.AddScoped<ILibraryService, LibraryService>();
 builder.Services.AddScoped<ILibraryRepository, LibraryRepository>();
 
 var app = builder.Build();
+
+app.MapGet("/health", () =>
+{
+    return Results.Ok("API funcionando");
+});
 
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseCors("AllowFrontend");
