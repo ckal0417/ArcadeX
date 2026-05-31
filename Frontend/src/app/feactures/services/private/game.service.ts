@@ -2,32 +2,32 @@ import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { environment } from "../../../../enviroment/enroment";
-import { IGame } from "../../interfaces/public/Game";
+import { IGame, IResponseGames } from "../../interfaces/public/Game";
 
 
 @Injectable({providedIn: 'root'
 })
-export class ProductService {
+export class GameService {
   private url = `${environment.apiUrl}/games`;
   private http = inject(HttpClient);
 
-  getProducts(): Observable<IGame> {
-    return this.http.get<IGame>(this.url);
+  get(): Observable<IResponseGames> {
+    return this.http.get<IResponseGames>(this.url);
   }
 
-  getById(id: number): Observable<IGame> {
-    return this.http.get<IGame>(`${this.url}/${id}`);
+  getById(id: number): Observable<IResponseGames> {
+    return this.http.get<IResponseGames>(`${this.url}/${id}`);
   }
 
-  create(payload: IGame): Observable<IGame> {
-    return this.http.post<IGame>(this.url, payload);
+  create(payload: IGame): Observable<IResponseGames> {
+    return this.http.post<IResponseGames>(this.url, payload);
   }
 
-  update(id: number, payload: IGame): Observable<IGame> {
-    return this.http.put<IGame>(`${this.url}/${id}`, payload);
+  update(id: number, payload: IResponseGames): Observable<IResponseGames> {
+    return this.http.put<IResponseGames>(`${this.url}/${id}`, payload);
   }
 
-  delete(id: number): Observable<IGame> {
+  delete(id: string): Observable<IGame> {
     return this.http.delete<IGame>(`${this.url}/${id}`);
   }
 
