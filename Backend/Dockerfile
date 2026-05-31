@@ -3,8 +3,8 @@ WORKDIR /src
 
 COPY . .
 
-RUN dotnet restore
-RUN dotnet publish ./ArcadeX.Api/ArcadeX.Api.csproj -c Release -o /app/publish
+RUN dotnet restore ArcadeX.API/ArcadeX.API.csproj
+RUN dotnet publish ArcadeX.API/ArcadeX.API.csproj -c Release -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
 
@@ -16,4 +16,4 @@ ENV ASPNETCORE_URLS=http://+:10000
 
 EXPOSE 10000
 
-ENTRYPOINT ["dotnet", "ArcadeX.Api.http"]
+ENTRYPOINT ["dotnet", "ArcadeX.API.dll"]
