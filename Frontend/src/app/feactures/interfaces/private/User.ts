@@ -2,7 +2,8 @@ export interface IUser {
   id: string;
   email: string;
   username: string;
-  role: string;
+  country?: string;
+  roles: string[];
   createdAt?: string;
-  updatedAt?: string;
+  lastLogin?: string;
 }

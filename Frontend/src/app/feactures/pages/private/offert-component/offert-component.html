@@ -42,7 +42,7 @@
           <table>
             <thead>
               <tr>
-                <th>ID de Juego</th>
+                <th>Juego</th>
                 <th>Descuento (%)</th>
                 <th>Fecha Inicio</th>
                 <th>Fecha Fin</th>
@@ -50,9 +50,9 @@
               </tr>
             </thead>
             <tbody>
-              @for (offert of filteredOfferts(); track offert.id) {
+              @for (offert of filteredOfferts(); track offert.offerId) {
                 <tr>
-                  <td>{{ offert.gameId }}</td>
+                  <td>{{ offert.gameTitle }}</td>
                   <td>
                     <strong>{{ offert.discountPct }}%</strong>
                   </td>

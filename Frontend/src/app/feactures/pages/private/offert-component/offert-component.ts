@@ -75,7 +75,7 @@ export class OffertComponent implements OnInit {
     this.filteredOfferts.set(
       this.offerts().filter(o =>
         o.gameId.toLowerCase().includes(q) ||
-        o.id.toLowerCase().includes(q)
+        o.gameTitle.toLowerCase().includes(q)
       )
     );
   }
@@ -109,7 +109,7 @@ export class OffertComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.offertService.update(offert.id, result)
+        this.offertService.update(offert.offerId, result)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({
             next: () => {
@@ -125,7 +125,7 @@ export class OffertComponent implements OnInit {
   eliminarOferta(offert: IOffert): void {
     if (!confirm(`¿Eliminar esta oferta?`)) return;
 
-    this.offertService.delete(offert.id)
+    this.offertService.delete(offert.offerId)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {

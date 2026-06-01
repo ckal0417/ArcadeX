@@ -1,10 +1,12 @@
 export interface IOffert {
-  id: string;
+  offerId: number;
   gameId: string;
+  gameTitle: string;
+  originalPrice: number;
   discountPct: number;
+  finalPrice: number;
   startDate: string;
   endDate: string;
-  status?: string;
 }
 
 export type IResponseOfferts = IOffert[];

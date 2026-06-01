@@ -54,7 +54,7 @@
                   <td>{{ user.email }}</td>
                   <td>{{ user.username }}</td>
                   <td>
-                    <span [class]="'role ' + user.role">{{ user.role | uppercase }}</span>
+                    <span [class]="'role ' + user.roles[0]">{{ user.roles[0] | uppercase }}</span>
                   </td>
                   <td>
                     <button mat-icon-button matTooltip="Editar" (click)="editarUsuario(user)">

@@ -14,19 +14,19 @@ export class OffertService {
     return this.http.get<IResponseOfferts>(this.apiUrl);
   }
 
-  getById(id: string) {
+  getById(id: number) {
     return this.http.get<IOffert>(`${this.apiUrl}/${id}`);
   }
 
-  create(offert: Partial<IOffert>) {
+  create(offert: Omit<IOffert, 'offerId' | 'gameTitle' | 'originalPrice' | 'finalPrice'>) {
     return this.http.post<IOffert>(this.apiUrl, offert);
   }
 
-  update(id: string, offert: Partial<IOffert>) {
+  update(id: number, offert: Partial<Omit<IOffert, 'offerId' | 'gameTitle' | 'originalPrice' | 'finalPrice'>>) {
     return this.http.put<IOffert>(`${this.apiUrl}/${id}`, offert);
   }
 
-  delete(id: string) {
+  delete(id: number) {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }
