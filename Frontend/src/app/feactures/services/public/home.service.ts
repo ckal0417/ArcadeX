@@ -6,7 +6,7 @@ import { Observable } from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class HomeService {
-  private url = `${environment.apiUrl}/games`;
+  private url = `${environment.apiUrl}/Games`;
   private http = inject(HttpClient);
 
   getGames(): Observable<IResponseGames> {

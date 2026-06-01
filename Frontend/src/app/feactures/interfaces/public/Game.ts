@@ -1,3 +1,4 @@
+
 export interface IGame {
   id: string,
   title: string,
@@ -5,6 +6,8 @@ export interface IGame {
   price: number,
   realeseDate: string,
   owerId: string,
+  oweruUsername: string,
+  geners: string[],
 }
 
 export interface IResponseGames {

@@ -3,10 +3,11 @@ import { MatCardModule } from '@angular/material/card';
 import { IGame, IResponseGames } from '../../../interfaces/public/Game';
 import { HomeComponent } from '../home-component/home-component';
 import { HomeService } from '../../../services/public/home.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-games-component',
-  imports: [MatCardModule],
+  imports: [MatCardModule, MatProgressSpinnerModule],
   templateUrl: './games-component.html',
   styleUrl: './games-component.scss',
 })

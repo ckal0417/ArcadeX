@@ -1,127 +1,35 @@
-<div class="games-grid">
-  <mat-card class="game-card">
-    <img mat-card-image src="https://images.unsplash.com/photo-1542751371-adc38448a05e" />
-    <mat-card-content>
-      <h3>Elden Ring</h3>
+@if (loading()) {
+  <div class="center">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+}
 
-      <p>Action RPG • Open World</p>
+@if (errorMessage()) {
+  <div>{{ errorMessage() }}</div>
+}
 
-      <div class="price-section">
-        <span class="discount">-30%</span>
-        <span class="price">$39.99</span>
-      </div>
-    </mat-card-content>
-  </mat-card>
-  <mat-card class="game-card">
-    <img mat-card-image src="https://images.unsplash.com/photo-1511512578047-dfb367046420" />
-
-    <mat-card-content>
-      <h3>God of War</h3>
-
-      <p>Adventure • Story Rich</p>
-
-      <div class="price-section">
-        <span class="discount">-20%</span>
-        <span class="price">$49.99</span>
-      </div>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card class="game-card">
-    <img mat-card-image src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8" />
-
-    <mat-card-content>
-      <h3>Red Dead Redemption 2</h3>
-
-      <p>Western • Open World</p>
-
-      <div class="price-section">
-        <span class="discount">-50%</span>
-        <span class="price">$29.99</span>
-      </div>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card class="game-card">
-    <img mat-card-image src="https://images.unsplash.com/photo-1511882150382-421056c89033" />
-
-    <mat-card-content>
-      <h3>Hogwarts Legacy</h3>
-
-      <p>Fantasy • RPG</p>
-
-      <div class="price-section">
-        <span class="discount">-15%</span>
-        <span class="price">$59.99</span>
-      </div>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card class="game-card">
-    <img
-      mat-card-image
-      src="https://cdn.tutsplus.com/cdn-cgi/image/width=1200/psd/uploads/legacy/psdtutsarticles/linkb_60vgamecovers/44.jpg"
-    />
-    <mat-card-content>
-      <h3>Crysis</h3>
-
-      <p>Accion • Fantasy</p>
-
-      <div class="price-section">
-        <span class="discount">-20%</span>
-        <span class="price">$19.99</span>
-      </div>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card class="game-card">
-    <img
-      mat-card-image
-      src="https://cdn.tutsplus.com/cdn-cgi/image/width=1280/psd/uploads/legacy/psdtutsarticles/linkb_60vgamecovers/17.jpg"
-    />
-    <mat-card-content>
-      <h3>Pokemon Blue</h3>
-
-      <p>RPG • Open World</p>
-
-      <div class="price-section">
-        <span class="discount">-25%</span>
-        <span class="price">$14.99</span>
-      </div>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card class="game-card">
-    <img
-      mat-card-image
-      src="https://cdn.tutsplus.com/cdn-cgi/image/width=1200/psd/uploads/legacy/psdtutsarticles/linkb_60vgamecovers/16.jpg"
-    />
-    <mat-card-content>
-      <h3>Halo 3</h3>
-
-      <p>RPG • Open World</p>
-
-      <div class="price-section">
-        <span class="discount">-15%</span>
-        <span class="price">$44.99</span>
-      </div>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card class="game-card">
-    <img
-      mat-card-image
-      src="https://cdn.tutsplus.com/cdn-cgi/image/width=1200/psd/uploads/legacy/psdtutsarticles/linkb_60vgamecovers/12.jpg"
-    />
-    <mat-card-content>
-      <h3>Super Mario Galaxy</h3>
-
-      <p>Fantasy • Adventure</p>
-
-      <div class="price-section">
-        <span class="discount">-10%</span>
-        <span class="price">$49.99</span>
-      </div>
-    </mat-card-content>
-  </mat-card>
-</div>
+@if (!loading() && !errorMessage()) {
+  <div class="games-grid">
+    @for (games of games(); track games.id) {
+      <mat-card appearance="outlined">
+        <mat-card-header>
+          <mat-card-title>{{ games.title }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            <strong>Generos:</strong>
+            {{ games.geners }}
+          </p>
+          <p>
+            <strong>Precio:</strong>
+            ${{ games.price }}
+          </p>
+          <p>
+            <strong>Descripción:</strong>
+            {{ games.description }}
+          </p>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+}
