@@ -50,7 +50,7 @@ export class GenreComponent implements OnInit {
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({
             next: () => { this.snackBar.open('Género creado exitosamente', 'Cerrar', { duration: 3000 }); this.cargar(); },
-            error: () => this.snackBar.open('Error al crear el género', 'Cerrar', { duration: 3000 })
+            error: (err) => { console.error('Error creando género:', err); this.snackBar.open(`Error al crear el género (${err?.status ?? 'desconocido'})`, 'Cerrar', { duration: 5000 }); }
           });
       }
     });
