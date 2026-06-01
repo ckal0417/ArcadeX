@@ -1,4 +1,4 @@
-import { Component, Inject, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -23,7 +23,7 @@ export class GameFormComponent implements OnInit {
   private fb = inject(FormBuilder);
   private dialogRef = inject(MatDialogRef<GameFormComponent>);
 
-  @Inject(MAT_DIALOG_DATA) data: IGame | null = null;
+  data = inject<IGame | null>(MAT_DIALOG_DATA);
 
   gameForm = this.fb.group({
     title: ['', [Validators.required, Validators.minLength(3)]],
