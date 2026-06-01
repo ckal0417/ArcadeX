@@ -1,0 +1,70 @@
+<div class="friend-container">
+  <div class="friend-header">
+    <div>
+      <h1>Gestión de Amigos</h1>
+      <p>Administra tus solicitudes y amigos</p>
+    </div>
+  </div>
+
+  <mat-card class="search-card">
+    <div class="search-row">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>ID del Usuario</mat-label>
+        <input matInput [(ngModel)]="nuevoAmigoId" placeholder="UUID del usuario a agregar" />
+        <mat-icon matSuffix>person_add</mat-icon>
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="enviarSolicitud()">Enviar Solicitud</button>
+    </div>
+  </mat-card>
+
+  @if (loading()) {
+    <div class="center"><mat-spinner></mat-spinner></div>
+  }
+
+  @if (errorMessage()) {
+    <mat-card class="error-card">{{ errorMessage() }}</mat-card>
+  }
+
+  @if (!loading() && !errorMessage()) {
+    <mat-card class="table-card">
+      <div class="table-wrapper">
+        @if (friends().length > 0) {
+          <table>
+            <thead>
+              <tr>
+                <th>Usuario</th>
+                <th>Email</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (friend of friends(); track friend.id) {
+                <tr>
+                  <td>{{ friend.username }}</td>
+                  <td>{{ friend.email }}</td>
+                  <td><span [class]="'status ' + friend.status">{{ friend.status | uppercase }}</span></td>
+                  <td>
+                    @if (friend.status === 'pending') {
+                      <button mat-icon-button matTooltip="Aceptar solicitud" color="primary" (click)="aceptar(friend)">
+                        <mat-icon>check_circle</mat-icon>
+                      </button>
+                    }
+                    <button mat-icon-button matTooltip="Eliminar" color="warn" (click)="eliminar(friend)">
+                      <mat-icon>person_remove</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        } @else {
+          <div class="no-data">
+            <mat-icon>group</mat-icon>
+            <p>No tienes amigos aún</p>
+          </div>
+        }
+      </div>
+    </mat-card>
+  }
+</div>

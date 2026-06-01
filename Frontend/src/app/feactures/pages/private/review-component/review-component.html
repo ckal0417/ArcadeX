@@ -1,0 +1,63 @@
+<div class="review-container">
+  <div class="review-header">
+    <div>
+      <h1>Gestión de Reseñas</h1>
+      <p>Administra las reseñas de los juegos</p>
+    </div>
+    <button mat-raised-button color="primary" (click)="crearResena()">
+      <mat-icon>rate_review</mat-icon>
+      Agregar Reseña
+    </button>
+  </div>
+
+  @if (loading()) {
+    <div class="center"><mat-spinner></mat-spinner></div>
+  }
+
+  @if (errorMessage()) {
+    <mat-card class="error-card">{{ errorMessage() }}</mat-card>
+  }
+
+  @if (!loading() && !errorMessage()) {
+    <mat-card class="table-card">
+      <div class="table-wrapper">
+        @if (reviews().length > 0) {
+          <table>
+            <thead>
+              <tr>
+                <th>Juego</th>
+                <th>Puntuación</th>
+                <th>Comentario</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (review of reviews(); track review.id) {
+                <tr>
+                  <td>{{ review.gameId }}</td>
+                  <td>{{ review.rating }} ⭐</td>
+                  <td>{{ review.comment ?? '—' }}</td>
+                  <td>{{ review.createdAt ? (review.createdAt | date:'shortDate') : '—' }}</td>
+                  <td>
+                    <button mat-icon-button matTooltip="Editar" (click)="editarResena(review)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button matTooltip="Eliminar" color="warn" (click)="eliminarResena(review)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        } @else {
+          <div class="no-data">
+            <mat-icon>rate_review</mat-icon>
+            <p>No hay reseñas disponibles</p>
+          </div>
+        }
+      </div>
+    </mat-card>
+  }
+</div>

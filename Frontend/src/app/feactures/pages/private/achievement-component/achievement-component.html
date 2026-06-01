@@ -1,0 +1,59 @@
+<div class="achievement-container">
+  <div class="achievement-header">
+    <div>
+      <h1>Gestión de Logros</h1>
+      <p>Administra los logros de los juegos</p>
+    </div>
+    <button mat-raised-button color="primary" (click)="crearLogro()">
+      <mat-icon>add</mat-icon>
+      Agregar Logro
+    </button>
+  </div>
+
+  @if (loading()) {
+    <div class="center"><mat-spinner></mat-spinner></div>
+  }
+
+  @if (errorMessage()) {
+    <mat-card class="error-card">{{ errorMessage() }}</mat-card>
+  }
+
+  @if (!loading() && !errorMessage()) {
+    <mat-card class="table-card">
+      <div class="table-wrapper">
+        @if (achievements().length > 0) {
+          <table>
+            <thead>
+              <tr>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Desbloqueado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (achievement of achievements(); track achievement.id) {
+                <tr>
+                  <td>{{ achievement.title }}</td>
+                  <td>{{ achievement.description ?? '—' }}</td>
+                  <td>{{ achievement.unlockedAt ? (achievement.unlockedAt | date:'shortDate') : 'No' }}</td>
+                  <td>
+                    <button mat-icon-button matTooltip="Desbloquear" color="accent"
+                            (click)="desbloquear(achievement)" [disabled]="!!achievement.unlockedAt">
+                      <mat-icon>lock_open</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        } @else {
+          <div class="no-data">
+            <mat-icon>emoji_events</mat-icon>
+            <p>No hay logros disponibles</p>
+          </div>
+        }
+      </div>
+    </mat-card>
+  }
+</div>

@@ -1,0 +1,38 @@
+<div class="form-container">
+  <h2>{{ data ? 'Editar Reseña' : 'Crear Reseña' }}</h2>
+  <form [formGroup]="form">
+    @if (!data) {
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>ID del Juego</mat-label>
+        <input matInput formControlName="gameId" placeholder="UUID del juego" />
+        @if (form.get('gameId')?.hasError('required') && form.get('gameId')?.touched) {
+          <mat-error>El ID del juego es requerido</mat-error>
+        }
+      </mat-form-field>
+    }
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Puntuación</mat-label>
+      <mat-select formControlName="rating">
+        @for (r of ratings; track r) {
+          <mat-option [value]="r">{{ r }} ⭐</mat-option>
+        }
+      </mat-select>
+      @if (form.get('rating')?.hasError('required') && form.get('rating')?.touched) {
+        <mat-error>La puntuación es requerida</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Comentario (opcional)</mat-label>
+      <textarea matInput formControlName="comment" rows="4" placeholder="Escribe tu opinión..."></textarea>
+    </mat-form-field>
+
+    <div class="form-actions">
+      <button mat-raised-button color="primary" (click)="onSubmit()">
+        {{ data ? 'Actualizar' : 'Crear' }}
+      </button>
+      <button mat-stroked-button (click)="cancel()">Cancelar</button>
+    </div>
+  </form>
+</div>

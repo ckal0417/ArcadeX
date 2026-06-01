@@ -1,0 +1,73 @@
+<div class="session-container">
+  <div class="session-header">
+    <div>
+      <h1>Sesiones de Juego</h1>
+      <p>Historial y gestión de sesiones activas</p>
+    </div>
+  </div>
+
+  <mat-card class="search-card">
+    <div class="search-row">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>ID del Juego</mat-label>
+        <input matInput [(ngModel)]="nuevoGameId" placeholder="UUID del juego a iniciar" />
+        <mat-icon matSuffix>videogame_asset</mat-icon>
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="iniciarSesion()">Iniciar Sesión</button>
+    </div>
+  </mat-card>
+
+  @if (loading()) {
+    <div class="center"><mat-spinner></mat-spinner></div>
+  }
+
+  @if (errorMessage()) {
+    <mat-card class="error-card">{{ errorMessage() }}</mat-card>
+  }
+
+  @if (!loading() && !errorMessage()) {
+    <mat-card class="table-card">
+      <div class="table-wrapper">
+        @if (sessions().length > 0) {
+          <table>
+            <thead>
+              <tr>
+                <th>Juego</th>
+                <th>Inicio</th>
+                <th>Fin</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (session of sessions(); track session.id) {
+                <tr>
+                  <td>{{ session.gameId }}</td>
+                  <td>{{ session.startTime | date:'short' }}</td>
+                  <td>{{ session.endTime ? (session.endTime | date:'short') : '—' }}</td>
+                  <td>
+                    <span [class]="'status ' + (session.endTime ? 'ended' : 'active')">
+                      {{ session.endTime ? 'Terminada' : 'Activa' }}
+                    </span>
+                  </td>
+                  <td>
+                    @if (!session.endTime) {
+                      <button mat-icon-button color="warn" matTooltip="Terminar sesión" (click)="terminarSesion(session)">
+                        <mat-icon>stop_circle</mat-icon>
+                      </button>
+                    }
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        } @else {
+          <div class="no-data">
+            <mat-icon>videogame_asset</mat-icon>
+            <p>No hay sesiones registradas</p>
+          </div>
+        }
+      </div>
+    </mat-card>
+  }
+</div>

@@ -1,0 +1,32 @@
+<div class="form-container">
+  <h2>Crear Logro</h2>
+  <form [formGroup]="form">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>ID del Juego</mat-label>
+      <input matInput formControlName="gameId" placeholder="UUID del juego" />
+      @if (form.get('gameId')?.hasError('required') && form.get('gameId')?.touched) {
+        <mat-error>El ID del juego es requerido</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Título</mat-label>
+      <input matInput formControlName="title" placeholder="Nombre del logro" />
+      @if (form.get('title')?.hasError('required') && form.get('title')?.touched) {
+        <mat-error>El título es requerido</mat-error>
+      } @else if (form.get('title')?.hasError('minlength') && form.get('title')?.touched) {
+        <mat-error>Mínimo 3 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Descripción (opcional)</mat-label>
+      <textarea matInput formControlName="description" rows="3" placeholder="Describe cómo obtener este logro"></textarea>
+    </mat-form-field>
+
+    <div class="form-actions">
+      <button mat-raised-button color="primary" (click)="onSubmit()">Crear</button>
+      <button mat-stroked-button (click)="cancel()">Cancelar</button>
+    </div>
+  </form>
+</div>

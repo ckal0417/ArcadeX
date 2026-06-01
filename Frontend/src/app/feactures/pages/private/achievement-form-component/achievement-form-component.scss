@@ -1,0 +1,10 @@
+.form-container {
+  padding: 24px;
+  min-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  h2 { margin: 0 0 16px; }
+}
+.full-width { width: 100%; }
+.form-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 8px; }

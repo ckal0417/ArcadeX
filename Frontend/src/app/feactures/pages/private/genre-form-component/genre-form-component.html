@@ -1,0 +1,18 @@
+<div class="form-container">
+  <h2>Crear Género</h2>
+  <form [formGroup]="form">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre del Género</mat-label>
+      <input matInput formControlName="name" placeholder="Ej: Acción, RPG..." />
+      @if (form.get('name')?.hasError('required') && form.get('name')?.touched) {
+        <mat-error>El nombre es requerido</mat-error>
+      } @else if (form.get('name')?.hasError('minlength') && form.get('name')?.touched) {
+        <mat-error>Mínimo 2 caracteres</mat-error>
+      }
+    </mat-form-field>
+    <div class="form-actions">
+      <button mat-raised-button color="primary" (click)="onSubmit()">Crear</button>
+      <button mat-stroked-button (click)="cancel()">Cancelar</button>
+    </div>
+  </form>
+</div>

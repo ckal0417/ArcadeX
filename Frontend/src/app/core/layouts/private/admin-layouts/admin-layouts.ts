@@ -37,7 +37,15 @@ export class AdminLayouts {
         { icon: 'dashboard', label: 'Dashboard', route: '/admin/dashboard' },
         { icon: 'people', label: 'Usuarios', route: '/admin/users' },
         { icon: 'sports_esports', label: 'Juegos', route: '/admin/game' },
-        { icon: 'local_offer', label: 'Ofertas', route: '/admin/offerts' }
+        { icon: 'local_offer', label: 'Ofertas', route: '/admin/offerts' },
+        { icon: 'category', label: 'Géneros', route: '/admin/genres' },
+        { icon: 'emoji_events', label: 'Logros', route: '/admin/achievements' },
+        { icon: 'rate_review', label: 'Reseñas', route: '/admin/reviews' },
+        { icon: 'comment', label: 'Comentarios', route: '/admin/review-comments' },
+        { icon: 'group', label: 'Amigos', route: '/admin/friends' },
+        { icon: 'library_books', label: 'Biblioteca', route: '/admin/library' },
+        { icon: 'favorite', label: 'Lista de Deseos', route: '/admin/wishlist' },
+        { icon: 'videogame_asset', label: 'Sesiones', route: '/admin/game-sessions' },
     ];
 
     toggle() {

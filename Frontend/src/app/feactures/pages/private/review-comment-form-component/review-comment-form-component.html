@@ -1,0 +1,31 @@
+<div class="form-container">
+  <h2>{{ data ? 'Editar Comentario' : 'Crear Comentario' }}</h2>
+  <form [formGroup]="form">
+    @if (!data) {
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>ID de la Reseña</mat-label>
+        <input matInput formControlName="reviewId" placeholder="UUID de la reseña" />
+        @if (form.get('reviewId')?.hasError('required') && form.get('reviewId')?.touched) {
+          <mat-error>El ID de la reseña es requerido</mat-error>
+        }
+      </mat-form-field>
+    }
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Comentario</mat-label>
+      <textarea matInput formControlName="comment" rows="4" placeholder="Escribe tu comentario..."></textarea>
+      @if (form.get('comment')?.hasError('required') && form.get('comment')?.touched) {
+        <mat-error>El comentario es requerido</mat-error>
+      } @else if (form.get('comment')?.hasError('minlength') && form.get('comment')?.touched) {
+        <mat-error>Mínimo 3 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="form-actions">
+      <button mat-raised-button color="primary" (click)="onSubmit()">
+        {{ data ? 'Actualizar' : 'Crear' }}
+      </button>
+      <button mat-stroked-button (click)="cancel()">Cancelar</button>
+    </div>
+  </form>
+</div>

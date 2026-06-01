@@ -1,0 +1,59 @@
+<div class="library-container">
+  <div class="library-header">
+    <div>
+      <h1>Mi Biblioteca</h1>
+      <p>Juegos en tu colección</p>
+    </div>
+  </div>
+
+  <mat-card class="search-card">
+    <div class="search-row">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>ID del Juego</mat-label>
+        <input matInput [(ngModel)]="nuevoGameId" placeholder="UUID del juego a agregar" />
+        <mat-icon matSuffix>sports_esports</mat-icon>
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="agregarJuego()">Agregar a Biblioteca</button>
+    </div>
+  </mat-card>
+
+  @if (loading()) {
+    <div class="center"><mat-spinner></mat-spinner></div>
+  }
+
+  @if (errorMessage()) {
+    <mat-card class="error-card">{{ errorMessage() }}</mat-card>
+  }
+
+  @if (!loading() && !errorMessage()) {
+    <mat-card class="table-card">
+      <div class="table-wrapper">
+        @if (items().length > 0) {
+          <table>
+            <thead>
+              <tr>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Agregado</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (item of items(); track item.gameId) {
+                <tr>
+                  <td>{{ item.title }}</td>
+                  <td>{{ item.description ?? '—' }}</td>
+                  <td>{{ item.addedAt ? (item.addedAt | date:'shortDate') : '—' }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        } @else {
+          <div class="no-data">
+            <mat-icon>library_books</mat-icon>
+            <p>Tu biblioteca está vacía</p>
+          </div>
+        }
+      </div>
+    </mat-card>
+  }
+</div>

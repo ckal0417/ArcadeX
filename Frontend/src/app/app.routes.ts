@@ -57,6 +57,46 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./feactures/pages/private/offert-component/offert-component').then((m) => m.OffertComponent)
       },
+      {
+        path: 'genres',
+        loadComponent: () =>
+          import('./feactures/pages/private/genre-component/genre-component').then((m) => m.GenreComponent)
+      },
+      {
+        path: 'achievements',
+        loadComponent: () =>
+          import('./feactures/pages/private/achievement-component/achievement-component').then((m) => m.AchievementComponent)
+      },
+      {
+        path: 'reviews',
+        loadComponent: () =>
+          import('./feactures/pages/private/review-component/review-component').then((m) => m.ReviewComponent)
+      },
+      {
+        path: 'review-comments',
+        loadComponent: () =>
+          import('./feactures/pages/private/review-comment-component/review-comment-component').then((m) => m.ReviewCommentComponent)
+      },
+      {
+        path: 'friends',
+        loadComponent: () =>
+          import('./feactures/pages/private/friend-component/friend-component').then((m) => m.FriendComponent)
+      },
+      {
+        path: 'library',
+        loadComponent: () =>
+          import('./feactures/pages/private/library-component/library-component').then((m) => m.LibraryComponent)
+      },
+      {
+        path: 'wishlist',
+        loadComponent: () =>
+          import('./feactures/pages/private/wishlist-component/wishlist-component').then((m) => m.WishlistComponent)
+      },
+      {
+        path: 'game-sessions',
+        loadComponent: () =>
+          import('./feactures/pages/private/game-session-component/game-session-component').then((m) => m.GameSessionComponent)
+      },
     ]
   }
 
