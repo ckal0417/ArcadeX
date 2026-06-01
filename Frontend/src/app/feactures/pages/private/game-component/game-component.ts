@@ -1,10 +1,11 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { IGame } from '../../../interfaces/public/Game';
 import { GameService } from '../../../services/private/game.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GameFormComponent } from '../game-form-component/game-form-component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-game-component',
@@ -19,6 +20,7 @@ export class GameComponent {
   searchQuery = signal('');
 
   gameService = inject(GameService);
+  private destroyRef = inject(DestroyRef);
   constructor(private dialogRef: MatDialog) {}
   private snackBar = inject(MatSnackBar);
 
@@ -26,31 +28,25 @@ export class GameComponent {
     this.cargar();
   }
 
-  cargar() {
+  cargar(): void {
     this.loading.set(true);
-    this.gameService.get().subscribe({
-      next: (data) => {
-        this.games.set(data.game);
-        this.loading.set(false);
-      },
-      error: (error) => {
-        this.errorMessage.set('Error al cargar los juegos');
-        this.loading.set(false);
-      }
-    });
-  }
-
-  abrirFormulario(product: IGame | null = null){
-    const dialogRef = this.dialogRef.open(GameFormComponent, {
-      width: '480px',
-      data: product
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.cargar();
-      }
-    });
+    this.gameService.get()
+      .pipe(
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe({
+        next: (data) => {
+          console.log('Respuesta del API:', data);
+          this.games.set(data);
+          console.log('Games signal actualizado:', this.games());
+          this.loading.set(false);
+        },
+        error: (error) => {
+          console.error('Error en API:', error);
+          this.errorMessage.set('Error al cargar los juegos');
+          this.loading.set(false);
+        }
+      });
   }
 
   delete(game: IGame) {

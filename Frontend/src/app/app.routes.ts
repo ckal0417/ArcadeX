@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
 
 
 
@@ -37,5 +38,24 @@ export const routes: Routes = [
     path: 'game', loadComponent: () =>
       import('./feactures/pages/private/game-component/game-component').then(m => m.GameComponent)
   },
+
+  {
+    path: 'admin',
+        canActivate: [authGuard],
+        loadComponent: () =>
+            import('./core/layouts/private/admin-layouts/admin-layouts').then((m) => m.AdminLayouts),
+        children: [
+            {
+                path: '',
+                redirectTo: 'dashboard',
+                pathMatch: 'full',
+            },
+            {
+                path: 'dashboard',
+                loadComponent: () =>
+                  import('./feactures/pages/private/dashboard-component/dashboard-component').then((m) => m.DashboardComponent),
+            },
+          ]
+  }
 
 ];

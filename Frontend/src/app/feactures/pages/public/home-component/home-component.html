@@ -48,24 +48,24 @@
       }
 
       @if (!loading() && !errorMessage()) {
-        <div class="grid">
-          @for (games of games(); track games.id) {
-            <mat-card>
+        <div class="games-grid">
+          @for (game of games(); track game.id) {
+            <mat-card class="game-card">
               <mat-card-header>
-                <mat-card-title>{{ games.title }}</mat-card-title>
+                <mat-card-title class="title">{{ game.title }}</mat-card-title>
               </mat-card-header>
               <mat-card-content>
                 <p>
                   <strong>Categoría:</strong>
-                  {{ games.geners }}
+                  {{ game.genres }}
                 </p>
                 <p>
-                  <strong>Stock:</strong>
-                  {{ games.description }}
+                  <strong>Descripción:</strong>
+                  {{ game.description }}
                 </p>
-                <p>
+                <p class="price">
                   <strong>Precio:</strong>
-                  ${{ games.price }}
+                  ${{ game.price }}
                 </p>
               </mat-card-content>
             </mat-card>

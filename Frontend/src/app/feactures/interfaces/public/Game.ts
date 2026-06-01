@@ -4,12 +4,10 @@ export interface IGame {
   title: string,
   description: string,
   price: number,
-  realeseDate: string,
-  owerId: string,
-  oweruUsername: string,
-  geners: string[],
+  releaseDate: string,
+  ownerId: string,
+  ownerUsername: string,
+  genres: string[],
 }
 
-export interface IResponseGames {
-  game: IGame[];
-}
+export type IResponseGames = IGame[];

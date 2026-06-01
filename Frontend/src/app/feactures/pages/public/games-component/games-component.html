@@ -1,35 +1,37 @@
-@if (loading()) {
-  <div class="center">
-    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-  </div>
-}
+<div class="section">
+  @if (loading()) {
+    <div class="center">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+  }
 
-@if (errorMessage()) {
-  <div>{{ errorMessage() }}</div>
-}
+  @if (errorMessage()) {
+    <div>{{ errorMessage() }}</div>
+  }
 
-@if (!loading() && !errorMessage()) {
-  <div class="games-grid">
-    @for (games of games(); track games.id) {
-      <mat-card appearance="outlined">
-        <mat-card-header>
-          <mat-card-title>{{ games.title }}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>
-            <strong>Generos:</strong>
-            {{ games.geners }}
-          </p>
-          <p>
-            <strong>Precio:</strong>
-            ${{ games.price }}
-          </p>
-          <p>
-            <strong>Descripción:</strong>
-            {{ games.description }}
-          </p>
-        </mat-card-content>
-      </mat-card>
-    }
-  </div>
-}
+  @if (!loading() && !errorMessage()) {
+    <div class="game-grid">
+      @for (game of games(); track game.id) {
+        <mat-card class="game-card">
+          <mat-card-header>
+            <mat-card-title class="title">{{ game.title }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              <strong>Categoría:</strong>
+              {{ game.genres }}
+            </p>
+            <p>
+              <strong>Descripción:</strong>
+              {{ game.description }}
+            </p>
+            <p class="price">
+              <strong>Precio:</strong>
+              ${{ game.price }}
+            </p>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  }
+</div>

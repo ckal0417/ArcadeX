@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators, ɵInternalFormsSharedModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -14,7 +14,8 @@ import { email } from '@angular/forms/signals';
 @Component({
   selector: 'app-login-component',
   imports: [MatIconModule, MatCardModule, MatFormFieldModule, MatInputModule,
-    MatButtonModule, MatCheckboxModule, RouterLink],
+    MatButtonModule, MatCheckboxModule, RouterLink, ɵInternalFormsSharedModule,
+  ReactiveFormsModule],
   templateUrl: './login-component.html',
   styleUrl: './login-component.scss',
 })
@@ -52,7 +53,7 @@ export class LoginComponent {
       },
       error: () => {
         this.loading.set(false);
-        this.error.set('Usuario o contraseña incorrectos.');
+        this.error.set('Correo o contraseña incorrectos.');
       },
     });
   }

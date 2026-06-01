@@ -1,9 +1,10 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { IGame, IResponseGames } from '../../../interfaces/public/Game';
 import { HomeComponent } from '../home-component/home-component';
 import { HomeService } from '../../../services/public/home.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-games-component',
@@ -19,6 +20,7 @@ export class GamesComponent implements OnInit {
   searchQuery = signal('');
 
   homeService = inject(HomeService);
+  private destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
     this.cargarJuegos();
@@ -26,16 +28,23 @@ export class GamesComponent implements OnInit {
 
   cargarJuegos() {
     this.loading.set(true);
-    this.homeService.getGames().subscribe({
-      next: (data) => {
-        this.games.set(data.game);
-        this.loading.set(false);
-      },
-      error: (error) => {
-        this.errorMessage.set('Error al cargar los productos');
-        this.loading.set(false);
-      }
-    });
+    this.homeService.getGames()
+          .pipe(
+            takeUntilDestroyed(this.destroyRef)
+          )
+          .subscribe({
+            next: (data) => {
+              console.log('Respuesta del API:', data);
+              this.games.set(data);
+              console.log('Games signal actualizado:', this.games());
+              this.loading.set(false);
+            },
+            error: (error) => {
+              console.error('Error en API:', error);
+              this.errorMessage.set('Error al cargar los juegos');
+              this.loading.set(false);
+            }
+          });
   }
 
 }

@@ -29,7 +29,7 @@ export class AuthService {
 
   login(credentials: LoginRequest) {
     return this.http
-    .post<LoginResponse>(`${this.API}/auth/login`, credentials)
+    .post<LoginResponse>(`${this.API}/Auth/login`, credentials)
     .pipe(
       tap( (res) => {
         localStorage.setItem(this.TOKEN_KEY, res.token);

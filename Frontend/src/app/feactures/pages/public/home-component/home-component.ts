@@ -38,10 +38,13 @@ export class HomeComponent implements OnInit {
       )
       .subscribe({
         next: (data) => {
-          this.games.set(data.game);
+          console.log('Respuesta del API:', data);
+          this.games.set(data);
+          console.log('Games signal actualizado:', this.games());
           this.loading.set(false);
         },
         error: (error) => {
+          console.error('Error en API:', error);
           this.errorMessage.set('Error al cargar los juegos');
           this.loading.set(false);
         }
