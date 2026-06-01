@@ -2,15 +2,9 @@ import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { environment } from "../../../../enviroment/enroment";
+import { IUser } from "../../interfaces/private/User";
 
-export interface IUser {
-  id: string;
-  email: string;
-  username: string;
-  role: string;
-  createdAt?: string;
-  updatedAt?: string;
-}
+
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
