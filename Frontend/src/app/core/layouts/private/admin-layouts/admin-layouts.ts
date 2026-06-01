@@ -36,7 +36,8 @@ export class AdminLayouts {
     navItems: NavItem[] = [
         { icon: 'dashboard', label: 'Dashboard', route: '/admin/dashboard' },
         { icon: 'people', label: 'Usuarios', route: '/admin/users' },
-        { icon: 'sports_esports', label: 'Juegos', route: '/admin/game' }
+        { icon: 'sports_esports', label: 'Juegos', route: '/admin/game' },
+        { icon: 'local_offer', label: 'Ofertas', route: '/admin/offerts' }
     ];
 
     toggle() {

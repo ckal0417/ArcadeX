@@ -1,0 +1,64 @@
+<div class="form-container">
+  <h2 mat-dialog-title>{{ data ? 'Editar Oferta' : 'Nueva Oferta' }}</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <!-- Game Selection -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Juego</mat-label>
+      <mat-select formControlName="gameId">
+        <mat-option value="">-- Seleccionar juego --</mat-option>
+        @for (game of games(); track game.id) {
+          <mat-option [value]="game.id">{{ game.title }}</mat-option>
+        }
+      </mat-select>
+      @if (form.get('gameId')?.hasError('required') && form.get('gameId')?.touched) {
+        <mat-error>Selecciona un juego</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Discount Percentage -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Descuento (%)</mat-label>
+      <input matInput type="number" formControlName="discountPct" min="0" max="100" />
+      @if (form.get('discountPct')?.hasError('required') && form.get('discountPct')?.touched) {
+        <mat-error>Ingresa el porcentaje de descuento</mat-error>
+      }
+      @if (form.get('discountPct')?.hasError('min')) {
+        <mat-error>El descuento no puede ser menor a 0</mat-error>
+      }
+      @if (form.get('discountPct')?.hasError('max')) {
+        <mat-error>El descuento no puede ser mayor a 100</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Start Date -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Fecha de Inicio</mat-label>
+      <input matInput [matDatepicker]="startPicker" formControlName="startDate" />
+      <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
+      <mat-datepicker #startPicker></mat-datepicker>
+      @if (form.get('startDate')?.hasError('required') && form.get('startDate')?.touched) {
+        <mat-error>Selecciona una fecha de inicio</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- End Date -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Fecha de Fin</mat-label>
+      <input matInput [matDatepicker]="endPicker" formControlName="endDate" />
+      <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
+      <mat-datepicker #endPicker></mat-datepicker>
+      @if (form.get('endDate')?.hasError('required') && form.get('endDate')?.touched) {
+        <mat-error>Selecciona una fecha de fin</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Actions -->
+    <div class="form-actions">
+      <button type="button" mat-stroked-button (click)="onCancel()">Cancelar</button>
+      <button type="submit" mat-raised-button color="primary" [disabled]="form.invalid">
+        {{ data ? 'Actualizar' : 'Crear' }}
+      </button>
+    </div>
+  </form>
+</div>

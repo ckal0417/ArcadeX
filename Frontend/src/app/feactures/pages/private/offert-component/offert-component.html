@@ -1,0 +1,87 @@
+<div class="offerts-container">
+  <!-- Header -->
+  <div class="offerts-header">
+    <div>
+      <h1>Gestión de Ofertas</h1>
+      <p>Administra todas las ofertas disponibles</p>
+    </div>
+    <button mat-raised-button color="primary" (click)="crearOferta()">
+      <mat-icon>local_offer</mat-icon>
+      Agregar Oferta
+    </button>
+  </div>
+
+  <!-- Search -->
+  <mat-card class="search-card">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Buscar ofertas...</mat-label>
+      <input matInput [ngModel]="searchQuery()" (ngModelChange)="buscar($event)" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </mat-card>
+
+  <!-- Loading -->
+  @if (loading()) {
+    <div class="center">
+      <mat-spinner></mat-spinner>
+    </div>
+  }
+
+  <!-- Error -->
+  @if (errorMessage()) {
+    <mat-card class="error-card">
+      {{ errorMessage() }}
+    </mat-card>
+  }
+
+  <!-- Table -->
+  @if (!loading() && !errorMessage()) {
+    <mat-card class="table-card">
+      <div class="table-wrapper">
+        @if (filteredOfferts().length > 0) {
+          <table>
+            <thead>
+              <tr>
+                <th>ID de Juego</th>
+                <th>Descuento (%)</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (offert of filteredOfferts(); track offert.id) {
+                <tr>
+                  <td>{{ offert.gameId }}</td>
+                  <td>
+                    <strong>{{ offert.discountPct }}%</strong>
+                  </td>
+                  <td>{{ offert.startDate | date: 'short' }}</td>
+                  <td>{{ offert.endDate | date: 'short' }}</td>
+                  <td>
+                    <button mat-icon-button matTooltip="Editar" (click)="editarOferta(offert)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button
+                      mat-icon-button
+                      matTooltip="Eliminar"
+                      color="warn"
+                      (click)="eliminarOferta(offert)"
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        } @else {
+          <div class="no-data">
+            <mat-icon>local_offer</mat-icon>
+            <p>No hay ofertas disponibles</p>
+          </div>
+        }
+      </div>
+    </mat-card>
+  }
+</div>

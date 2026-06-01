@@ -5,7 +5,6 @@ import { environment } from "../../../../enviroment/enroment";
 import { IUser } from "../../interfaces/private/User";
 
 
-
 @Injectable({ providedIn: 'root' })
 export class UserService {
   private url = `${environment.apiUrl}/Users`;

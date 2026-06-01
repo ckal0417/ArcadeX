@@ -52,6 +52,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./feactures/pages/private/game-component/game-component').then((m) => m.GameComponent)
       },
+      {
+        path: 'offerts',
+        loadComponent: () =>
+          import('./feactures/pages/private/offert-component/offert-component').then((m) => m.OffertComponent)
+      },
     ]
   }
 
