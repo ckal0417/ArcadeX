@@ -22,6 +22,27 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using System.Text;
+using ArcadeX.Application.Features.Reviews.Interfaces;
+using ArcadeX.Application.Features.Reviews.Services;
+using ArcadeX.Persistence.Features.Reviews.Repositories;
+using ArcadeX.Application.Features.Wishlist.Interfaces;
+using ArcadeX.Application.Features.Wishlist.Services;
+using ArcadeX.Persistence.Features.Wishlist.Repositories;
+using ArcadeX.Application.Features.Achievements.Interfaces;
+using ArcadeX.Application.Features.Achievements.Services;
+using ArcadeX.Persistence.Features.Achievements.Repositories;
+using ArcadeX.Application.Features.Offers.Interfaces;
+using ArcadeX.Application.Features.Offers.Services;
+using ArcadeX.Persistence.Features.Offers.Repositories;
+using ArcadeX.Application.Features.ReviewComments.Interfaces;
+using ArcadeX.Application.Features.ReviewComments.Services;
+using ArcadeX.Persistence.Features.ReviewComments.Repositories;
+using ArcadeX.Application.Features.Friends.Interfaces;
+using ArcadeX.Application.Features.Friends.Services;
+using ArcadeX.Persistence.Features.Friends.Repositories;
+using ArcadeX.Application.Features.GameSessions.Interfaces;
+using ArcadeX.Application.Features.GameSessions.Services;
+using ArcadeX.Persistence.Features.GameSessions.Repositories;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -82,6 +103,22 @@ builder.Services.AddScoped<IGenreService, GenreService>();
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 builder.Services.AddScoped<ILibraryService, LibraryService>();
 builder.Services.AddScoped<ILibraryRepository, LibraryRepository>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+builder.Services.AddScoped<IWishlistService, WishlistService>();
+builder.Services.AddScoped<IWishlistRepository, WishlistRepository>();
+builder.Services.AddScoped<IAchievementService, AchievementService>();
+builder.Services.AddScoped<IAchievementRepository, AchievementRepository>();
+builder.Services.AddScoped<IOfferService, OfferService>();
+builder.Services.AddScoped<IOfferRepository, OfferRepository>();
+builder.Services.AddScoped<IReviewCommentService, ReviewCommentService>();
+builder.Services.AddScoped<IReviewCommentRepository, ReviewCommentRepository>();
+builder.Services.AddScoped<IFriendService, FriendService>();
+builder.Services.AddScoped<IFriendRepository, FriendRepository>();
+builder.Services.AddScoped<IGameSessionService, GameSessionService>();
+builder.Services.AddScoped<IGameSessionRepository, GameSessionRepository>();
+
+
 
 var app = builder.Build();
 

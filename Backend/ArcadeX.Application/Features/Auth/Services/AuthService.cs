@@ -15,15 +15,13 @@ public class AuthService : IAuthService
 
     public async Task<AuthResponseDto> LoginAsync(LoginDto dto)
     {
-        var auth = await _authRepository.LoginAsync(dto);
+        var response = await _authRepository.LoginAsync(dto);
 
-        if (auth is null)
+        if (response is null)
         {
-            throw new BadRequestException(
-                "Invalid email or password"
-            );
+            throw new BadRequestException("Invalid email or password");
         }
 
-        return auth;
+        return response;
     }
 }
