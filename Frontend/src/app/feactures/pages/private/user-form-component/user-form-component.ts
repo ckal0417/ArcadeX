@@ -1,4 +1,4 @@
-import { Component, Inject, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,14 +28,14 @@ export class UserFormComponent implements OnInit {
   private fb = inject(FormBuilder);
   private dialogRef = inject(MatDialogRef<UserFormComponent>);
 
-  @Inject(MAT_DIALOG_DATA) data: IUser | null = null;
+  data = inject<IUser | null>(MAT_DIALOG_DATA);
 
   userForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     username: ['', [Validators.required, Validators.minLength(3)]],
     country: ['', [Validators.required, Validators.minLength(3)]],
-    password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^[a-zA-ZÀ-ÿ0-9\s.,:'"()-]+$/) ]],
-    role: ['user', Validators.required]
+    password: ['', [Validators.minLength(8)]],
+    role: ['User', Validators.required]
   });
 
   roles = ['User', 'Admin', 'Developer', 'Publisher'];
@@ -45,8 +45,12 @@ export class UserFormComponent implements OnInit {
       this.userForm.patchValue({
         email: this.data.email,
         username: this.data.username,
-        role: this.data.role
+        country: this.data.country ?? '',
+        role: this.data.roles[0]
       });
+    } else {
+      this.userForm.get('password')!.addValidators(Validators.required);
+      this.userForm.get('password')!.updateValueAndValidity();
     }
   }
 
@@ -56,10 +60,12 @@ export class UserFormComponent implements OnInit {
       return;
     }
 
-    this.dialogRef.close({
-      ...this.data,
-      ...this.userForm.value
-    });
+    const { role, password, ...rest } = this.userForm.value;
+    const payload: any = { ...this.data, ...rest, roles: [role] };
+    if (password) {
+      payload.password = password;
+    }
+    this.dialogRef.close(payload);
   }
 
   cancel() {

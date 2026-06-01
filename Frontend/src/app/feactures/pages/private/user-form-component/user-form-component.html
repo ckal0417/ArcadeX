@@ -5,21 +5,41 @@
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Correo Electrónico</mat-label>
       <input matInput type="email" formControlName="email" placeholder="usuario@email.com" />
+      @if (userForm.get('email')?.hasError('required') && userForm.get('email')?.touched) {
+        <mat-error>El correo es requerido</mat-error>
+      } @else if (userForm.get('email')?.hasError('email') && userForm.get('email')?.touched) {
+        <mat-error>Ingresa un correo válido</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Nombre de Usuario</mat-label>
       <input matInput formControlName="username" placeholder="nombre_usuario" />
+      @if (userForm.get('username')?.hasError('required') && userForm.get('username')?.touched) {
+        <mat-error>El nombre de usuario es requerido</mat-error>
+      } @else if (userForm.get('username')?.hasError('minlength') && userForm.get('username')?.touched) {
+        <mat-error>Mínimo 3 caracteres</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>País</mat-label>
       <input matInput formControlName="country" placeholder="País" />
+      @if (userForm.get('country')?.hasError('required') && userForm.get('country')?.touched) {
+        <mat-error>El país es requerido</mat-error>
+      } @else if (userForm.get('country')?.hasError('minlength') && userForm.get('country')?.touched) {
+        <mat-error>Mínimo 3 caracteres</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Contraseña</mat-label>
+      <mat-label>{{ data ? 'Nueva Contraseña (opcional)' : 'Contraseña' }}</mat-label>
       <input matInput formControlName="password" type="password" placeholder="***************" />
+      @if (userForm.get('password')?.hasError('required') && userForm.get('password')?.touched) {
+        <mat-error>La contraseña es requerida</mat-error>
+      } @else if (userForm.get('password')?.hasError('minlength') && userForm.get('password')?.touched) {
+        <mat-error>Mínimo 8 caracteres</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
@@ -29,6 +49,9 @@
           {{ role | uppercase }}
         </mat-option>
       </mat-select>
+      @if (userForm.get('role')?.hasError('required') && userForm.get('role')?.touched) {
+        <mat-error>El rol es requerido</mat-error>
+      }
     </mat-form-field>
 
     <div class="form-actions">
