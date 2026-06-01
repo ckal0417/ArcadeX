@@ -38,66 +38,50 @@
   @if (!loading() && !errorMessage()) {
     <mat-card class="table-card">
       <div class="table-wrapper">
-        <table mat-table [dataSource]="filteredGames()">
-          <!-- Title Column -->
-          <ng-container matColumnDef="title">
-            <th mat-header-cell>Título</th>
-            <td mat-cell *matRowDef="let element">{{ element.title }}</td>
-          </ng-container>
-
-          <!-- Description Column -->
-          <ng-container matColumnDef="description">
-            <th mat-header-cell>Descripción</th>
-            <td mat-cell *matRowDef="let element">{{ element.description | slice: 0 : 50 }}...</td>
-          </ng-container>
-
-          <!-- Price Column -->
-          <ng-container matColumnDef="price">
-            <th mat-header-cell>Precio</th>
-            <td mat-cell *matRowDef="let element">${{ element.price }}</td>
-          </ng-container>
-
-          <!-- Release Date Column -->
-          <ng-container matColumnDef="releaseDate">
-            <th mat-header-cell>Fecha de Lanzamiento</th>
-            <td mat-cell *matRowDef="let element">{{ element.releaseDate | date: 'short' }}</td>
-          </ng-container>
-
-          <!-- Genres Column -->
-          <ng-container matColumnDef="genres">
-            <th mat-header-cell>Géneros</th>
-            <td mat-cell *matRowDef="let element">{{ element.genres?.join(', ') }}</td>
-          </ng-container>
-
-          <!-- Actions Column -->
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell>Acciones</th>
-            <td mat-cell *matRowDef="let element">
-              <button mat-icon-button matTooltip="Editar" (click)="editarJuego(element)">
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button
-                mat-icon-button
-                matTooltip="Eliminar"
-                color="warn"
-                (click)="eliminarJuego(element)"
-              >
-                <mat-icon>delete</mat-icon>
-              </button>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
+        @if (filteredGames().length > 0) {
+          <table>
+            <thead>
+              <tr>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Fecha de Lanzamiento</th>
+                <th>Géneros</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (game of filteredGames(); track game.id) {
+                <tr>
+                  <td>{{ game.title }}</td>
+                  <td>{{ game.description | slice: 0 : 50 }}...</td>
+                  <td>${{ game.price }}</td>
+                  <td>{{ game.releaseDate | date: 'short' }}</td>
+                  <td>{{ game.genres.join(', ') }}</td>
+                  <td>
+                    <button mat-icon-button matTooltip="Editar" (click)="editarJuego(game)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button
+                      mat-icon-button
+                      matTooltip="Eliminar"
+                      color="warn"
+                      (click)="eliminarJuego(game)"
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        } @else {
+          <div class="no-data">
+            <mat-icon>videogame_asset</mat-icon>
+            <p>No hay juegos disponibles</p>
+          </div>
+        }
       </div>
-
-      @if (filteredGames().length === 0) {
-        <div class="no-data">
-          <mat-icon>videogame_asset</mat-icon>
-          <p>No hay juegos disponibles</p>
-        </div>
-      }
     </mat-card>
   }
 </div>

@@ -13,6 +13,16 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
+      <mat-label>País</mat-label>
+      <input matInput formControlName="country" placeholder="País" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Contraseña</mat-label>
+      <input matInput formControlName="password" type="password" placeholder="***************" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
       <mat-label>Rol</mat-label>
       <mat-select formControlName="role">
         <mat-option *ngFor="let role of roles" [value]="role">

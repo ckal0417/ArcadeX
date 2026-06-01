@@ -38,56 +38,43 @@
   @if (!loading() && !errorMessage()) {
     <mat-card class="table-card">
       <div class="table-wrapper">
-        <table mat-table [dataSource]="filteredUsers()">
-          <!-- Email Column -->
-          <ng-container matColumnDef="email">
-            <th mat-header-cell>Correo Electrónico</th>
-            <td mat-cell *matRowDef="let element">{{ element.email }}</td>
-          </ng-container>
-
-          <!-- Username Column -->
-          <ng-container matColumnDef="username">
-            <th mat-header-cell>Usuario</th>
-            <td mat-cell *matRowDef="let element">{{ element.username }}</td>
-          </ng-container>
-
-          <!-- Role Column -->
-          <ng-container matColumnDef="role">
-            <th mat-header-cell>Rol</th>
-            <td mat-cell *matRowDef="let element">
-              <span [class]="'role ' + element.role">{{ element.role | uppercase }}</span>
-            </td>
-          </ng-container>
-
-          <!-- Actions Column -->
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell>Acciones</th>
-            <td mat-cell *matRowDef="let element">
-              <button mat-icon-button matTooltip="Editar" (click)="editarUsuario(element)">
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button
-                mat-icon-button
-                matTooltip="Eliminar"
-                color="warn"
-                (click)="eliminarUsuario(element)"
-              >
-                <mat-icon>delete</mat-icon>
-              </button>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
+        @if (filteredUsers().length > 0) {
+          <table>
+            <thead>
+              <tr>
+                <th>Correo Electrónico</th>
+                <th>Usuario</th>
+                <th>Rol</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (user of filteredUsers(); track user.id) {
+                <tr>
+                  <td>{{ user.email }}</td>
+                  <td>{{ user.username }}</td>
+                  <td>
+                    <span [class]="'role ' + user.role">{{ user.role | uppercase }}</span>
+                  </td>
+                  <td>
+                    <button mat-icon-button matTooltip="Editar" (click)="editarUsuario(user)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button matTooltip="Eliminar" color="warn" (click)="eliminarUsuario(user)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        } @else {
+          <div class="no-data">
+            <mat-icon>person_off</mat-icon>
+            <p>No hay usuarios disponibles</p>
+          </div>
+        }
       </div>
-
-      @if (filteredUsers().length === 0) {
-        <div class="no-data">
-          <mat-icon>person_off</mat-icon>
-          <p>No hay usuarios disponibles</p>
-        </div>
-      }
     </mat-card>
   }
 </div>

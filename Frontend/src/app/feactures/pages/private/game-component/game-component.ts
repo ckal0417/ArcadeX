@@ -1,4 +1,5 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { IGame } from '../../../interfaces/public/Game';
@@ -7,28 +8,25 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GameFormComponent } from '../game-form-component/game-form-component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-game-component',
   imports: [
+    CommonModule,
     MatCardModule,
     MatIconModule,
-    MatTableModule,
     MatButtonModule,
     MatProgressSpinnerModule,
     MatInputModule,
     MatFormFieldModule,
     FormsModule,
-    MatTooltipModule,
-    CommonModule
+    MatTooltipModule
   ],
   templateUrl: './game-component.html',
   styleUrl: './game-component.scss',
@@ -39,7 +37,6 @@ export class GameComponent implements OnInit {
   loading = signal(false);
   errorMessage = signal('');
   searchQuery = signal('');
-  displayedColumns = ['title', 'description', 'price', 'releaseDate', 'genres', 'actions'];
 
   gameService = inject(GameService);
   private destroyRef = inject(DestroyRef);

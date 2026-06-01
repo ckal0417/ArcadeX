@@ -7,7 +7,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserFormComponent } from '../user-form-component/user-form-component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatInputModule } from '@angular/material/input';
@@ -21,7 +20,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     CommonModule,
     MatCardModule,
     MatIconModule,
-    MatTableModule,
     MatButtonModule,
     MatProgressSpinnerModule,
     MatInputModule,
@@ -38,7 +36,6 @@ export class UserComponent implements OnInit {
   loading = signal(false);
   errorMessage = signal('');
   searchQuery = signal('');
-  displayedColumns = ['email', 'username', 'role', 'actions'];
 
   userService = inject(UserService);
   private destroyRef = inject(DestroyRef);

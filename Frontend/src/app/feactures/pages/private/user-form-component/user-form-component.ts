@@ -32,10 +32,12 @@ export class UserFormComponent implements OnInit {
   userForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     username: ['', [Validators.required, Validators.minLength(3)]],
+    country: ['', [Validators.required, Validators.minLength(3)]],
+    password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^[a-zA-ZÀ-ÿ0-9\s.,:'"()-]+$/) ]],
     role: ['user', Validators.required]
   });
 
-  roles = ['user', 'admin', 'moderator'];
+  roles = ['User', 'Admin', 'Developer', 'Publisher'];
 
   ngOnInit() {
     if (this.data) {

@@ -14,7 +14,7 @@ export interface IUser {
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  private url = `${environment.apiUrl}/users`;
+  private url = `${environment.apiUrl}/Users`;
   private http = inject(HttpClient);
 
   getAll(): Observable<IUser[]> {
