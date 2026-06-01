@@ -43,6 +43,8 @@ using ArcadeX.Persistence.Features.Friends.Repositories;
 using ArcadeX.Application.Features.GameSessions.Interfaces;
 using ArcadeX.Application.Features.GameSessions.Services;
 using ArcadeX.Persistence.Features.GameSessions.Repositories;
+using ArcadeX.Application.Common.Interfaces;
+using ArcadeX.Persistence.Common.UnitOfWork;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -117,6 +119,7 @@ builder.Services.AddScoped<IFriendService, FriendService>();
 builder.Services.AddScoped<IFriendRepository, FriendRepository>();
 builder.Services.AddScoped<IGameSessionService, GameSessionService>();
 builder.Services.AddScoped<IGameSessionRepository, GameSessionRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
 
