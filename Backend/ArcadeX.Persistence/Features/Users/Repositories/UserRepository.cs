@@ -1,9 +1,8 @@
 using ArcadeX.Application.Features.Users.DTOs;
 using ArcadeX.Application.Features.Users.Interfaces;
 using ArcadeX.Persistence.Context;
-using Microsoft.EntityFrameworkCore;
 using ArcadeX.Persistence.Entities;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace ArcadeX.Persistence.Features.Users.Repositories;
 
@@ -19,17 +18,19 @@ public class UserRepository : IUserRepository
     public async Task<List<UserResponseDto>> GetAllAsync()
     {
         return await _context.Users
-            .Include(u => u.UserRoles)
-            .ThenInclude(ur => ur.Role)
-            .Select(u => new UserResponseDto
+            .Include(user => user.UserRoles)
+            .ThenInclude(userRole => userRole.Role)
+            .Select(user => new UserResponseDto
             {
-                Id = u.Id,
-                Username = u.Username,
-                Email = u.Email,
-                Country = u.Country,
-                CreatedAt = u.CreatedAt,
-                LastLogin = u.LastLogin,
-                Roles = u.UserRoles.Select(ur => ur.Role.Name).ToList()
+                Id = user.Id,
+                Username = user.Username,
+                Email = user.Email,
+                Country = user.Country,
+                CreatedAt = user.CreatedAt,
+                LastLogin = user.LastLogin,
+                Roles = user.UserRoles
+                    .Select(userRole => userRole.Role.Name)
+                    .ToList()
             })
             .ToListAsync();
     }
@@ -37,39 +38,29 @@ public class UserRepository : IUserRepository
     public async Task<UserResponseDto?> GetByIdAsync(Guid id)
     {
         return await _context.Users
-            .Where(u => u.Id == id)
-            .Include(u => u.UserRoles)
-            .ThenInclude(ur => ur.Role)
-            .Select(u => new UserResponseDto
+            .Where(user => user.Id == id)
+            .Include(user => user.UserRoles)
+            .ThenInclude(userRole => userRole.Role)
+            .Select(user => new UserResponseDto
             {
-                Id = u.Id,
-                Username = u.Username,
-                Email = u.Email,
-                Country = u.Country,
-                CreatedAt = u.CreatedAt,
-                LastLogin = u.LastLogin,
-                Roles = u.UserRoles.Select(ur => ur.Role.Name).ToList()
+                Id = user.Id,
+                Username = user.Username,
+                Email = user.Email,
+                Country = user.Country,
+                CreatedAt = user.CreatedAt,
+                LastLogin = user.LastLogin,
+                Roles = user.UserRoles
+                    .Select(userRole => userRole.Role.Name)
+                    .ToList()
             })
             .FirstOrDefaultAsync();
     }
 
-    public async Task<UserResponseDto> CreateAsync(CreateUserDto dto)
+    public async Task<UserResponseDto> CreateAsync(
+        CreateUserDto dto,
+        List<string> requestedRoles
+    )
     {
-        var requestedRoles = dto.Roles
-            .Select(role => role.Trim())
-            .Where(role => !string.IsNullOrWhiteSpace(role))
-            .Distinct()
-            .ToList();
-
-        if (!requestedRoles.Any())
-        {
-            requestedRoles = new List<string> { "User" };
-        }
-
-        var roles = await _context.Roles
-            .Where(role => requestedRoles.Contains(role.Name))
-            .ToListAsync();
-
         var user = new User
         {
             Id = Guid.NewGuid(),
@@ -81,6 +72,10 @@ public class UserRepository : IUserRepository
             LastLogin = DateTime.UtcNow
         };
 
+        var roles = await _context.Roles
+            .Where(role => requestedRoles.Contains(role.Name))
+            .ToListAsync();
+
         _context.Users.Add(user);
 
         foreach (var role in roles)
@@ -91,8 +86,6 @@ public class UserRepository : IUserRepository
                 RoleId = role.Id
             });
         }
-
-        await _context.SaveChangesAsync();
 
         return new UserResponseDto
         {
@@ -106,44 +99,11 @@ public class UserRepository : IUserRepository
         };
     }
 
-    public async Task<bool> ExistsByUsernameOrEmailAsync(string username, string email)
-    {
-        return await _context.Users
-            .AnyAsync(user =>
-                user.Username == username ||
-                user.Email == email
-            );
-    }
-
-
-    public async Task<bool> RolesExistAsync(List<string> roles)
-    {
-        var normalizedRoles = roles
-            .Select(role => role.Trim())
-            .Where(role => !string.IsNullOrWhiteSpace(role))
-            .Distinct()
-            .ToList();
-
-        var existingRolesCount = await _context.Roles
-            .CountAsync(role => normalizedRoles.Contains(role.Name));
-
-        return existingRolesCount == normalizedRoles.Count;
-    }
-
-
-
-    public async Task<bool> ExistsByUsernameOrEmailForOtherUserAsync(Guid userId,string username,string email)
-    {
-        return await _context.Users.AnyAsync(user =>
-            user.Id != userId &&
-            (
-                user.Username == username ||
-                user.Email == email
-            )
-        );
-    }
-
-    public async Task<UserResponseDto?> UpdateAsync(Guid id, UpdateUserDto dto)
+    public async Task<UserResponseDto?> UpdateAsync(
+        Guid id,
+        UpdateUserDto dto,
+        List<string> requestedRoles
+    )
     {
         var user = await _context.Users
             .Include(user => user.UserRoles)
@@ -154,24 +114,13 @@ public class UserRepository : IUserRepository
             return null;
         }
 
-        user.Username = dto.Username;
-        user.Email = dto.Email;
-        user.Country = dto.Country;
-
-        var requestedRoles = dto.Roles
-            .Select(role => role.Trim())
-            .Where(role => !string.IsNullOrWhiteSpace(role))
-            .Distinct()
-            .ToList();
-
-        if (!requestedRoles.Any())
-        {
-            requestedRoles = new List<string> { "User" };
-        }
-
         var roles = await _context.Roles
             .Where(role => requestedRoles.Contains(role.Name))
             .ToListAsync();
+
+        user.Username = dto.Username;
+        user.Email = dto.Email;
+        user.Country = dto.Country;
 
         _context.UserRoles.RemoveRange(user.UserRoles);
 
@@ -184,9 +133,16 @@ public class UserRepository : IUserRepository
             });
         }
 
-        await _context.SaveChangesAsync();
-
-        return await GetByIdAsync(user.Id);
+        return new UserResponseDto
+        {
+            Id = user.Id,
+            Username = user.Username,
+            Email = user.Email,
+            Country = user.Country,
+            CreatedAt = user.CreatedAt,
+            LastLogin = user.LastLogin,
+            Roles = roles.Select(role => role.Name).ToList()
+        };
     }
 
     public async Task<bool> DeleteAsync(Guid id)
@@ -201,9 +157,48 @@ public class UserRepository : IUserRepository
 
         _context.Users.Remove(user);
 
-        await _context.SaveChangesAsync();
-
         return true;
     }
 
+    public async Task<bool> ExistsByUsernameOrEmailAsync(
+        string username,
+        string email
+    )
+    {
+        return await _context.Users
+            .AnyAsync(user =>
+                user.Username == username ||
+                user.Email == email
+            );
+    }
+
+    public async Task<bool> ExistsByUsernameOrEmailForOtherUserAsync(
+        Guid userId,
+        string username,
+        string email
+    )
+    {
+        return await _context.Users
+            .AnyAsync(user =>
+                user.Id != userId &&
+                (
+                    user.Username == username ||
+                    user.Email == email
+                )
+            );
+    }
+
+    public async Task<bool> RolesExistAsync(List<string> roles)
+    {
+        var normalizedRoles = roles
+            .Select(role => role.Trim())
+            .Where(role => !string.IsNullOrWhiteSpace(role))
+            .Distinct()
+            .ToList();
+
+        var existingRolesCount = await _context.Roles
+            .CountAsync(role => normalizedRoles.Contains(role.Name));
+
+        return existingRolesCount == normalizedRoles.Count;
+    }
 }
