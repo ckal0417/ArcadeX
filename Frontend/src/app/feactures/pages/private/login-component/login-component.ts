@@ -49,7 +49,9 @@ export class LoginComponent {
       next: () => {
         this.loading.set(false);
         this.snackBar.open('¡Bienvenido!', 'Cerrar', { duration: 3000 });
-        this.router.navigate(['/admin/dashboard']);
+        setTimeout(() => {
+          this.router.navigate(['/admin/dashboard']);
+        }, 500);
       },
       error: () => {
         this.loading.set(false);

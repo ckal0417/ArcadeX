@@ -1,127 +1,103 @@
-<div class="games-grid">
-  <mat-card class="game-card">
-    <img mat-card-image src="https://images.unsplash.com/photo-1542751371-adc38448a05e" />
-    <mat-card-content>
-      <h3>Elden Ring</h3>
+<div class="games-container">
+  <!-- Header -->
+  <div class="games-header">
+    <div>
+      <h1>Gestión de Juegos</h1>
+      <p>Administra todos los juegos disponibles</p>
+    </div>
+    <button mat-raised-button color="primary" (click)="crearJuego()">
+      <mat-icon>add</mat-icon>
+      Agregar Juego
+    </button>
+  </div>
 
-      <p>Action RPG • Open World</p>
-
-      <div class="price-section">
-        <span class="discount">-30%</span>
-        <span class="price">$39.99</span>
-      </div>
-    </mat-card-content>
-  </mat-card>
-  <mat-card class="game-card">
-    <img mat-card-image src="https://images.unsplash.com/photo-1511512578047-dfb367046420" />
-
-    <mat-card-content>
-      <h3>God of War</h3>
-
-      <p>Adventure • Story Rich</p>
-
-      <div class="price-section">
-        <span class="discount">-20%</span>
-        <span class="price">$49.99</span>
-      </div>
-    </mat-card-content>
+  <!-- Search -->
+  <mat-card class="search-card">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Buscar juegos...</mat-label>
+      <input matInput [ngModel]="searchQuery()" (ngModelChange)="buscar($event)" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
   </mat-card>
 
-  <mat-card class="game-card">
-    <img mat-card-image src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8" />
+  <!-- Loading -->
+  @if (loading()) {
+    <div class="center">
+      <mat-spinner></mat-spinner>
+    </div>
+  }
 
-    <mat-card-content>
-      <h3>Red Dead Redemption 2</h3>
+  <!-- Error -->
+  @if (errorMessage()) {
+    <mat-card class="error-card">
+      {{ errorMessage() }}
+    </mat-card>
+  }
 
-      <p>Western • Open World</p>
+  <!-- Table -->
+  @if (!loading() && !errorMessage()) {
+    <mat-card class="table-card">
+      <div class="table-wrapper">
+        <table mat-table [dataSource]="filteredGames()">
+          <!-- Title Column -->
+          <ng-container matColumnDef="title">
+            <th mat-header-cell>Título</th>
+            <td mat-cell *matRowDef="let element">{{ element.title }}</td>
+          </ng-container>
 
-      <div class="price-section">
-        <span class="discount">-50%</span>
-        <span class="price">$29.99</span>
+          <!-- Description Column -->
+          <ng-container matColumnDef="description">
+            <th mat-header-cell>Descripción</th>
+            <td mat-cell *matRowDef="let element">{{ element.description | slice: 0 : 50 }}...</td>
+          </ng-container>
+
+          <!-- Price Column -->
+          <ng-container matColumnDef="price">
+            <th mat-header-cell>Precio</th>
+            <td mat-cell *matRowDef="let element">${{ element.price }}</td>
+          </ng-container>
+
+          <!-- Release Date Column -->
+          <ng-container matColumnDef="releaseDate">
+            <th mat-header-cell>Fecha de Lanzamiento</th>
+            <td mat-cell *matRowDef="let element">{{ element.releaseDate | date: 'short' }}</td>
+          </ng-container>
+
+          <!-- Genres Column -->
+          <ng-container matColumnDef="genres">
+            <th mat-header-cell>Géneros</th>
+            <td mat-cell *matRowDef="let element">{{ element.genres?.join(', ') }}</td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell>Acciones</th>
+            <td mat-cell *matRowDef="let element">
+              <button mat-icon-button matTooltip="Editar" (click)="editarJuego(element)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                matTooltip="Eliminar"
+                color="warn"
+                (click)="eliminarJuego(element)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
       </div>
-    </mat-card-content>
-  </mat-card>
 
-  <mat-card class="game-card">
-    <img mat-card-image src="https://images.unsplash.com/photo-1511882150382-421056c89033" />
-
-    <mat-card-content>
-      <h3>Hogwarts Legacy</h3>
-
-      <p>Fantasy • RPG</p>
-
-      <div class="price-section">
-        <span class="discount">-15%</span>
-        <span class="price">$59.99</span>
-      </div>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card class="game-card">
-    <img
-      mat-card-image
-      src="https://cdn.tutsplus.com/cdn-cgi/image/width=1200/psd/uploads/legacy/psdtutsarticles/linkb_60vgamecovers/44.jpg"
-    />
-    <mat-card-content>
-      <h3>Crysis</h3>
-
-      <p>Accion • Fantasy</p>
-
-      <div class="price-section">
-        <span class="discount">-20%</span>
-        <span class="price">$19.99</span>
-      </div>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card class="game-card">
-    <img
-      mat-card-image
-      src="https://cdn.tutsplus.com/cdn-cgi/image/width=1280/psd/uploads/legacy/psdtutsarticles/linkb_60vgamecovers/17.jpg"
-    />
-    <mat-card-content>
-      <h3>Pokemon Blue</h3>
-
-      <p>RPG • Open World</p>
-
-      <div class="price-section">
-        <span class="discount">-25%</span>
-        <span class="price">$14.99</span>
-      </div>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card class="game-card">
-    <img
-      mat-card-image
-      src="https://cdn.tutsplus.com/cdn-cgi/image/width=1200/psd/uploads/legacy/psdtutsarticles/linkb_60vgamecovers/16.jpg"
-    />
-    <mat-card-content>
-      <h3>Halo 3</h3>
-
-      <p>RPG • Open World</p>
-
-      <div class="price-section">
-        <span class="discount">-15%</span>
-        <span class="price">$44.99</span>
-      </div>
-    </mat-card-content>
-  </mat-card>
-
-  <mat-card class="game-card">
-    <img
-      mat-card-image
-      src="https://cdn.tutsplus.com/cdn-cgi/image/width=1200/psd/uploads/legacy/psdtutsarticles/linkb_60vgamecovers/12.jpg"
-    />
-    <mat-card-content>
-      <h3>Super Mario Galaxy</h3>
-
-      <p>Fantasy • Adventure</p>
-
-      <div class="price-section">
-        <span class="discount">-10%</span>
-        <span class="price">$49.99</span>
-      </div>
-    </mat-card-content>
-  </mat-card>
+      @if (filteredGames().length === 0) {
+        <div class="no-data">
+          <mat-icon>videogame_asset</mat-icon>
+          <p>No hay juegos disponibles</p>
+        </div>
+      }
+    </mat-card>
+  }
 </div>

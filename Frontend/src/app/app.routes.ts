@@ -27,35 +27,32 @@ export const routes: Routes = [
     import('./feactures/routes/private/login.route').then(m => m.loginRoute)
   },
   {
-    path:'admin', loadComponent: () =>
-      import('./feactures/pages/private/dashboard-component/dashboard-component').then(m => m.DashboardComponent)
-  },
-  {
-    path: 'users', loadComponent: () =>
-      import('./feactures/pages/private/user-component/user-component').then(m => m.UserComponent)
-  },
-  {
-    path: 'game', loadComponent: () =>
-      import('./feactures/pages/private/game-component/game-component').then(m => m.GameComponent)
-  },
-
-  {
     path: 'admin',
-        canActivate: [authGuard],
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./core/layouts/private/admin-layouts/admin-layouts').then((m) => m.AdminLayouts),
+    children: [
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+      },
+      {
+        path: 'dashboard',
         loadComponent: () =>
-            import('./core/layouts/private/admin-layouts/admin-layouts').then((m) => m.AdminLayouts),
-        children: [
-            {
-                path: '',
-                redirectTo: 'dashboard',
-                pathMatch: 'full',
-            },
-            {
-                path: 'dashboard',
-                loadComponent: () =>
-                  import('./feactures/pages/private/dashboard-component/dashboard-component').then((m) => m.DashboardComponent),
-            },
-          ]
+          import('./feactures/pages/private/dashboard-component/dashboard-component').then((m) => m.DashboardComponent),
+      },
+      {
+        path: 'users',
+        loadComponent: () =>
+          import('./feactures/pages/private/user-component/user-component').then((m) => m.UserComponent)
+      },
+      {
+        path: 'game',
+        loadComponent: () =>
+          import('./feactures/pages/private/game-component/game-component').then((m) => m.GameComponent)
+      },
+    ]
   }
 
 ];

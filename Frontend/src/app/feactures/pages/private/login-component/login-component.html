@@ -52,11 +52,11 @@
 
       <p class="subtitle">Ingresa tus credenciales para continuar</p>
 
-      <form class="login-form" [formGroup]="loginForm" (ngSumit)="onSubmit()">
+      <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="outline">
           <mat-label>Correo electrónico</mat-label>
 
-          <input matInput name="email" type="email" placeholder="correo@email.com" />
+          <input matInput formControlName="email" type="email" placeholder="correo@email.com" />
 
           <mat-icon matSuffix>mail</mat-icon>
         </mat-form-field>
@@ -64,7 +64,7 @@
         <mat-form-field appearance="outline">
           <mat-label>Contraseña</mat-label>
 
-          <input matInput name="password" type="password" placeholder="********" />
+          <input matInput formControlName="password" type="password" placeholder="********" />
 
           <mat-icon matSuffix>lock</mat-icon>
         </mat-form-field>

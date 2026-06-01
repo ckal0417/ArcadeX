@@ -1,207 +1,108 @@
 .users-container {
-  padding: 2rem;
-  background: #0f172a;
-  min-height: 100vh;
-  color: white;
-}
-
-/* HEADER */
-
-.users-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-}
-
-.users-header h1 {
-  margin: 0;
-  font-size: 2rem;
-}
-
-.users-header p {
-  color: #94a3b8;
-  margin-top: .3rem;
-}
-
-.add-btn {
-  height: 50px;
-  border-radius: 14px;
-  padding: 0 1.5rem;
-
-  font-weight: 600;
-
-  background: linear-gradient(90deg, #00e5ff, #2563eb) !important;
-}
-
-/* FILTERS */
-
-.filters-card {
-  background: #1e293b;
-  border-radius: 20px;
-  margin-bottom: 2rem;
-  padding: 1rem;
-}
-
-.filters {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-}
-
-.search-box {
-  flex: 1;
-  height: 50px;
-
-  display: flex;
-  align-items: center;
-  gap: .7rem;
-
-  padding: 0 1rem;
-
-  background: #0f172a;
-  border-radius: 14px;
-}
-
-.search-box input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: white;
-}
-
-.search-box mat-icon {
-  color: #00e5ff;
-}
-
-/* TABLE */
-
-.table-card {
-  background: #1e293b;
-  border-radius: 20px;
-  padding: 1rem;
-  overflow-x: auto;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 900px;
-}
-
-thead {
-  background: rgba(255,255,255,.03);
-}
-
-th,
-td {
-  padding: 1rem;
-  text-align: left;
-}
-
-tbody tr {
-  border-top: 1px solid rgba(255,255,255,.05);
-  transition: .3s;
-}
-
-tbody tr:hover {
-  background: rgba(255,255,255,.03);
-}
-
-/* USER INFO */
-
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.user-info img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
-
-.user-info h4 {
-  margin: 0;
-}
-
-.user-info span {
-  color: #94a3b8;
-  font-size: .9rem;
-}
-
-/* ROLE */
-
-.role {
-  padding: .4rem .8rem;
-  border-radius: 20px;
-  font-size: .8rem;
-  font-weight: 600;
-}
-
-.role.admin {
-  background: rgba(59,130,246,.15);
-  color: #3b82f6;
-}
-
-.role.user {
-  background: rgba(168,85,247,.15);
-  color: #a855f7;
-}
-
-/* STATUS */
-
-.status {
-  padding: .4rem .8rem;
-  border-radius: 20px;
-  font-size: .8rem;
-  font-weight: 600;
-}
-
-.status.active {
-  background: rgba(34,197,94,.15);
-  color: #22c55e;
-}
-
-.status.inactive {
-  background: rgba(239,68,68,.15);
-  color: #ef4444;
-}
-
-/* ACTIONS */
-
-.actions {
-  display: flex;
-  gap: .5rem;
-}
-
-.actions button {
-  background: rgba(255,255,255,.04);
-}
-
-/* RESPONSIVE */
-
-@media(max-width: 768px) {
-
-  .users-container {
-    padding: 1rem;
-  }
+  padding: 20px;
 
   .users-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    gap: 20px;
+
+    h1 {
+      margin: 0;
+      color: #333;
+    }
+
+    p {
+      margin: 5px 0 0 0;
+      color: #999;
+    }
   }
 
-  .filters {
-    flex-direction: column;
+  .search-card {
+    margin-bottom: 20px;
+    padding: 15px;
+
+    .full-width {
+      width: 100%;
+    }
   }
 
-  .add-btn {
-    width: 100%;
+  .table-card {
+    overflow-x: auto;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      th, td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+      }
+
+      th {
+        background-color: #f5f5f5;
+        font-weight: 600;
+        color: #333;
+      }
+
+      tr:hover {
+        background-color: #fafafa;
+      }
+    }
   }
 
+  .role {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+
+    &.admin {
+      background-color: rgba(63, 81, 181, 0.1);
+      color: #3f51b5;
+    }
+
+    &.user {
+      background-color: rgba(244, 67, 54, 0.1);
+      color: #f44336;
+    }
+
+    &.moderator {
+      background-color: rgba(255, 152, 0, 0.1);
+      color: #ff9800;
+    }
+  }
+
+  .no-data {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+
+    mat-icon {
+      font-size: 64px;
+      width: 64px;
+      height: 64px;
+      color: #ddd;
+    }
+
+    p {
+      margin-top: 10px;
+      font-size: 16px;
+    }
+  }
+
+  .center {
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+  }
+
+  .error-card {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 15px;
+    border-radius: 4px;
+  }
 }

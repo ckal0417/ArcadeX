@@ -1,9 +1,9 @@
 <div class="admin-wrapper">
   <aside class="sidebar" [class.collapsed]="collapsed()">
     <div class="sidebar-brand">
-      <mat-icon>storefront</mat-icon>
+      <mat-icon>sports_esports</mat-icon>
       @if (!collapsed()) {
-        <span>NovaMarket S.A.</span>
+        <span>ArcadeX Admin</span>
       }
     </div>
 
@@ -45,7 +45,7 @@
       <button mat-icon-button (click)="toggle()">
         <mat-icon>{{ collapsed() ? 'menu_open' : 'menu' }}</mat-icon>
       </button>
-      <span class="topbar-title">Panel de Administración</span>
+      <span class="topbar-title">Panel de Administración - ArcadeX</span>
       <span class="spacer"></span>
       <mat-icon class="admin-avatar">account_circle</mat-icon>
     </mat-toolbar>

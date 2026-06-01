@@ -2,133 +2,92 @@
   <!-- Header -->
   <div class="users-header">
     <div>
-      <h1>Users Management</h1>
-      <p>Manage all registered users on the platform</p>
+      <h1>Gestión de Usuarios</h1>
+      <p>Administra todos los usuarios registrados</p>
     </div>
-
-    <button mat-raised-button color="primary" class="add-btn">
+    <button mat-raised-button color="primary" (click)="crearUsuario()">
       <mat-icon>person_add</mat-icon>
-      Add User
+      Agregar Usuario
     </button>
   </div>
 
-  <!-- Filters -->
-  <mat-card class="filters-card">
-    <div class="filters">
-      <!-- Search -->
-      <div class="search-box">
-        <mat-icon>search</mat-icon>
+  <!-- Search -->
+  <mat-card class="search-card">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Buscar usuarios...</mat-label>
+      <input matInput [ngModel]="searchQuery()" (ngModelChange)="buscar($event)" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </mat-card>
 
-        <input type="text" placeholder="Search users..." />
+  <!-- Loading -->
+  @if (loading()) {
+    <div class="center">
+      <mat-spinner></mat-spinner>
+    </div>
+  }
+
+  <!-- Error -->
+  @if (errorMessage()) {
+    <mat-card class="error-card">
+      {{ errorMessage() }}
+    </mat-card>
+  }
+
+  <!-- Table -->
+  @if (!loading() && !errorMessage()) {
+    <mat-card class="table-card">
+      <div class="table-wrapper">
+        <table mat-table [dataSource]="filteredUsers()">
+          <!-- Email Column -->
+          <ng-container matColumnDef="email">
+            <th mat-header-cell>Correo Electrónico</th>
+            <td mat-cell *matRowDef="let element">{{ element.email }}</td>
+          </ng-container>
+
+          <!-- Username Column -->
+          <ng-container matColumnDef="username">
+            <th mat-header-cell>Usuario</th>
+            <td mat-cell *matRowDef="let element">{{ element.username }}</td>
+          </ng-container>
+
+          <!-- Role Column -->
+          <ng-container matColumnDef="role">
+            <th mat-header-cell>Rol</th>
+            <td mat-cell *matRowDef="let element">
+              <span [class]="'role ' + element.role">{{ element.role | uppercase }}</span>
+            </td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell>Acciones</th>
+            <td mat-cell *matRowDef="let element">
+              <button mat-icon-button matTooltip="Editar" (click)="editarUsuario(element)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                matTooltip="Eliminar"
+                color="warn"
+                (click)="eliminarUsuario(element)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
       </div>
 
-      <!-- Role Filter -->
-      <button mat-stroked-button>
-        <mat-icon>filter_list</mat-icon>
-        All Roles
-      </button>
-    </div>
-  </mat-card>
-
-  <!-- Users Table -->
-  <mat-card class="table-card">
-    <table>
-      <thead>
-        <tr>
-          <th>User</th>
-          <th>Email</th>
-          <th>Role</th>
-          <th>Status</th>
-          <th>Games</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr>
-          <td>
-            <div class="user-info">
-              <img src="https://i.pravatar.cc/150?img=15" alt="user" />
-
-              <div>
-                <h4>Jefferson Veloz</h4>
-                <span>@jefferson</span>
-              </div>
-            </div>
-          </td>
-
-          <td>jefferson@gmail.com</td>
-
-          <td>
-            <span class="role admin"> Admin </span>
-          </td>
-
-          <td>
-            <span class="status active"> Active </span>
-          </td>
-
-          <td>24 Games</td>
-
-          <td>
-            <div class="actions">
-              <button mat-icon-button>
-                <mat-icon>visibility</mat-icon>
-              </button>
-
-              <button mat-icon-button color="primary">
-                <mat-icon>edit</mat-icon>
-              </button>
-
-              <button mat-icon-button color="warn">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-          </td>
-        </tr>
-
-        <!-- USER 2 -->
-
-        <tr>
-          <td>
-            <div class="user-info">
-              <img src="https://i.pravatar.cc/150?img=32" alt="user" />
-
-              <div>
-                <h4>Maria Lopez</h4>
-                <span>@maria</span>
-              </div>
-            </div>
-          </td>
-
-          <td>maria@gmail.com</td>
-
-          <td>
-            <span class="role user"> User </span>
-          </td>
-
-          <td>
-            <span class="status inactive"> Inactive </span>
-          </td>
-
-          <td>10 Games</td>
-
-          <td>
-            <div class="actions">
-              <button mat-icon-button>
-                <mat-icon>visibility</mat-icon>
-              </button>
-
-              <button mat-icon-button color="primary">
-                <mat-icon>edit</mat-icon>
-              </button>
-
-              <button mat-icon-button color="warn">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </mat-card>
+      @if (filteredUsers().length === 0) {
+        <div class="no-data">
+          <mat-icon>person_off</mat-icon>
+          <p>No hay usuarios disponibles</p>
+        </div>
+      }
+    </mat-card>
+  }
 </div>

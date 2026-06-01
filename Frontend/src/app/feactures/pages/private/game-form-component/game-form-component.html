@@ -1,1 +1,46 @@
-<p>game-form-component works!</p>
+<div class="form-container">
+  <h2>{{ data ? 'Editar Juego' : 'Crear Juego' }}</h2>
+
+  <form [formGroup]="gameForm">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Título</mat-label>
+      <input matInput formControlName="title" placeholder="Nombre del juego" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Descripción</mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+        placeholder="Descripción del juego"
+        rows="4"
+      ></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Precio</mat-label>
+      <input matInput type="number" formControlName="price" placeholder="0.00" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Fecha de Lanzamiento</mat-label>
+      <input matInput type="date" formControlName="releaseDate" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Géneros</mat-label>
+      <input
+        matInput
+        formControlName="genres"
+        placeholder="Acción, RPG, Aventura (separados por comas)"
+      />
+    </mat-form-field>
+
+    <div class="form-actions">
+      <button mat-raised-button color="primary" (click)="onSubmit()">
+        {{ data ? 'Actualizar' : 'Crear' }}
+      </button>
+      <button mat-stroked-button (click)="cancel()">Cancelar</button>
+    </div>
+  </form>
+</div>
