@@ -10,7 +10,7 @@
   }
 
   @if (!loading() && !errorMessage()) {
-    <div class="game-grid">
+    <div class="games-grid">
       @for (game of games(); track game.id) {
         <mat-card class="game-card">
           <mat-card-header>

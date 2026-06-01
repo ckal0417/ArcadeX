@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { UpperCasePipe } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -13,7 +13,7 @@ import { IUser } from '../../../interfaces/private/User';
 @Component({
   selector: 'app-user-form-component',
   imports: [
-    CommonModule,
+    UpperCasePipe,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
@@ -33,7 +33,7 @@ export class UserFormComponent implements OnInit {
   userForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     username: ['', [Validators.required, Validators.minLength(3)]],
-    country: ['', [Validators.required, Validators.minLength(3)]],
+    country: ['', [Validators.minLength(3)]],
     password: ['', [Validators.minLength(8)]],
     role: ['User', Validators.required]
   });
