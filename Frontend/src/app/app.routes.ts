@@ -106,16 +106,21 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./core/layouts/private/developer-layout/developer-layout').then(m => m.DeveloperLayout),
         children: [
-          { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+          { path: '', redirectTo: 'my-games', pathMatch: 'full' },
           {
             path: 'dashboard',
             loadComponent: () =>
               import('./feactures/pages/private/dashboard-component/dashboard-component').then(m => m.DashboardComponent),
           },
           {
-            path: 'game',
+            path: 'create',
             loadComponent: () =>
-              import('./feactures/pages/private/game-component/game-component').then(m => m.GameComponent),
+              import('./feactures/pages/private/developer-game-create/developer-game-create').then(m => m.DeveloperGameCreateComponent),
+          },
+          {
+            path: 'my-games',
+            loadComponent: () =>
+              import('./feactures/pages/private/developer-my-games/developer-my-games').then(m => m.DeveloperMyGamesComponent),
           },
           {
             path: 'achievements',
@@ -126,11 +131,6 @@ export const routes: Routes = [
             path: 'reviews',
             loadComponent: () =>
               import('./feactures/pages/private/review-component/review-component').then(m => m.ReviewComponent),
-          },
-          {
-            path: 'library',
-            loadComponent: () =>
-              import('./feactures/pages/private/library-component/library-component').then(m => m.LibraryComponent),
           },
         ],
       },

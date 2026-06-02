@@ -41,10 +41,10 @@ export class DeveloperLayout {
 
   navItems: NavItem[] = [
     { icon: 'dashboard', label: 'Dashboard', route: '/dashboard/developer/dashboard' },
-    { icon: 'sports_esports', label: 'Juegos', route: '/dashboard/developer/game' },
+    { icon: 'add_circle', label: 'Publicar Juego', route: '/dashboard/developer/create' },
+    { icon: 'sports_esports', label: 'Mis Juegos', route: '/dashboard/developer/my-games' },
     { icon: 'emoji_events', label: 'Logros', route: '/dashboard/developer/achievements' },
     { icon: 'rate_review', label: 'Reseñas', route: '/dashboard/developer/reviews' },
-    { icon: 'library_books', label: 'Biblioteca', route: '/dashboard/developer/library' },
   ];
 
   toggle(): void {

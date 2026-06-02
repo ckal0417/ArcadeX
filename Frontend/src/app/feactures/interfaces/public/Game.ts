@@ -11,4 +11,13 @@ export interface IGame {
   coverImageUrl: string,
 }
 
+export interface ICreateGame {
+  title: string;
+  description?: string;
+  price: number;
+  releaseDate: string;
+  genres: string[];
+  coverImageUrl?: string;
+}
+
 export type IResponseGames = IGame[];

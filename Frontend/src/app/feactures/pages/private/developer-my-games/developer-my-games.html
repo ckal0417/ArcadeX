@@ -1,0 +1,88 @@
+<section class="my-games-page">
+  <header class="page-header">
+    <div>
+      <span class="eyebrow">DEVELOPER</span>
+      <h1>Mis Juegos</h1>
+      <p>Juegos que has publicado en ArcadeX.</p>
+    </div>
+
+    <button mat-raised-button class="publish-btn" (click)="goCreate()">
+      <mat-icon>add</mat-icon>
+      Publicar juego
+    </button>
+  </header>
+
+  @if (loading()) {
+    <div class="state-card">
+      <mat-spinner></mat-spinner>
+      <p>Cargando tus juegos...</p>
+    </div>
+  }
+
+  @if (errorMessage()) {
+    <div class="error-card">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ errorMessage() }}</span>
+    </div>
+  }
+
+  @if (!loading() && !errorMessage()) {
+    @if (games().length === 0) {
+      <div class="empty-state">
+        <mat-icon>sports_esports</mat-icon>
+        <h3>Aún no has publicado juegos</h3>
+        <p>Crea tu primer juego y aparecerá aquí.</p>
+        <button mat-raised-button class="publish-btn" (click)="goCreate()">
+          <mat-icon>add</mat-icon>
+          Publicar primer juego
+        </button>
+      </div>
+    } @else {
+      <div class="games-grid">
+        @for (game of games(); track game.id) {
+          <article class="game-card">
+            <div class="card-cover">
+              @if (game.coverImageUrl) {
+                <img [src]="game.coverImageUrl" [alt]="game.title" loading="lazy" />
+              } @else {
+                <div class="cover-placeholder">
+                  <mat-icon>sports_esports</mat-icon>
+                </div>
+              }
+            </div>
+
+            <div class="card-body">
+              <h3 class="game-title">{{ game.title }}</h3>
+
+              @if (game.description) {
+                <p class="game-description">
+                  {{ game.description | slice: 0 : 110 }}
+                  @if (game.description.length > 110) { ... }
+                </p>
+              }
+
+              @if (game.genres?.length) {
+                <div class="genre-chips">
+                  @for (genre of game.genres.slice(0, 3); track genre) {
+                    <span class="genre-chip">{{ genre }}</span>
+                  }
+                </div>
+              }
+
+              <div class="card-footer">
+                <span class="price">${{ game.price }}</span>
+
+                @if (game.releaseDate) {
+                  <span class="release-date">
+                    <mat-icon>calendar_today</mat-icon>
+                    {{ game.releaseDate | date:'mediumDate' }}
+                  </span>
+                }
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+    }
+  }
+</section>
