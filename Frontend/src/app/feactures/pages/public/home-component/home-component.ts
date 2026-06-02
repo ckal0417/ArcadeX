@@ -8,11 +8,12 @@ import { MatAnchor } from "@angular/material/button";
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { IGame } from '../../../interfaces/public/Game';
 import { HomeService } from '../../../services/public/home.service';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-home-component',
   imports: [MatProgressSpinnerModule, MatCardModule, MatToolbarModule,
-    MatIconModule, MatAnchor, MatSidenavModule],
+    MatIconModule, MatAnchor, MatSidenavModule, RouterLink],
   templateUrl: './home-component.html',
   styleUrl: './home-component.scss',
 })

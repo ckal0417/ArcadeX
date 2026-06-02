@@ -9,9 +9,33 @@
     <div>{{ errorMessage() }}</div>
   }
 
+  <mat-card class="search-card">
+    <div class="search-info">
+      <mat-icon>manage_search</mat-icon>
+
+      <div>
+        <h2>Buscar juegos</h2>
+        <p>Filtra por título o descripción dentro del catálogo.</p>
+      </div>
+    </div>
+
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Buscar juegos...</mat-label>
+
+      <input
+        matInput
+        [ngModel]="searchQuery()"
+        (ngModelChange)="buscar($event)"
+        placeholder="Ej: Cyberpunk, RPG, aventura..."
+      />
+
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </mat-card>
+
   @if (!loading() && !errorMessage()) {
     <div class="games-grid">
-      @for (game of games(); track game.id) {
+      @for (game of filteredGames(); track game.id) {
         <mat-card class="game-card">
           <mat-card-header>
             <mat-card-title class="title">{{ game.title }}</mat-card-title>
@@ -29,6 +53,9 @@
               <strong>Precio:</strong>
               ${{ game.price }}
             </p>
+            <div>
+              <button class="primary-btn" routerLink="/login">Comprar Ahora</button>
+            </div>
           </mat-card-content>
         </mat-card>
       }
