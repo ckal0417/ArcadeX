@@ -12,8 +12,8 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-games-component',
-  imports: [MatCardModule, MatProgressSpinnerModule, RouterLink,
-    MatFormFieldModule, MatInputModule, MatIconModule, FormsModule],
+  imports: [MatCardModule, MatProgressSpinnerModule,
+    MatFormFieldModule, MatInputModule, MatIconModule, FormsModule, RouterLink],
   templateUrl: './games-component.html',
   styleUrl: './games-component.scss',
 })

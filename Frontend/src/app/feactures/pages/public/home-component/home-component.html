@@ -32,53 +32,5 @@
         </div>
       </div>
     </section>
-
-    <section class="games-section">
-      <div class="section-title">
-        <h2>Juegos disponibles</h2>
-        <span>Explora el catálogo ArcadeX</span>
-      </div>
-
-      @if (loading()) {
-        <div class="center">
-          <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-        </div>
-      }
-
-      @if (errorMessage()) {
-        <div class="error-message">{{ errorMessage() }}</div>
-      }
-
-      @if (!loading() && !errorMessage()) {
-        <div class="games-grid">
-          @for (game of games(); track game.id) {
-            <mat-card class="game-card">
-              <mat-card-header>
-                <mat-card-title class="title">
-                  {{ game.title }}
-                </mat-card-title>
-              </mat-card-header>
-
-              <mat-card-content>
-                <p>
-                  <strong>Categoría:</strong>
-                  {{ game.genres }}
-                </p>
-
-                <p>
-                  <strong>Descripción:</strong>
-                  {{ game.description }}
-                </p>
-
-                <p class="price">
-                  <strong>Precio:</strong>
-                  ${{ game.price }}
-                </p>
-              </mat-card-content>
-            </mat-card>
-          }
-        </div>
-      }
-    </section>
   </main>
 </div>
