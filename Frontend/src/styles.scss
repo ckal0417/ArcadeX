@@ -53,3 +53,17 @@ body {
   --arcade-border: rgba(161, 0, 255, 0.35);
   --arcade-glow: 0 0 18px rgba(161, 0, 255, 0.55);
 }
+
+/* ── Autofill dark override ───────────────────────────────────────────────── */
+/* Prevents the browser from painting a white background on autocompleted     */
+/* inputs. background-color is ignored on :-webkit-autofill; box-shadow inset */
+/* is the only reliable workaround.                                            */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #111827 inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff;
+  transition: background-color 9999s ease-in-out 0s;
+}

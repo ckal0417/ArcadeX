@@ -1,0 +1,14 @@
+Usuario final 
+email: usuarioprueba1@emial.com
+pass: hash_userprueba1
+
+email: usuarioprueba2@email.com
+pass: hash_userprueba2
+
+Usuario Developer 
+Email: devprueba1@email.com
+password: hash_devprueba1
+
+email: devprueba2@email.com
+pass: hash_devprueba2
+
