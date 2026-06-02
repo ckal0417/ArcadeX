@@ -16,5 +16,6 @@ public class Game
     public ICollection<Achievement> Achievements { get; set; } = new List<Achievement>();
     public ICollection<Offer> Offers { get; set; } = new List<Offer>();
     public ICollection<GameSession> GameSessions { get; set; } = new List<GameSession>();
+    public string? CoverImageUrl { get; set; }
 
 }

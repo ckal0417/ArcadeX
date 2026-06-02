@@ -6,5 +6,6 @@ public class UpdateUserDto
     public string Email { get; set; } = string.Empty;
     public string? Country { get; set; }
     public List<string> Roles { get; set; } = new();
+    public string? AvatarUrl { get; set; }
     
 }

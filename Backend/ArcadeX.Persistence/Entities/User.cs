@@ -20,6 +20,7 @@ public class User
     public ICollection<Friend> FriendsSent { get; set; } = new List<Friend>();
     public ICollection<Friend> FriendsReceived { get; set; } = new List<Friend>();
     public ICollection<GameSession> GameSessions { get; set; } = new List<GameSession>();
+    public string? AvatarUrl { get; set; }
 
 
 }

@@ -11,5 +11,6 @@ public class GameResponseDto
     public Guid OwnerId { get; set; }
     public string OwnerUsername { get; set; } = string.Empty;
     public List<string> Genres { get; set; } = new();
+    public string? CoverImageUrl { get; set; }
 
 }

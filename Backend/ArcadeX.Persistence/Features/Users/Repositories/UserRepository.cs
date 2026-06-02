@@ -26,6 +26,7 @@ public class UserRepository : IUserRepository
                 Username = user.Username,
                 Email = user.Email,
                 Country = user.Country,
+                AvatarUrl = user.AvatarUrl,
                 CreatedAt = user.CreatedAt,
                 LastLogin = user.LastLogin,
                 Roles = user.UserRoles
@@ -47,6 +48,7 @@ public class UserRepository : IUserRepository
                 Username = user.Username,
                 Email = user.Email,
                 Country = user.Country,
+                AvatarUrl = user.AvatarUrl,
                 CreatedAt = user.CreatedAt,
                 LastLogin = user.LastLogin,
                 Roles = user.UserRoles
@@ -68,6 +70,7 @@ public class UserRepository : IUserRepository
             Email = dto.Email,
             PasswordHash = dto.Password,
             Country = dto.Country,
+            AvatarUrl = dto.AvatarUrl,
             CreatedAt = DateTime.UtcNow,
             LastLogin = DateTime.UtcNow
         };
@@ -93,6 +96,7 @@ public class UserRepository : IUserRepository
             Username = user.Username,
             Email = user.Email,
             Country = user.Country,
+            AvatarUrl = user.AvatarUrl,
             CreatedAt = user.CreatedAt,
             LastLogin = user.LastLogin,
             Roles = roles.Select(role => role.Name).ToList()
@@ -121,6 +125,7 @@ public class UserRepository : IUserRepository
         user.Username = dto.Username;
         user.Email = dto.Email;
         user.Country = dto.Country;
+        user.AvatarUrl = dto.AvatarUrl;
 
         _context.UserRoles.RemoveRange(user.UserRoles);
 
@@ -139,6 +144,7 @@ public class UserRepository : IUserRepository
             Username = user.Username,
             Email = user.Email,
             Country = user.Country,
+            AvatarUrl = user.AvatarUrl,
             CreatedAt = user.CreatedAt,
             LastLogin = user.LastLogin,
             Roles = roles.Select(role => role.Name).ToList()

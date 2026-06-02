@@ -28,9 +28,12 @@ public class GameRepository : IGameRepository
                 Description = game.Description,
                 Price = game.Price,
                 ReleaseDate = game.ReleaseDate,
+                CoverImageUrl = game.CoverImageUrl,
                 OwnerId = game.OwnerId,
                 OwnerUsername = game.Owner.Username,
-                Genres = game.GameGenres.Select(gameGenre => gameGenre.Genre.Name).ToList()
+                Genres = game.GameGenres
+                    .Select(gameGenre => gameGenre.Genre.Name)
+                    .ToList()
             })
             .ToListAsync();
     }
@@ -49,13 +52,20 @@ public class GameRepository : IGameRepository
                 Description = game.Description,
                 Price = game.Price,
                 ReleaseDate = game.ReleaseDate,
+                CoverImageUrl = game.CoverImageUrl,
                 OwnerId = game.OwnerId,
                 OwnerUsername = game.Owner.Username,
-                Genres = game.GameGenres.Select(gameGenre => gameGenre.Genre.Name).ToList()
-            }).FirstOrDefaultAsync();
+                Genres = game.GameGenres
+                    .Select(gameGenre => gameGenre.Genre.Name)
+                    .ToList()
+            })
+            .FirstOrDefaultAsync();
     }
 
-    public async Task<GameResponseDto> CreateAsync(CreateGameDto dto, Guid ownerId)
+    public async Task<GameResponseDto> CreateAsync(
+        CreateGameDto dto,
+        Guid ownerId
+    )
     {
         var game = new Game
         {
@@ -64,6 +74,7 @@ public class GameRepository : IGameRepository
             Description = dto.Description,
             Price = dto.Price,
             ReleaseDate = dto.ReleaseDate,
+            CoverImageUrl = dto.CoverImageUrl,
             OwnerId = ownerId
         };
 
@@ -88,12 +99,24 @@ public class GameRepository : IGameRepository
             });
         }
 
-        await _context.SaveChangesAsync();
-
-        return (await GetByIdAsync(game.Id))!;
+        return new GameResponseDto
+        {
+            Id = game.Id,
+            Title = game.Title,
+            Description = game.Description,
+            Price = game.Price,
+            ReleaseDate = game.ReleaseDate,
+            CoverImageUrl = game.CoverImageUrl,
+            OwnerId = game.OwnerId,
+            OwnerUsername = string.Empty,
+            Genres = genres.Select(genre => genre.Name).ToList()
+        };
     }
 
-    public async Task<GameResponseDto?> UpdateAsync(Guid id, UpdateGameDto dto)
+    public async Task<GameResponseDto?> UpdateAsync(
+        Guid id,
+        UpdateGameDto dto
+    )
     {
         var game = await _context.Games
             .Include(game => game.GameGenres)
@@ -108,6 +131,7 @@ public class GameRepository : IGameRepository
         game.Description = dto.Description;
         game.Price = dto.Price;
         game.ReleaseDate = dto.ReleaseDate;
+        game.CoverImageUrl = dto.CoverImageUrl;
 
         var requestedGenres = dto.Genres
             .Select(genre => genre.Trim())
@@ -130,9 +154,18 @@ public class GameRepository : IGameRepository
             });
         }
 
-        await _context.SaveChangesAsync();
-
-        return await GetByIdAsync(game.Id);
+        return new GameResponseDto
+        {
+            Id = game.Id,
+            Title = game.Title,
+            Description = game.Description,
+            Price = game.Price,
+            ReleaseDate = game.ReleaseDate,
+            CoverImageUrl = game.CoverImageUrl,
+            OwnerId = game.OwnerId,
+            OwnerUsername = string.Empty,
+            Genres = genres.Select(genre => genre.Name).ToList()
+        };
     }
 
     public async Task<bool> DeleteAsync(Guid id)
@@ -146,8 +179,6 @@ public class GameRepository : IGameRepository
         }
 
         _context.Games.Remove(game);
-
-        await _context.SaveChangesAsync();
 
         return true;
     }

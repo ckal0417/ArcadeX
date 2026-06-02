@@ -8,5 +8,6 @@ public class CreateGameDto
     public decimal Price { get; set; }
     public DateTime ReleaseDate { get; set; }
     public List<string> Genres { get; set; } = new();
+    public string? CoverImageUrl { get; set; }
     
 }
