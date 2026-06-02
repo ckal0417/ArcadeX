@@ -17,7 +17,6 @@ import { GameService } from '../../../services/private/game.service';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
   ],

@@ -31,7 +31,6 @@
       <div class="games-grid">
         @for (game of games(); track game.id) {
           <article class="game-card" [class.is-owned]="isOwned(game.id)">
-
             <div class="card-cover">
               @if (game.coverImageUrl) {
                 <img [src]="game.coverImageUrl" [alt]="game.title" loading="lazy" />
@@ -54,10 +53,12 @@
 
               <p class="game-description">
                 {{ game.description ? (game.description | slice: 0 : 110) : 'Sin descripción' }}
-                @if (game.description && game.description.length > 110) { ... }
+                @if (game.description && game.description.length > 110) {
+                  ...
+                }
               </p>
 
-              @if (game.genres?.length) {
+              @if (game.genres.length) {
                 <div class="genre-chips">
                   @for (genre of game.genres.slice(0, 3); track genre) {
                     <span class="genre-chip">{{ genre }}</span>
@@ -87,7 +88,6 @@
                 </button>
               </div>
             </div>
-
           </article>
         }
       </div>

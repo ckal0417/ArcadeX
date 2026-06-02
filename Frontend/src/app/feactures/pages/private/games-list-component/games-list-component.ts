@@ -16,7 +16,6 @@ import { IGame } from '../../../interfaces/public/Game';
   selector: 'app-games-list',
   imports: [
     CommonModule,
-    MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
   ],

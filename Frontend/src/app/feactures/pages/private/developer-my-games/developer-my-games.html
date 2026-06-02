@@ -57,11 +57,13 @@
               @if (game.description) {
                 <p class="game-description">
                   {{ game.description | slice: 0 : 110 }}
-                  @if (game.description.length > 110) { ... }
+                  @if (game.description.length > 110) {
+                    ...
+                  }
                 </p>
               }
 
-              @if (game.genres?.length) {
+              @if (game.genres.length) {
                 <div class="genre-chips">
                   @for (genre of game.genres.slice(0, 3); track genre) {
                     <span class="genre-chip">{{ genre }}</span>
@@ -75,7 +77,7 @@
                 @if (game.releaseDate) {
                   <span class="release-date">
                     <mat-icon>calendar_today</mat-icon>
-                    {{ game.releaseDate | date:'mediumDate' }}
+                    {{ game.releaseDate | date: 'mediumDate' }}
                   </span>
                 }
               </div>
