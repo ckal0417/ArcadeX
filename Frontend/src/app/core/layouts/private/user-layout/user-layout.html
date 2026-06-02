@@ -1,0 +1,75 @@
+<div class="admin-wrapper">
+  <aside class="sidebar" [class.collapsed]="collapsed()">
+    <div class="sidebar-brand">
+      @if (!collapsed()) {
+        <div class="brand-text">
+          <span class="brand-name">Panel de Administración</span>
+          <small>ARCADEX PRIVATE</small>
+        </div>
+      } @else {
+        <mat-icon>admin_panel_settings</mat-icon>
+      }
+    </div>
+
+    <mat-nav-list class="sidebar-nav">
+      @for (item of navItems; track item.route) {
+        <a
+          mat-list-item
+          [routerLink]="item.route"
+          routerLinkActive="active-item"
+          [matTooltip]="collapsed() ? item.label : ''"
+          matTooltipPosition="right"
+        >
+          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+
+          @if (!collapsed()) {
+            <span matListItemTitle>{{ item.label }}</span>
+          }
+        </a>
+      }
+    </mat-nav-list>
+
+    <div class="sidebar-footer">
+      <button
+        mat-button
+        class="logout-btn"
+        (click)="logout()"
+        [matTooltip]="collapsed() ? 'Cerrar sesión' : ''"
+        matTooltipPosition="right"
+      >
+        <mat-icon>logout</mat-icon>
+
+        @if (!collapsed()) {
+          <span>Cerrar sesión</span>
+        }
+      </button>
+    </div>
+  </aside>
+
+  <div class="admin-content">
+    <mat-toolbar class="topbar">
+      <button mat-icon-button class="menu-btn" (click)="toggle()">
+        <mat-icon>{{ collapsed() ? 'menu_open' : 'menu' }}</mat-icon>
+      </button>
+
+      <div class="topbar-logo">
+        <img src="assets/branding/texto-completo.png" alt="ArcadeX" />
+      </div>
+
+      <span class="spacer"></span>
+
+      <div class="topbar-profile">
+        <mat-icon>shield_person</mat-icon>
+
+        <div>
+          <strong>Admin</strong>
+          <small>Administrador</small>
+        </div>
+      </div>
+    </mat-toolbar>
+
+    <main class="main">
+      <router-outlet />
+    </main>
+  </div>
+</div>
