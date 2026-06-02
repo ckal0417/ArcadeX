@@ -1,36 +1,11 @@
 <section class="admin-page">
   <header class="admin-header">
     <div>
-      <span class="eyebrow">ADMIN PANEL</span>
-      <h1>Biblioteca de Usuario</h1>
-      <p>Administra los juegos asociados a la colección del usuario.</p>
+      <span class="eyebrow">MI BIBLIOTECA</span>
+      <h1>Biblioteca de Juegos</h1>
+      <p>Todos los juegos que forman parte de tu colección.</p>
     </div>
   </header>
-
-  <mat-card class="search-card">
-    <div class="search-info">
-      <mat-icon>library_add</mat-icon>
-
-      <div>
-        <h2>Agregar a biblioteca</h2>
-        <p>Ingresa el ID del juego para añadirlo a la colección.</p>
-      </div>
-    </div>
-
-    <div class="search-row">
-      <mat-form-field appearance="outline" class="search-field">
-        <mat-label>ID del Juego</mat-label>
-
-        <input matInput [(ngModel)]="nuevoGameId" placeholder="UUID del juego a agregar" />
-
-        <mat-icon matSuffix>sports_esports</mat-icon>
-      </mat-form-field>
-
-      <button mat-raised-button class="primary-action" (click)="agregarJuego()">
-        Agregar a Biblioteca
-      </button>
-    </div>
-  </mat-card>
 
   @if (loading()) {
     <div class="state-card">
@@ -47,47 +22,40 @@
   }
 
   @if (!loading() && !errorMessage()) {
-    <mat-card class="admin-card">
-      <div class="card-header">
-        <div>
-          <h2>Colección de juegos</h2>
-          <p>Total: {{ items().length }}</p>
-        </div>
+    @if (items().length > 0) {
+      <div class="items-grid">
+        @for (item of items(); track item.gameId) {
+          <article class="item-card">
+            <div class="item-cover">
+              <mat-icon>sports_esports</mat-icon>
+            </div>
 
-        <mat-icon>library_books</mat-icon>
-      </div>
+            <div class="item-body">
+              <h3 class="item-title">{{ item.title }}</h3>
 
-      @if (items().length > 0) {
-        <div class="table-wrapper">
-          <table>
-            <thead>
-              <tr>
-                <th>Título</th>
-                <th>Descripción</th>
-                <th>Agregado</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              @for (item of items(); track item.gameId) {
-                <tr>
-                  <td class="main-cell">{{ item.title }}</td>
-                  <td class="game-description">{{ item.description ?? '—' }}</td>
-                  <td class="date-cell">
-                    {{ item.addedAt ? (item.addedAt | date:'shortDate') : '—' }}
-                  </td>
-                </tr>
+              @if (item.description) {
+                <p class="item-description">
+                  {{ item.description | slice: 0 : 100 }}
+                  @if (item.description.length > 100) { ... }
+                </p>
               }
-            </tbody>
-          </table>
-        </div>
-      } @else {
-        <div class="empty-state">
-          <mat-icon>library_books</mat-icon>
-          <h3>La biblioteca está vacía</h3>
-          <p>Agrega el primer juego a la colección.</p>
-        </div>
-      }
-    </mat-card>
+
+              @if (item.addedAt) {
+                <div class="item-meta">
+                  <mat-icon>calendar_today</mat-icon>
+                  <span>Adquirido el {{ item.addedAt | date:'mediumDate' }}</span>
+                </div>
+              }
+            </div>
+          </article>
+        }
+      </div>
+    } @else {
+      <div class="empty-state">
+        <mat-icon>library_books</mat-icon>
+        <h3>Aún no tienes juegos</h3>
+        <p>Visita la tienda para añadir juegos a tu colección.</p>
+      </div>
+    }
   }
 </section>

@@ -1,0 +1,96 @@
+<section class="store-page">
+  <header class="store-header">
+    <div>
+      <span class="eyebrow">TIENDA</span>
+      <h1>Catálogo de Juegos</h1>
+      <p>Descubre y añade los mejores juegos a tu biblioteca.</p>
+    </div>
+  </header>
+
+  @if (loading()) {
+    <div class="state-card">
+      <mat-spinner></mat-spinner>
+      <p>Cargando catálogo...</p>
+    </div>
+  }
+
+  @if (errorMessage()) {
+    <div class="error-card">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ errorMessage() }}</span>
+    </div>
+  }
+
+  @if (!loading() && !errorMessage()) {
+    @if (games().length === 0) {
+      <div class="state-card">
+        <mat-icon>videogame_asset_off</mat-icon>
+        <p>No hay juegos disponibles en este momento.</p>
+      </div>
+    } @else {
+      <div class="games-grid">
+        @for (game of games(); track game.id) {
+          <article class="game-card" [class.is-owned]="isOwned(game.id)">
+
+            <div class="card-cover">
+              @if (game.coverImageUrl) {
+                <img [src]="game.coverImageUrl" [alt]="game.title" loading="lazy" />
+              } @else {
+                <div class="cover-placeholder">
+                  <mat-icon>sports_esports</mat-icon>
+                </div>
+              }
+
+              @if (isOwned(game.id)) {
+                <div class="owned-badge">
+                  <mat-icon>check_circle</mat-icon>
+                  En tu biblioteca
+                </div>
+              }
+            </div>
+
+            <div class="card-body">
+              <h3 class="game-title">{{ game.title }}</h3>
+
+              <p class="game-description">
+                {{ game.description ? (game.description | slice: 0 : 110) : 'Sin descripción' }}
+                @if (game.description && game.description.length > 110) { ... }
+              </p>
+
+              @if (game.genres?.length) {
+                <div class="genre-chips">
+                  @for (genre of game.genres.slice(0, 3); track genre) {
+                    <span class="genre-chip">{{ genre }}</span>
+                  }
+                </div>
+              }
+
+              <div class="card-footer">
+                <span class="price">${{ game.price }}</span>
+
+                <button
+                  mat-raised-button
+                  class="buy-btn"
+                  [class.owned-btn]="isOwned(game.id)"
+                  [disabled]="isOwned(game.id) || isBuying(game.id)"
+                  (click)="comprar(game)"
+                >
+                  @if (isBuying(game.id)) {
+                    <mat-spinner diameter="18"></mat-spinner>
+                  } @else if (isOwned(game.id)) {
+                    <mat-icon>check</mat-icon>
+                    En tu biblioteca
+                  } @else {
+                    <mat-icon>add</mat-icon>
+                    Comprar
+                  }
+                </button>
+              </div>
+            </div>
+
+          </article>
+        }
+      </div>
+    }
+  }
+</section>

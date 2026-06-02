@@ -147,6 +147,11 @@ export const routes: Routes = [
               import('./feactures/pages/private/dashboard-component/dashboard-component').then(m => m.DashboardComponent),
           },
           {
+            path: 'store',
+            loadComponent: () =>
+              import('./feactures/pages/private/games-list-component/games-list-component').then(m => m.GamesListComponent),
+          },
+          {
             path: 'library',
             loadComponent: () =>
               import('./feactures/pages/private/library-component/library-component').then(m => m.LibraryComponent),

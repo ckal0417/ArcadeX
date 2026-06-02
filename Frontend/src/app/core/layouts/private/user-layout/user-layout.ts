@@ -35,6 +35,7 @@ export class UserLayout {
 
   navItems: NavItem[] = [
     { icon: 'dashboard', label: 'Dashboard', route: '/dashboard/user/dashboard' },
+    { icon: 'storefront', label: 'Tienda', route: '/dashboard/user/store' },
     { icon: 'library_books', label: 'Biblioteca', route: '/dashboard/user/library' },
     { icon: 'favorite', label: 'Lista de Deseos', route: '/dashboard/user/wishlist' },
     { icon: 'rate_review', label: 'Reseñas', route: '/dashboard/user/reviews' },
