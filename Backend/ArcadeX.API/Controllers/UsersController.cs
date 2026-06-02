@@ -1,7 +1,8 @@
-using ArcadeX.Application.Features.Users.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using ArcadeX.Application.Features.Users.DTOs;
+using ArcadeX.Application.Features.Users.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ArcadeX.API.Controllers;
 
@@ -21,9 +22,22 @@ public class UsersController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetAll()
     {
-        var users = await _userService.GetAllAsync();
+        return Ok(await _userService.GetAllAsync());
+    }
 
-        return Ok(users);
+    [HttpGet("me")]
+    public async Task<IActionResult> GetMe()
+    {
+        var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+        var user = await _userService.GetByIdAsync(userId);
+
+        if (user is null)
+        {
+            return NotFound(new { message = "User not found" });
+        }
+
+        return Ok(user);
     }
 
     [HttpGet("{id:guid}")]
@@ -33,16 +47,14 @@ public class UsersController : ControllerBase
 
         if (user is null)
         {
-            return NotFound(new
-            {
-                message = "User not found"
-            });
+            return NotFound(new { message = "User not found" });
         }
 
         return Ok(user);
     }
 
     [HttpPost]
+    [AllowAnonymous]
     public async Task<IActionResult> Create(CreateUserDto dto)
     {
         var user = await _userService.CreateAsync(dto);
@@ -62,10 +74,7 @@ public class UsersController : ControllerBase
 
         if (user is null)
         {
-            return NotFound(new
-            {
-                message = "User not found"
-            });
+            return NotFound(new { message = "User not found" });
         }
 
         return Ok(user);
@@ -79,10 +88,7 @@ public class UsersController : ControllerBase
 
         if (!deleted)
         {
-            return NotFound(new
-            {
-                message = "User not found"
-            });
+            return NotFound(new { message = "User not found" });
         }
 
         return NoContent();
