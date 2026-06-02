@@ -8,7 +8,7 @@ export const publicGuard: CanActivateFn = () => {
 
 
     if (authService.isAuthenticated()) {
-        return router.createUrlTree(['/admin/dashboard']);
+        return router.createUrlTree([authService.getDashboardRoute()]);
     }
 
     return true;

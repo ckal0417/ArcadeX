@@ -5,6 +5,9 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   token: string;
+  username: string;
+  email: string;
+  roles: string[];
 }
 
 export interface JwtPayload {

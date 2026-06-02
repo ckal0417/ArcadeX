@@ -4,7 +4,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import {
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+} from '@angular/router';
 import { AuthService } from '../../../../feactures/services/private/auth.service';
 
 interface NavItem {
@@ -14,7 +19,7 @@ interface NavItem {
 }
 
 @Component({
-  selector: 'app-user-layout',
+  selector: 'app-developer-layout',
   imports: [
     RouterOutlet,
     RouterLink,
@@ -23,23 +28,23 @@ interface NavItem {
     MatButtonModule,
     MatIconModule,
     MatListModule,
-    MatTooltipModule,],
-  templateUrl: './user-layout.html',
-  styleUrl: './user-layout.scss',
+    MatTooltipModule,
+  ],
+  templateUrl: './developer-layout.html',
+  styleUrl: './developer-layout.scss',
 })
-export class UserLayout {
+export class DeveloperLayout {
   private auth = inject(AuthService);
   private router = inject(Router);
 
   collapsed = signal(false);
 
   navItems: NavItem[] = [
-    { icon: 'dashboard', label: 'Dashboard', route: '/dashboard/user/dashboard' },
-    { icon: 'library_books', label: 'Biblioteca', route: '/dashboard/user/library' },
-    { icon: 'favorite', label: 'Lista de Deseos', route: '/dashboard/user/wishlist' },
-    { icon: 'rate_review', label: 'Reseñas', route: '/dashboard/user/reviews' },
-    { icon: 'group', label: 'Amigos', route: '/dashboard/user/friends' },
-    { icon: 'videogame_asset', label: 'Sesiones', route: '/dashboard/user/game-sessions' },
+    { icon: 'dashboard', label: 'Dashboard', route: '/dashboard/developer/dashboard' },
+    { icon: 'sports_esports', label: 'Juegos', route: '/dashboard/developer/game' },
+    { icon: 'emoji_events', label: 'Logros', route: '/dashboard/developer/achievements' },
+    { icon: 'rate_review', label: 'Reseñas', route: '/dashboard/developer/reviews' },
+    { icon: 'library_books', label: 'Biblioteca', route: '/dashboard/developer/library' },
   ];
 
   toggle(): void {

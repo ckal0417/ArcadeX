@@ -61,7 +61,7 @@ export class LoginComponent {
         });
 
         setTimeout(() => {
-          this.router.navigate(['/admin/dashboard']);
+          this.router.navigate([this.authService.getDashboardRoute()]);
         }, 500);
       },
       error: () => {
