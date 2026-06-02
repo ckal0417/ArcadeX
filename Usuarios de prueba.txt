@@ -11,4 +11,3 @@ password: hash_devprueba1
 
 email: devprueba2@email.com
 pass: hash_devprueba2
-
