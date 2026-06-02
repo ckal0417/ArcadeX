@@ -15,7 +15,7 @@ export const routes: Routes = [
     import('./feactures/routes/public/about.route').then(m => m.aboutRoute)
   },
   {
-    path: 'games', loadChildren: () =>
+    path: 'store', loadChildren: () =>
       import('./feactures/routes/public/game.route').then(m => m.gameRoute)
   },
   {
