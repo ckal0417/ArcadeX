@@ -26,6 +26,7 @@ export class GameFormComponent implements OnInit {
   data = inject<IGame | null>(MAT_DIALOG_DATA);
 
   gameForm = this.fb.group({
+    url: [''],
     title: ['', [Validators.required, Validators.minLength(3)]],
     description: ['', [Validators.required, Validators.minLength(10)]],
     price: [0, [Validators.required, Validators.min(0)]],

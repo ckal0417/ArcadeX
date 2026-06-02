@@ -3,6 +3,11 @@
 
   <form [formGroup]="gameForm" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Url</mat-label>
+      <input matInput formControlName="url" placeholder="Url de la imagen" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
       <mat-label>Título</mat-label>
       <input matInput formControlName="title" placeholder="Nombre del juego" />
     </mat-form-field>
@@ -29,11 +34,7 @@
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Géneros</mat-label>
-      <input
-        matInput
-        formControlName="genres"
-        placeholder="Acción, RPG, Aventura"
-      />
+      <input matInput formControlName="genres" placeholder="Acción, RPG, Aventura" />
     </mat-form-field>
 
     <div class="form-actions">
@@ -41,10 +42,7 @@
         {{ data ? 'Actualizar' : 'Crear' }}
       </button>
 
-      <button mat-stroked-button type="button" (click)="cancel()">
-        Cancelar
-      </button>
+      <button mat-stroked-button type="button" (click)="cancel()">Cancelar</button>
     </div>
   </form>
 </div>
-

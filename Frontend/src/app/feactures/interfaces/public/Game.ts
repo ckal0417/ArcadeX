@@ -8,6 +8,7 @@ export interface IGame {
   ownerId: string,
   ownerUsername: string,
   genres: string[],
+  coverImageUrl: string,
 }
 
 export type IResponseGames = IGame[];
