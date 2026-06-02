@@ -2,8 +2,9 @@
 
 Poyecto del boocmp de full stack de vmtdev
 
-## Steam-Clone
+## ArcadeX
 
+Es una plataforma que sirve para la gestión y distribución de video jugos.
 Es un proyecto se va a realizar una aplicacion muy parecida a steam una plataforma de videojuegos
 
 ## Autores
@@ -20,5 +21,3 @@ dotnet ef dbcontext scaffold "Server=localhost,1433;User=usuario;Password=contra
 ```
 
 ## Enlaces externos
-
-Diagrama de entidad relación:
