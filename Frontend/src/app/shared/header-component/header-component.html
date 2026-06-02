@@ -1,12 +1,11 @@
 <mat-toolbar class="topbar">
-
-  <button class="toggle-navbar" (click)="toggleNavbar()">
+  <button class="toggle-navbar" type="button" (click)="toggleNavbar()">
     <mat-icon>menu</mat-icon>
   </button>
 
   <div class="brand">
     <img
-      src="./assets/branding/texto-completo.png"
+      src="assets/branding/texto-completo.png"
       alt="ArcadeX"
       class="brand-logo"
     />
@@ -21,9 +20,8 @@
   </div>
 
   <div class="topbar-actions">
-    <button matButton class="login" routerLink="/login">
+    <button mat-button class="login" routerLink="/login">
       Iniciar sesión
     </button>
   </div>
-
 </mat-toolbar>
