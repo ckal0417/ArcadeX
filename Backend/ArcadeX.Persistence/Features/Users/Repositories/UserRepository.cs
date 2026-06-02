@@ -161,6 +161,27 @@ public class UserRepository : IUserRepository
             return false;
         }
 
+        var userRoles = _context.UserRoles.Where(item => item.UserId == id);
+        var userGames = _context.UserGames.Where(item => item.UserId == id);
+        var wishlist = _context.Wishlist.Where(item => item.UserId == id);
+        var reviews = _context.Reviews.Where(item => item.UserId == id);
+        var reviewComments = _context.ReviewComments.Where(item => item.UserId == id);
+        var userAchievements = _context.UserAchievements.Where(item => item.UserId == id);
+        var friends = _context.Friends.Where(item =>
+            item.UserId == id ||
+            item.FriendId == id
+        );
+        var gameSessions = _context.GameSessions.Where(item => item.UserId == id);
+
+        _context.UserRoles.RemoveRange(userRoles);
+        _context.UserGames.RemoveRange(userGames);
+        _context.Wishlist.RemoveRange(wishlist);
+        _context.Reviews.RemoveRange(reviews);
+        _context.ReviewComments.RemoveRange(reviewComments);
+        _context.UserAchievements.RemoveRange(userAchievements);
+        _context.Friends.RemoveRange(friends);
+        _context.GameSessions.RemoveRange(gameSessions);
+
         _context.Users.Remove(user);
 
         return true;

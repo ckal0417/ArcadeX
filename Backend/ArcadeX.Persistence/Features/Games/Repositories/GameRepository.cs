@@ -178,6 +178,38 @@ public class GameRepository : IGameRepository
             return false;
         }
 
+        var gameGenres = _context.GameGenres.Where(item => item.GameId == id);
+        var userGames = _context.UserGames.Where(item => item.GameId == id);
+        var wishlist = _context.Wishlist.Where(item => item.GameId == id);
+        var reviews = _context.Reviews.Where(item => item.GameId == id);
+        var achievements = _context.Achievements.Where(item => item.GameId == id);
+        var offers = _context.Offers.Where(item => item.GameId == id);
+        var gameSessions = _context.GameSessions.Where(item => item.GameId == id);
+
+        var reviewIds = await reviews
+            .Select(review => review.Id)
+            .ToListAsync();
+
+        var reviewComments = _context.ReviewComments
+            .Where(comment => reviewIds.Contains(comment.ReviewId));
+
+        var achievementIds = await achievements
+            .Select(achievement => achievement.Id)
+            .ToListAsync();
+
+        var userAchievements = _context.UserAchievements
+            .Where(item => achievementIds.Contains(item.AchievementId));
+
+        _context.GameGenres.RemoveRange(gameGenres);
+        _context.UserGames.RemoveRange(userGames);
+        _context.Wishlist.RemoveRange(wishlist);
+        _context.ReviewComments.RemoveRange(reviewComments);
+        _context.Reviews.RemoveRange(reviews);
+        _context.UserAchievements.RemoveRange(userAchievements);
+        _context.Achievements.RemoveRange(achievements);
+        _context.Offers.RemoveRange(offers);
+        _context.GameSessions.RemoveRange(gameSessions);
+
         _context.Games.Remove(game);
 
         return true;
