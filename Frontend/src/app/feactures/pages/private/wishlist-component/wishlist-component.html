@@ -1,63 +1,78 @@
-<div class="wishlist-container">
-  <div class="wishlist-header">
+<section class="admin-page">
+  <header class="admin-header">
     <div>
+      <span class="eyebrow">ADMIN PANEL</span>
       <h1>Lista de Deseos</h1>
-      <p>Administra los juegos guardados como interés por el usuario</p>
+      <p>Administra los juegos guardados como interés por el usuario.</p>
     </div>
-  </div>
+  </header>
 
   <mat-card class="search-card">
+    <div class="search-info">
+      <mat-icon>favorite_border</mat-icon>
+
+      <div>
+        <h2>Agregar a wishlist</h2>
+        <p>Ingresa el ID del juego para añadirlo a la lista de deseos.</p>
+      </div>
+    </div>
+
     <div class="search-row">
       <mat-form-field appearance="outline" class="search-field">
         <mat-label>ID del Juego</mat-label>
 
-        <input
-          matInput
-          [(ngModel)]="nuevoGameId"
-          placeholder="UUID del juego a agregar"
-        />
+        <input matInput [(ngModel)]="nuevoGameId" placeholder="UUID del juego a agregar" />
 
         <mat-icon matSuffix>favorite</mat-icon>
       </mat-form-field>
 
-      <button mat-raised-button color="primary" (click)="agregar()">
+      <button mat-raised-button class="primary-action" (click)="agregar()">
         Agregar a Wishlist
       </button>
     </div>
   </mat-card>
 
   @if (loading()) {
-    <div class="center">
+    <div class="state-card">
       <mat-spinner></mat-spinner>
+      <p>Cargando lista de deseos...</p>
     </div>
   }
 
   @if (errorMessage()) {
     <mat-card class="error-card">
-      {{ errorMessage() }}
+      <mat-icon>error</mat-icon>
+      <span>{{ errorMessage() }}</span>
     </mat-card>
   }
 
   @if (!loading() && !errorMessage()) {
-    <mat-card class="table-card">
-      <div class="table-wrapper">
-        @if (items().length > 0) {
+    <mat-card class="admin-card">
+      <div class="card-header">
+        <div>
+          <h2>Juegos en wishlist</h2>
+          <p>Total: {{ items().length }}</p>
+        </div>
+
+        <mat-icon>favorite</mat-icon>
+      </div>
+
+      @if (items().length > 0) {
+        <div class="table-wrapper">
           <table>
             <thead>
               <tr>
                 <th>Título</th>
                 <th>Precio</th>
                 <th>Agregado</th>
-                <th>Acciones</th>
+                <th class="actions-column">Acciones</th>
               </tr>
             </thead>
 
             <tbody>
               @for (item of items(); track item.gameId) {
                 <tr>
-                  <td class="game-title">
-                    {{ item.title }}
-                  </td>
+                  <td class="main-cell">{{ item.title }}</td>
 
                   <td class="price-cell">
                     {{ item.price != null ? ('$' + item.price) : '—' }}
@@ -67,29 +82,28 @@
                     {{ item.addedAt ? (item.addedAt | date:'shortDate') : '—' }}
                   </td>
 
-                  <td>
-                    <div class="actions">
-                      <button
-                        mat-icon-button
-                        color="warn"
-                        matTooltip="Quitar de wishlist"
-                        (click)="eliminar(item)"
-                      >
-                        <mat-icon>favorite_border</mat-icon>
-                      </button>
-                    </div>
+                  <td class="actions">
+                    <button
+                      mat-icon-button
+                      class="icon-action danger"
+                      matTooltip="Quitar de wishlist"
+                      (click)="eliminar(item)"
+                    >
+                      <mat-icon>favorite_border</mat-icon>
+                    </button>
                   </td>
                 </tr>
               }
             </tbody>
           </table>
-        } @else {
-          <div class="no-data">
-            <mat-icon>favorite_border</mat-icon>
-            <p>La lista de deseos está vacía</p>
-          </div>
-        }
-      </div>
+        </div>
+      } @else {
+        <div class="empty-state">
+          <mat-icon>favorite_border</mat-icon>
+          <h3>La lista de deseos está vacía</h3>
+          <p>Agrega el primer juego a la wishlist.</p>
+        </div>
+      }
     </mat-card>
   }
-</div>
+</section>

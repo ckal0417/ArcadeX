@@ -1,18 +1,28 @@
-<div class="users-container">
-  <div class="users-header">
+<section class="admin-page">
+  <header class="admin-header">
     <div>
+      <span class="eyebrow">ADMIN PANEL</span>
       <h1>Gestión de Usuarios</h1>
-      <p>Administra cuentas, roles y accesos registrados en la plataforma</p>
+      <p>Administra cuentas, roles y accesos registrados en la plataforma.</p>
     </div>
 
-    <button mat-raised-button color="primary" (click)="crearUsuario()">
+    <button mat-raised-button class="primary-action" (click)="crearUsuario()">
       <mat-icon>person_add</mat-icon>
       Agregar Usuario
     </button>
-  </div>
+  </header>
 
   <mat-card class="search-card">
-    <mat-form-field appearance="outline" class="full-width">
+    <div class="search-info">
+      <mat-icon>manage_search</mat-icon>
+
+      <div>
+        <h2>Buscar usuarios</h2>
+        <p>Filtra por correo, nombre de usuario o rol.</p>
+      </div>
+    </div>
+
+    <mat-form-field appearance="outline" class="search-field">
       <mat-label>Buscar usuarios...</mat-label>
 
       <input
@@ -27,79 +37,83 @@
   </mat-card>
 
   @if (loading()) {
-    <div class="center">
+    <div class="state-card">
       <mat-spinner></mat-spinner>
+      <p>Cargando usuarios...</p>
     </div>
   }
 
   @if (errorMessage()) {
     <mat-card class="error-card">
-      {{ errorMessage() }}
+      <mat-icon>error</mat-icon>
+      <span>{{ errorMessage() }}</span>
     </mat-card>
   }
 
   @if (!loading() && !errorMessage()) {
-    <mat-card class="table-card">
-      <div class="table-wrapper">
-        @if (filteredUsers().length > 0) {
+    <mat-card class="admin-card">
+      <div class="card-header">
+        <div>
+          <h2>Usuarios registrados</h2>
+          <p>Total mostrado: {{ filteredUsers().length }}</p>
+        </div>
+
+        <mat-icon>group</mat-icon>
+      </div>
+
+      @if (filteredUsers().length > 0) {
+        <div class="table-wrapper">
           <table>
             <thead>
               <tr>
                 <th>Correo Electrónico</th>
                 <th>Usuario</th>
                 <th>Rol</th>
-                <th>Acciones</th>
+                <th class="actions-column">Acciones</th>
               </tr>
             </thead>
 
             <tbody>
               @for (user of filteredUsers(); track user.id) {
                 <tr>
-                  <td class="email-cell">
-                    {{ user.email }}
-                  </td>
-
-                  <td class="username-cell">
-                    {{ user.username }}
-                  </td>
-
+                  <td class="main-cell">{{ user.email }}</td>
+                  <td>{{ user.username }}</td>
                   <td>
                     <span [class]="'role ' + (user.roles[0] | lowercase)">
                       {{ user.roles[0] | uppercase }}
                     </span>
                   </td>
+                  <td class="actions">
+                    <button
+                      mat-icon-button
+                      class="icon-action edit"
+                      matTooltip="Editar usuario"
+                      (click)="editarUsuario(user)"
+                    >
+                      <mat-icon>edit</mat-icon>
+                    </button>
 
-                  <td>
-                    <div class="actions">
-                      <button
-                        mat-icon-button
-                        matTooltip="Editar usuario"
-                        (click)="editarUsuario(user)"
-                      >
-                        <mat-icon>edit</mat-icon>
-                      </button>
-
-                      <button
-                        mat-icon-button
-                        matTooltip="Eliminar usuario"
-                        color="warn"
-                        (click)="eliminarUsuario(user)"
-                      >
-                        <mat-icon>delete</mat-icon>
-                      </button>
-                    </div>
+                    <button
+                      mat-icon-button
+                      class="icon-action danger"
+                      matTooltip="Eliminar usuario"
+                      (click)="eliminarUsuario(user)"
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
                   </td>
                 </tr>
               }
             </tbody>
           </table>
-        } @else {
-          <div class="no-data">
-            <mat-icon>person_off</mat-icon>
-            <p>No hay usuarios disponibles</p>
-          </div>
-        }
-      </div>
+        </div>
+      } @else {
+        <div class="empty-state">
+          <mat-icon>person_off</mat-icon>
+          <h3>No hay usuarios disponibles</h3>
+          <p>Crea el primer usuario o prueba con otra búsqueda.</p>
+        </div>
+      }
     </mat-card>
   }
-</div>
+</section>

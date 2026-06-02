@@ -1,108 +1,120 @@
-<div class="comment-container">
-  <div class="comment-header">
+<section class="admin-page">
+  <header class="admin-header">
     <div>
+      <span class="eyebrow">ADMIN PANEL</span>
       <h1>Comentarios de Reseñas</h1>
-      <p>Administra las respuestas asociadas a reseñas de usuarios</p>
+      <p>Administra las respuestas asociadas a reseñas de usuarios.</p>
     </div>
 
-    <button mat-raised-button color="primary" (click)="crearComentario()">
+    <button mat-raised-button class="primary-action" (click)="crearComentario()">
       <mat-icon>add_comment</mat-icon>
       Agregar Comentario
     </button>
-  </div>
+  </header>
 
   <mat-card class="search-card">
+    <div class="search-info">
+      <mat-icon>manage_search</mat-icon>
+
+      <div>
+        <h2>Filtrar por reseña</h2>
+        <p>Ingresa el ID de la reseña para ver sus comentarios.</p>
+      </div>
+    </div>
+
     <div class="search-row">
       <mat-form-field appearance="outline" class="search-field">
         <mat-label>ID de la Reseña</mat-label>
 
-        <input
-          matInput
-          [(ngModel)]="reviewIdFiltro"
-          placeholder="UUID de la reseña"
-        />
+        <input matInput [(ngModel)]="reviewIdFiltro" placeholder="UUID de la reseña" />
 
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
 
-      <button mat-raised-button color="primary" (click)="buscarPorResena()">
+      <button mat-raised-button class="primary-action" (click)="buscarPorResena()">
         Buscar
       </button>
     </div>
   </mat-card>
 
   @if (loading()) {
-    <div class="center">
+    <div class="state-card">
       <mat-spinner></mat-spinner>
+      <p>Cargando comentarios...</p>
     </div>
   }
 
   @if (errorMessage()) {
     <mat-card class="error-card">
-      {{ errorMessage() }}
+      <mat-icon>error</mat-icon>
+      <span>{{ errorMessage() }}</span>
     </mat-card>
   }
 
   @if (!loading() && !errorMessage()) {
-    <mat-card class="table-card">
-      <div class="table-wrapper">
-        @if (comments().length > 0) {
+    <mat-card class="admin-card">
+      <div class="card-header">
+        <div>
+          <h2>Comentarios</h2>
+          <p>Total: {{ comments().length }}</p>
+        </div>
+
+        <mat-icon>comment</mat-icon>
+      </div>
+
+      @if (comments().length > 0) {
+        <div class="table-wrapper">
           <table>
             <thead>
               <tr>
                 <th>ID</th>
                 <th>Comentario</th>
                 <th>Fecha</th>
-                <th>Acciones</th>
+                <th class="actions-column">Acciones</th>
               </tr>
             </thead>
 
             <tbody>
               @for (comment of comments(); track comment.id) {
                 <tr>
-                  <td class="comment-id">
-                    {{ comment.id }}
-                  </td>
-
-                  <td class="comment-text">
-                    {{ comment.comment }}
-                  </td>
+                  <td class="comment-id">{{ comment.id }}</td>
+                  <td class="comment-text">{{ comment.comment }}</td>
 
                   <td class="date-cell">
                     {{ comment.createdAt ? (comment.createdAt | date:'shortDate') : '—' }}
                   </td>
 
-                  <td>
-                    <div class="actions">
-                      <button
-                        mat-icon-button
-                        matTooltip="Editar comentario"
-                        (click)="editarComentario(comment)"
-                      >
-                        <mat-icon>edit</mat-icon>
-                      </button>
+                  <td class="actions">
+                    <button
+                      mat-icon-button
+                      class="icon-action edit"
+                      matTooltip="Editar comentario"
+                      (click)="editarComentario(comment)"
+                    >
+                      <mat-icon>edit</mat-icon>
+                    </button>
 
-                      <button
-                        mat-icon-button
-                        matTooltip="Eliminar comentario"
-                        color="warn"
-                        (click)="eliminarComentario(comment)"
-                      >
-                        <mat-icon>delete</mat-icon>
-                      </button>
-                    </div>
+                    <button
+                      mat-icon-button
+                      class="icon-action danger"
+                      matTooltip="Eliminar comentario"
+                      (click)="eliminarComentario(comment)"
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
                   </td>
                 </tr>
               }
             </tbody>
           </table>
-        } @else {
-          <div class="no-data">
-            <mat-icon>comment</mat-icon>
-            <p>Ingresa un ID de reseña para visualizar sus comentarios</p>
-          </div>
-        }
-      </div>
+        </div>
+      } @else {
+        <div class="empty-state">
+          <mat-icon>comment</mat-icon>
+          <h3>No hay comentarios disponibles</h3>
+          <p>Ingresa un ID de reseña para visualizar sus comentarios.</p>
+        </div>
+      }
     </mat-card>
   }
-</div>
+</section>

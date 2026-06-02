@@ -1,47 +1,64 @@
-<div class="library-container">
-  <div class="library-header">
+<section class="admin-page">
+  <header class="admin-header">
     <div>
+      <span class="eyebrow">ADMIN PANEL</span>
       <h1>Biblioteca de Usuario</h1>
-      <p>Administra los juegos asociados a la colección del usuario</p>
+      <p>Administra los juegos asociados a la colección del usuario.</p>
     </div>
-  </div>
+  </header>
 
   <mat-card class="search-card">
+    <div class="search-info">
+      <mat-icon>library_add</mat-icon>
+
+      <div>
+        <h2>Agregar a biblioteca</h2>
+        <p>Ingresa el ID del juego para añadirlo a la colección.</p>
+      </div>
+    </div>
+
     <div class="search-row">
       <mat-form-field appearance="outline" class="search-field">
         <mat-label>ID del Juego</mat-label>
 
-        <input
-          matInput
-          [(ngModel)]="nuevoGameId"
-          placeholder="UUID del juego a agregar"
-        />
+        <input matInput [(ngModel)]="nuevoGameId" placeholder="UUID del juego a agregar" />
 
         <mat-icon matSuffix>sports_esports</mat-icon>
       </mat-form-field>
 
-      <button mat-raised-button color="primary" (click)="agregarJuego()">
+      <button mat-raised-button class="primary-action" (click)="agregarJuego()">
         Agregar a Biblioteca
       </button>
     </div>
   </mat-card>
 
   @if (loading()) {
-    <div class="center">
+    <div class="state-card">
       <mat-spinner></mat-spinner>
+      <p>Cargando biblioteca...</p>
     </div>
   }
 
   @if (errorMessage()) {
     <mat-card class="error-card">
-      {{ errorMessage() }}
+      <mat-icon>error</mat-icon>
+      <span>{{ errorMessage() }}</span>
     </mat-card>
   }
 
   @if (!loading() && !errorMessage()) {
-    <mat-card class="table-card">
-      <div class="table-wrapper">
-        @if (items().length > 0) {
+    <mat-card class="admin-card">
+      <div class="card-header">
+        <div>
+          <h2>Colección de juegos</h2>
+          <p>Total: {{ items().length }}</p>
+        </div>
+
+        <mat-icon>library_books</mat-icon>
+      </div>
+
+      @if (items().length > 0) {
+        <div class="table-wrapper">
           <table>
             <thead>
               <tr>
@@ -54,10 +71,8 @@
             <tbody>
               @for (item of items(); track item.gameId) {
                 <tr>
-                  <td class="game-title">{{ item.title }}</td>
-                  <td class="game-description">
-                    {{ item.description ?? '—' }}
-                  </td>
+                  <td class="main-cell">{{ item.title }}</td>
+                  <td class="game-description">{{ item.description ?? '—' }}</td>
                   <td class="date-cell">
                     {{ item.addedAt ? (item.addedAt | date:'shortDate') : '—' }}
                   </td>
@@ -65,13 +80,14 @@
               }
             </tbody>
           </table>
-        } @else {
-          <div class="no-data">
-            <mat-icon>library_books</mat-icon>
-            <p>La biblioteca está vacía</p>
-          </div>
-        }
-      </div>
+        </div>
+      } @else {
+        <div class="empty-state">
+          <mat-icon>library_books</mat-icon>
+          <h3>La biblioteca está vacía</h3>
+          <p>Agrega el primer juego a la colección.</p>
+        </div>
+      }
     </mat-card>
   }
-</div>
+</section>

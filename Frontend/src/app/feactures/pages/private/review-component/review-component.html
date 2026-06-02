@@ -1,32 +1,44 @@
-<div class="review-container">
-  <div class="review-header">
+<section class="admin-page">
+  <header class="admin-header">
     <div>
+      <span class="eyebrow">ADMIN PANEL</span>
       <h1>Gestión de Reseñas</h1>
-      <p>Administra valoraciones, comentarios y registros de opinión de los juegos</p>
+      <p>Administra valoraciones, comentarios y registros de opinión de los juegos.</p>
     </div>
 
-    <button mat-raised-button color="primary" (click)="crearResena()">
+    <button mat-raised-button class="primary-action" (click)="crearResena()">
       <mat-icon>rate_review</mat-icon>
       Agregar Reseña
     </button>
-  </div>
+  </header>
 
   @if (loading()) {
-    <div class="center">
+    <div class="state-card">
       <mat-spinner></mat-spinner>
+      <p>Cargando reseñas...</p>
     </div>
   }
 
   @if (errorMessage()) {
     <mat-card class="error-card">
-      {{ errorMessage() }}
+      <mat-icon>error</mat-icon>
+      <span>{{ errorMessage() }}</span>
     </mat-card>
   }
 
   @if (!loading() && !errorMessage()) {
-    <mat-card class="table-card">
-      <div class="table-wrapper">
-        @if (reviews().length > 0) {
+    <mat-card class="admin-card">
+      <div class="card-header">
+        <div>
+          <h2>Catálogo de reseñas</h2>
+          <p>Total: {{ reviews().length }}</p>
+        </div>
+
+        <mat-icon>rate_review</mat-icon>
+      </div>
+
+      @if (reviews().length > 0) {
+        <div class="table-wrapper">
           <table>
             <thead>
               <tr>
@@ -34,62 +46,56 @@
                 <th>Puntuación</th>
                 <th>Comentario</th>
                 <th>Fecha</th>
-                <th>Acciones</th>
+                <th class="actions-column">Acciones</th>
               </tr>
             </thead>
 
             <tbody>
               @for (review of reviews(); track review.id) {
                 <tr>
-                  <td class="game-id">
-                    {{ review.gameId }}
-                  </td>
+                  <td class="game-id">{{ review.gameId }}</td>
 
                   <td>
-                    <span class="rating-badge">
-                      {{ review.rating }} ⭐
-                    </span>
+                    <span class="rating-badge">{{ review.rating }} ⭐</span>
                   </td>
 
-                  <td class="review-comment">
-                    {{ review.comment ?? '—' }}
-                  </td>
+                  <td class="review-comment">{{ review.comment ?? '—' }}</td>
 
                   <td class="date-cell">
                     {{ review.createdAt ? (review.createdAt | date:'shortDate') : '—' }}
                   </td>
 
-                  <td>
-                    <div class="actions">
-                      <button
-                        mat-icon-button
-                        matTooltip="Editar reseña"
-                        (click)="editarResena(review)"
-                      >
-                        <mat-icon>edit</mat-icon>
-                      </button>
+                  <td class="actions">
+                    <button
+                      mat-icon-button
+                      class="icon-action edit"
+                      matTooltip="Editar reseña"
+                      (click)="editarResena(review)"
+                    >
+                      <mat-icon>edit</mat-icon>
+                    </button>
 
-                      <button
-                        mat-icon-button
-                        matTooltip="Eliminar reseña"
-                        color="warn"
-                        (click)="eliminarResena(review)"
-                      >
-                        <mat-icon>delete</mat-icon>
-                      </button>
-                    </div>
+                    <button
+                      mat-icon-button
+                      class="icon-action danger"
+                      matTooltip="Eliminar reseña"
+                      (click)="eliminarResena(review)"
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
                   </td>
                 </tr>
               }
             </tbody>
           </table>
-        } @else {
-          <div class="no-data">
-            <mat-icon>rate_review</mat-icon>
-            <p>No hay reseñas disponibles</p>
-          </div>
-        }
-      </div>
+        </div>
+      } @else {
+        <div class="empty-state">
+          <mat-icon>rate_review</mat-icon>
+          <h3>No hay reseñas disponibles</h3>
+          <p>Crea la primera reseña para comenzar.</p>
+        </div>
+      }
     </mat-card>
   }
-</div>
+</section>

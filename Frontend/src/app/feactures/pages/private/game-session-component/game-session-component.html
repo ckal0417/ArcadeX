@@ -1,34 +1,62 @@
-<div class="session-container">
-  <div class="session-header">
+<section class="admin-page">
+  <header class="admin-header">
     <div>
+      <span class="eyebrow">ADMIN PANEL</span>
       <h1>Sesiones de Juego</h1>
-      <p>Historial y gestión de sesiones activas</p>
+      <p>Historial y gestión de sesiones activas.</p>
     </div>
-  </div>
+  </header>
 
   <mat-card class="search-card">
+    <div class="search-info">
+      <mat-icon>videogame_asset</mat-icon>
+
+      <div>
+        <h2>Iniciar sesión</h2>
+        <p>Selecciona un juego para iniciar una nueva sesión.</p>
+      </div>
+    </div>
+
     <div class="search-row">
       <mat-form-field appearance="outline" class="search-field">
         <mat-label>ID del Juego</mat-label>
         <mat-select matInput [(ngModel)]="nuevoGameId" placeholder="UUID del juego a iniciar" />
         <mat-icon matSuffix>videogame_asset</mat-icon>
       </mat-form-field>
-      <button mat-raised-button color="primary" (click)="iniciarSesion()">Iniciar Sesión</button>
+
+      <button mat-raised-button class="primary-action" (click)="iniciarSesion()">
+        Iniciar Sesión
+      </button>
     </div>
   </mat-card>
 
   @if (loading()) {
-    <div class="center"><mat-spinner></mat-spinner></div>
+    <div class="state-card">
+      <mat-spinner></mat-spinner>
+      <p>Cargando sesiones...</p>
+    </div>
   }
 
   @if (errorMessage()) {
-    <mat-card class="error-card">{{ errorMessage() }}</mat-card>
+    <mat-card class="error-card">
+      <mat-icon>error</mat-icon>
+      <span>{{ errorMessage() }}</span>
+    </mat-card>
   }
 
   @if (!loading() && !errorMessage()) {
-    <mat-card class="table-card">
-      <div class="table-wrapper">
-        @if (sessions().length > 0) {
+    <mat-card class="admin-card">
+      <div class="card-header">
+        <div>
+          <h2>Historial de sesiones</h2>
+          <p>Total: {{ sessions().length }}</p>
+        </div>
+
+        <mat-icon>history</mat-icon>
+      </div>
+
+      @if (sessions().length > 0) {
+        <div class="table-wrapper">
           <table>
             <thead>
               <tr>
@@ -36,23 +64,31 @@
                 <th>Inicio</th>
                 <th>Fin</th>
                 <th>Estado</th>
-                <th>Acciones</th>
+                <th class="actions-column">Acciones</th>
               </tr>
             </thead>
+
             <tbody>
               @for (session of sessions(); track session.id) {
                 <tr>
-                  <td>{{ session.gameId }}</td>
-                  <td>{{ session.startTime | date:'short' }}</td>
-                  <td>{{ session.endTime ? (session.endTime | date:'short') : '—' }}</td>
+                  <td class="main-cell">{{ session.gameId }}</td>
+                  <td class="date-cell">{{ session.startTime | date:'short' }}</td>
+                  <td class="date-cell">
+                    {{ session.endTime ? (session.endTime | date:'short') : '—' }}
+                  </td>
                   <td>
                     <span [class]="'status ' + (session.endTime ? 'ended' : 'active')">
                       {{ session.endTime ? 'Terminada' : 'Activa' }}
                     </span>
                   </td>
-                  <td>
+                  <td class="actions">
                     @if (!session.endTime) {
-                      <button mat-icon-button color="warn" matTooltip="Terminar sesión" (click)="terminarSesion(session)">
+                      <button
+                        mat-icon-button
+                        class="icon-action danger"
+                        matTooltip="Terminar sesión"
+                        (click)="terminarSesion(session)"
+                      >
                         <mat-icon>stop_circle</mat-icon>
                       </button>
                     }
@@ -61,13 +97,14 @@
               }
             </tbody>
           </table>
-        } @else {
-          <div class="no-data">
-            <mat-icon>videogame_asset</mat-icon>
-            <p>No hay sesiones registradas</p>
-          </div>
-        }
-      </div>
+        </div>
+      } @else {
+        <div class="empty-state">
+          <mat-icon>videogame_asset</mat-icon>
+          <h3>No hay sesiones registradas</h3>
+          <p>Inicia una nueva sesión para comenzar.</p>
+        </div>
+      }
     </mat-card>
   }
-</div>
+</section>

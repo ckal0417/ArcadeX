@@ -1,32 +1,44 @@
-<div class="genre-container">
-  <div class="genre-header">
+<section class="admin-page">
+  <header class="admin-header">
     <div>
+      <span class="eyebrow">ADMIN PANEL</span>
       <h1>Gestión de Géneros</h1>
-      <p>Administra y clasifica los géneros disponibles para los juegos</p>
+      <p>Administra y clasifica los géneros disponibles para los juegos.</p>
     </div>
 
-    <button mat-raised-button color="primary" (click)="crearGenero()">
+    <button mat-raised-button class="primary-action" (click)="crearGenero()">
       <mat-icon>add</mat-icon>
       Agregar Género
     </button>
-  </div>
+  </header>
 
   @if (loading()) {
-    <div class="center">
+    <div class="state-card">
       <mat-spinner></mat-spinner>
+      <p>Cargando géneros...</p>
     </div>
   }
 
   @if (errorMessage()) {
     <mat-card class="error-card">
-      {{ errorMessage() }}
+      <mat-icon>error</mat-icon>
+      <span>{{ errorMessage() }}</span>
     </mat-card>
   }
 
   @if (!loading() && !errorMessage()) {
-    <mat-card class="table-card">
-      <div class="table-wrapper">
-        @if (genres().length > 0) {
+    <mat-card class="admin-card">
+      <div class="card-header">
+        <div>
+          <h2>Catálogo de géneros</h2>
+          <p>Total: {{ genres().length }}</p>
+        </div>
+
+        <mat-icon>category</mat-icon>
+      </div>
+
+      @if (genres().length > 0) {
+        <div class="table-wrapper">
           <table>
             <thead>
               <tr>
@@ -39,7 +51,7 @@
               @for (genre of genres(); track genre.id) {
                 <tr>
                   <td class="genre-id">{{ genre.id }}</td>
-                  <td>
+                  <td class="main-cell">
                     <span class="genre-name">
                       <mat-icon>category</mat-icon>
                       {{ genre.name }}
@@ -49,13 +61,14 @@
               }
             </tbody>
           </table>
-        } @else {
-          <div class="no-data">
-            <mat-icon>category</mat-icon>
-            <p>No hay géneros disponibles</p>
-          </div>
-        }
-      </div>
+        </div>
+      } @else {
+        <div class="empty-state">
+          <mat-icon>category</mat-icon>
+          <h3>No hay géneros disponibles</h3>
+          <p>Crea el primer género para comenzar.</p>
+        </div>
+      }
     </mat-card>
   }
-</div>
+</section>
