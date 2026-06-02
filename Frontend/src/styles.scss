@@ -1,12 +1,11 @@
-// Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
 
 html {
   height: 100%;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+
   @include mat.theme(
     (
       color: (
@@ -20,20 +19,37 @@ html {
 }
 
 body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: light;
-
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
-
-  // Reset the user agent margin.
+  min-height: 100%;
+  width: 100%;
+  max-width: 100%;
   margin: 0;
-  height: 100%;
+  overflow-x: hidden;
+
+  background: #000;
+  color: var(--arcade-text);
+  font-family: Roboto, sans-serif;
 }
-/* You can add global styles to this file, and also import other style files */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --arcade-bg: #070b16;
+  --arcade-bg-2: #0b1020;
+  --arcade-surface: #111827;
+  --arcade-surface-soft: #172033;
+
+  --arcade-purple: #a100ff;
+  --arcade-purple-2: #7c3aed;
+  --arcade-pink: #ff00d4;
+  --arcade-cyan: #38bdf8;
+
+  --arcade-text: #ffffff;
+  --arcade-muted: #9ca3af;
+
+  --arcade-border: rgba(161, 0, 255, 0.35);
+  --arcade-glow: 0 0 18px rgba(161, 0, 255, 0.55);
+}

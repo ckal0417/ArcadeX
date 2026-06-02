@@ -7,7 +7,13 @@ import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-contact-component',
-  imports: [MatCardModule, MatIconModule, MatFormFieldModule, MatInputModule, MatButtonModule ],
+  imports: [
+    MatCardModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+  ],
   templateUrl: './contact-component.html',
   styleUrl: './contact-component.scss',
 })

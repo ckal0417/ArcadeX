@@ -1,20 +1,29 @@
 <mat-toolbar class="topbar">
-  <div class="logo">
-    <mat-icon>sports_esports</mat-icon>
-    <span matButton class="title">ArcadeX</span>
+
+  <button class="toggle-navbar" (click)="toggleNavbar()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <div class="brand">
+    <img
+      src="./assets/branding/texto-completo.png"
+      alt="ArcadeX"
+      class="brand-logo"
+    />
   </div>
 
   <div class="search-box">
     <mat-icon>search</mat-icon>
     <input
-      (focus)="searchFocused = true"
-      (blur)="searchFocused = false"
       type="text"
       placeholder="Buscar juegos, DLC, categorías..."
     />
   </div>
 
   <div class="topbar-actions">
-    <button matButton class="login" routerLink="/login">Iniciar sesion</button>
+    <button matButton class="login" routerLink="/login">
+      Iniciar sesión
+    </button>
   </div>
+
 </mat-toolbar>

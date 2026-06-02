@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
 import { MatAnchor, MatButtonModule } from "@angular/material/button";
 import { NgModel } from '@angular/forms';
+
 
 @Component({
   selector: 'app-header-component',
@@ -14,4 +15,11 @@ import { NgModel } from '@angular/forms';
 export class HeaderComponent {
   searchQuery = '';
   searchFocused = false;
+
+  @Input() navbarVisible = true;
+  @Output() toggleNavbarEvent = new EventEmitter<void>();
+
+  toggleNavbar() {
+    this.toggleNavbarEvent.emit();
+  }
 }

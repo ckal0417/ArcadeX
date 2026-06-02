@@ -1,13 +1,21 @@
 <div class="layout">
   @if (!authService.isAuthenticated()) {
-    <app-header-component></app-header-component>
-    <div class="wrapper">
-      <app-navbar-component></app-navbar-component>
-    </div>
+    <app-header-component
+      [navbarVisible]="navbarVisible"
+      (toggleNavbarEvent)="toggleNavbar()">
+    </app-header-component>
+
+    @if (navbarVisible) {
+      <div class="wrapper">
+        <app-navbar-component></app-navbar-component>
+      </div>
+    }
   }
+
   <main class="content-area">
     <router-outlet />
   </main>
+
   @if (!authService.isAuthenticated()) {
     <app-footer-component></app-footer-component>
   }

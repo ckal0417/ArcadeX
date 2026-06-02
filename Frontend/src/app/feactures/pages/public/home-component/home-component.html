@@ -1,8 +1,8 @@
-<div class="layout">
-  <!-- SIDEBAR -->
+<div class="home-layout">
   <aside class="sidebar">
     <div class="categories">
       <h4>Categorías</h4>
+
       <span>Acción</span>
       <span>RPG</span>
       <span>Multijugador</span>
@@ -12,9 +12,7 @@
     </div>
   </aside>
 
-  <!-- MAIN -->
   <main class="content">
-    <!-- HERO -->
     <section class="hero">
       <div class="hero-overlay">
         <div class="hero-content">
@@ -23,20 +21,24 @@
           <h1>Cyberpunk 2077</h1>
 
           <p>
-            Sumérgete en Night City y vive una experiencia futurista llena de acción, misiones y
-            exploración.
+            Sumérgete en Night City y vive una experiencia futurista llena de acción,
+            misiones y exploración.
           </p>
 
           <div class="hero-buttons">
-            <button matButton color="primary">Comprar Ahora</button>
-            <button matButton>Ver Trailer</button>
+            <button matButton class="primary-btn">Comprar Ahora</button>
+            <button matButton class="ghost-btn">Ver Trailer</button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SECTION -->
     <section class="games-section">
+      <div class="section-title">
+        <h2>Juegos disponibles</h2>
+        <span>Explora el catálogo ArcadeX</span>
+      </div>
+
       @if (loading()) {
         <div class="center">
           <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
@@ -44,7 +46,7 @@
       }
 
       @if (errorMessage()) {
-        <div>{{ errorMessage() }}</div>
+        <div class="error-message">{{ errorMessage() }}</div>
       }
 
       @if (!loading() && !errorMessage()) {
@@ -52,17 +54,22 @@
           @for (game of games(); track game.id) {
             <mat-card class="game-card">
               <mat-card-header>
-                <mat-card-title class="title">{{ game.title }}</mat-card-title>
+                <mat-card-title class="title">
+                  {{ game.title }}
+                </mat-card-title>
               </mat-card-header>
+
               <mat-card-content>
                 <p>
                   <strong>Categoría:</strong>
                   {{ game.genres }}
                 </p>
+
                 <p>
                   <strong>Descripción:</strong>
                   {{ game.description }}
                 </p>
+
                 <p class="price">
                   <strong>Precio:</strong>
                   ${{ game.price }}

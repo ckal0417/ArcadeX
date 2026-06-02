@@ -1,0 +1,16 @@
+.layout {
+  min-height: 100vh;
+  background: #000;
+}
+
+.wrapper {
+  width: 100%;
+  min-height: 72px;
+  background: #000;
+  overflow: visible;
+}
+
+.content-area {
+  background: #000;
+  min-height: calc(100vh - 150px);
+}

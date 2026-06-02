@@ -15,4 +15,10 @@ import { AuthService } from './feactures/services/private/auth.service';
 export class App {
   protected readonly title = signal('Frontend');
   authService = inject(AuthService);
+
+  navbarVisible = true;
+
+  toggleNavbar() {
+    this.navbarVisible = !this.navbarVisible;
+  }
 }

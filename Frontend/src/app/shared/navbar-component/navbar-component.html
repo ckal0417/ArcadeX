@@ -1,11 +1,24 @@
-<aside class="sidebar">
-  <button mat-button class="menu-item active" routerLink="/home">Inicio</button>
+<nav class="navbar">
+  <a
+    routerLink="/home"
+    routerLinkActive="active-link"
+    [routerLinkActiveOptions]="{ exact: true }">
+    Inicio
+  </a>
 
-  <button mat-button class="menu-item active" routerLink="/games">Tienda</button>
+  <a routerLink="/store" routerLinkActive="active-link">
+    Tienda
+  </a>
 
-  <button mat-button class="menu-item active" routerLink="/about">Sobre nosotros</button>
+  <a routerLink="/about" routerLinkActive="active-link">
+    Sobre nosotros
+  </a>
 
-  <button mat-button class="menu-item active" routerLink="/contact">Contactanos</button>
+  <a routerLink="/contact" routerLinkActive="active-link">
+    Contáctanos
+  </a>
 
-  <button mat-button class="menu-item active">Ofertas</button>
-</aside>
+  <a routerLink="/offers" routerLinkActive="active-link">
+    Ofertas
+  </a>
+</nav>
