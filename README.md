@@ -130,20 +130,6 @@ Durante el desarrollo de ArcadeX se aplicaron conceptos y buenas prácticas util
 - Contenerización con Docker
 - Integración continua con GitHub Actions
 
-## 🎯 Objetivos del Proyecto
-
-Durante el desarrollo de ArcadeX se aplicaron conceptos y buenas prácticas utilizadas en aplicacionesempresariales modernas:
-
-- Arquitectura Limpia (Clean Architecture)
-- Principios SOLID
-- Diseño de APIs REST
-- Separación de responsabilidades
-- Inyección de dependencias
-- Desarrollo modular con Angular
-- Persistencia relacional con SQL Server
-- Contenerización con Docker
-- Integración continua con GitHub Actions
-
 ## 📂 Estructura General del Proyecto
 
 ```text
