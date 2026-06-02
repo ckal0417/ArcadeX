@@ -4,7 +4,10 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-dashboard-component',
-  imports: [MatIconModule, MatCardModule],
+  imports: [
+    MatCardModule,
+    MatIconModule
+  ],
   templateUrl: './dashboard-component.html',
   styleUrl: './dashboard-component.scss',
 })

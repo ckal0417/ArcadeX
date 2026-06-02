@@ -62,7 +62,18 @@ public class GamesController : ControllerBase
     [Authorize(Roles = "Admin,Developer,Publisher")]
     public async Task<IActionResult> Update(Guid id, UpdateGameDto dto)
     {
-        var game = await _gameService.UpdateAsync(id, dto);
+        var userId = Guid.Parse(
+            User.FindFirstValue(ClaimTypes.NameIdentifier)!
+        );
+
+        var isAdmin = User.IsInRole("Admin");
+
+        var game = await _gameService.UpdateAsync(
+            id,
+            dto,
+            userId,
+            isAdmin
+        );
 
         if (game is null)
         {
@@ -79,7 +90,17 @@ public class GamesController : ControllerBase
     [Authorize(Roles = "Admin,Developer,Publisher")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        var deleted = await _gameService.DeleteAsync(id);
+        var userId = Guid.Parse(
+            User.FindFirstValue(ClaimTypes.NameIdentifier)!
+        );
+
+        var isAdmin = User.IsInRole("Admin");
+
+        var deleted = await _gameService.DeleteAsync(
+            id,
+            userId,
+            isAdmin
+        );
 
         if (!deleted)
         {

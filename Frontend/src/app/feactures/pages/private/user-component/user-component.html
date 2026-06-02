@@ -1,40 +1,43 @@
 <div class="users-container">
-  <!-- Header -->
   <div class="users-header">
     <div>
       <h1>Gestión de Usuarios</h1>
-      <p>Administra todos los usuarios registrados</p>
+      <p>Administra cuentas, roles y accesos registrados en la plataforma</p>
     </div>
+
     <button mat-raised-button color="primary" (click)="crearUsuario()">
       <mat-icon>person_add</mat-icon>
       Agregar Usuario
     </button>
   </div>
 
-  <!-- Search -->
   <mat-card class="search-card">
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Buscar usuarios...</mat-label>
-      <input matInput [ngModel]="searchQuery()" (ngModelChange)="buscar($event)" />
+
+      <input
+        matInput
+        [ngModel]="searchQuery()"
+        (ngModelChange)="buscar($event)"
+        placeholder="Buscar por correo o usuario"
+      />
+
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
   </mat-card>
 
-  <!-- Loading -->
   @if (loading()) {
     <div class="center">
       <mat-spinner></mat-spinner>
     </div>
   }
 
-  <!-- Error -->
   @if (errorMessage()) {
     <mat-card class="error-card">
       {{ errorMessage() }}
     </mat-card>
   }
 
-  <!-- Table -->
   @if (!loading() && !errorMessage()) {
     <mat-card class="table-card">
       <div class="table-wrapper">
@@ -48,21 +51,43 @@
                 <th>Acciones</th>
               </tr>
             </thead>
+
             <tbody>
               @for (user of filteredUsers(); track user.id) {
                 <tr>
-                  <td>{{ user.email }}</td>
-                  <td>{{ user.username }}</td>
-                  <td>
-                    <span [class]="'role ' + user.roles[0]">{{ user.roles[0] | uppercase }}</span>
+                  <td class="email-cell">
+                    {{ user.email }}
                   </td>
+
+                  <td class="username-cell">
+                    {{ user.username }}
+                  </td>
+
                   <td>
-                    <button mat-icon-button matTooltip="Editar" (click)="editarUsuario(user)">
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                    <button mat-icon-button matTooltip="Eliminar" color="warn" (click)="eliminarUsuario(user)">
-                      <mat-icon>delete</mat-icon>
-                    </button>
+                    <span [class]="'role ' + (user.roles[0] | lowercase)">
+                      {{ user.roles[0] | uppercase }}
+                    </span>
+                  </td>
+
+                  <td>
+                    <div class="actions">
+                      <button
+                        mat-icon-button
+                        matTooltip="Editar usuario"
+                        (click)="editarUsuario(user)"
+                      >
+                        <mat-icon>edit</mat-icon>
+                      </button>
+
+                      <button
+                        mat-icon-button
+                        matTooltip="Eliminar usuario"
+                        color="warn"
+                        (click)="eliminarUsuario(user)"
+                      >
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
                   </td>
                 </tr>
               }

@@ -151,4 +151,13 @@ public class GameRepository : IGameRepository
 
         return true;
     }
+
+    public async Task<bool> IsOwnerAsync(Guid gameId, Guid userId)
+    {
+        return await _context.Games
+            .AnyAsync(game =>
+                game.Id == gameId &&
+                game.OwnerId == userId
+            );
+    }
 }

@@ -8,23 +8,36 @@ import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-genre-form-component',
-  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+  ],
   templateUrl: './genre-form-component.html',
   styleUrl: './genre-form-component.scss',
 })
 export class GenreFormComponent {
   private fb = inject(FormBuilder);
   private dialogRef = inject(MatDialogRef<GenreFormComponent>);
-  data = inject(MAT_DIALOG_DATA);
+
+  data = inject(MAT_DIALOG_DATA, { optional: true });
 
   form = this.fb.group({
-    name: ['', [Validators.required, Validators.minLength(2)]]
+    name: ['', [Validators.required, Validators.minLength(2)]],
   });
 
-  onSubmit() {
-    if (this.form.invalid) { this.form.markAllAsTouched(); return; }
+  onSubmit(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
     this.dialogRef.close(this.form.value);
   }
 
-  cancel() { this.dialogRef.close(); }
+  cancel(): void {
+    this.dialogRef.close();
+  }
 }

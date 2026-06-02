@@ -1,40 +1,43 @@
 <div class="offerts-container">
-  <!-- Header -->
   <div class="offerts-header">
     <div>
       <h1>Gestión de Ofertas</h1>
-      <p>Administra todas las ofertas disponibles</p>
+      <p>Administra descuentos, promociones y vigencias comerciales</p>
     </div>
+
     <button mat-raised-button color="primary" (click)="crearOferta()">
       <mat-icon>local_offer</mat-icon>
       Agregar Oferta
     </button>
   </div>
 
-  <!-- Search -->
   <mat-card class="search-card">
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Buscar ofertas...</mat-label>
-      <input matInput [ngModel]="searchQuery()" (ngModelChange)="buscar($event)" />
+
+      <input
+        matInput
+        [ngModel]="searchQuery()"
+        (ngModelChange)="buscar($event)"
+        placeholder="Buscar por juego o ID"
+      />
+
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
   </mat-card>
 
-  <!-- Loading -->
   @if (loading()) {
     <div class="center">
       <mat-spinner></mat-spinner>
     </div>
   }
 
-  <!-- Error -->
   @if (errorMessage()) {
     <mat-card class="error-card">
       {{ errorMessage() }}
     </mat-card>
   }
 
-  <!-- Table -->
   @if (!loading() && !errorMessage()) {
     <mat-card class="table-card">
       <div class="table-wrapper">
@@ -43,33 +46,56 @@
             <thead>
               <tr>
                 <th>Juego</th>
-                <th>Descuento (%)</th>
+                <th>Descuento</th>
                 <th>Fecha Inicio</th>
                 <th>Fecha Fin</th>
                 <th>Acciones</th>
               </tr>
             </thead>
+
             <tbody>
               @for (offert of filteredOfferts(); track offert.offerId) {
                 <tr>
-                  <td>{{ offert.gameTitle }}</td>
                   <td>
-                    <strong>{{ offert.discountPct }}%</strong>
+                    <div class="game-cell">
+                      <span class="game-title">{{ offert.gameTitle }}</span>
+                      <span class="game-id">{{ offert.gameId }}</span>
+                    </div>
                   </td>
-                  <td>{{ offert.startDate | date: 'short' }}</td>
-                  <td>{{ offert.endDate | date: 'short' }}</td>
+
                   <td>
-                    <button mat-icon-button matTooltip="Editar" (click)="editarOferta(offert)">
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                    <button
-                      mat-icon-button
-                      matTooltip="Eliminar"
-                      color="warn"
-                      (click)="eliminarOferta(offert)"
-                    >
-                      <mat-icon>delete</mat-icon>
-                    </button>
+                    <span class="discount-badge">
+                      {{ offert.discountPct }}%
+                    </span>
+                  </td>
+
+                  <td class="date-cell">
+                    {{ offert.startDate | date: 'short' }}
+                  </td>
+
+                  <td class="date-cell">
+                    {{ offert.endDate | date: 'short' }}
+                  </td>
+
+                  <td>
+                    <div class="actions">
+                      <button
+                        mat-icon-button
+                        matTooltip="Editar oferta"
+                        (click)="editarOferta(offert)"
+                      >
+                        <mat-icon>edit</mat-icon>
+                      </button>
+
+                      <button
+                        mat-icon-button
+                        matTooltip="Eliminar oferta"
+                        color="warn"
+                        (click)="eliminarOferta(offert)"
+                      >
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
                   </td>
                 </tr>
               }

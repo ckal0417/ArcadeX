@@ -14,8 +14,16 @@ import { ILibraryItem } from '../../../interfaces/private/Library';
 
 @Component({
   selector: 'app-library-component',
-  imports: [CommonModule, FormsModule, MatCardModule, MatIconModule, MatButtonModule,
-            MatProgressSpinnerModule, MatFormFieldModule, MatInputModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatCardModule,
+    MatIconModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
   templateUrl: './library-component.html',
   styleUrl: './library-component.scss',
 })
@@ -36,21 +44,44 @@ export class LibraryComponent implements OnInit {
   cargar(): void {
     this.loading.set(true);
     this.errorMessage.set('');
-    this.libraryService.getMine()
+
+    this.libraryService
+      .getMine()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (data) => { this.items.set(data); this.loading.set(false); },
-        error: () => { this.errorMessage.set('Error al cargar la biblioteca'); this.loading.set(false); }
+        next: (data) => {
+          this.items.set(data);
+          this.loading.set(false);
+        },
+        error: () => {
+          this.errorMessage.set('Error al cargar la biblioteca');
+          this.loading.set(false);
+        },
       });
   }
 
   agregarJuego(): void {
-    if (!this.nuevoGameId.trim()) return;
-    this.libraryService.addGame(this.nuevoGameId.trim())
+    const gameId = this.nuevoGameId.trim();
+
+    if (!gameId) return;
+
+    this.libraryService
+      .addGame(gameId)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: () => { this.snackBar.open('Juego agregado a la biblioteca', 'Cerrar', { duration: 3000 }); this.nuevoGameId = ''; this.cargar(); },
-        error: () => this.snackBar.open('Error al agregar el juego', 'Cerrar', { duration: 3000 })
+        next: () => {
+          this.snackBar.open('Juego agregado a la biblioteca', 'Cerrar', {
+            duration: 3000,
+          });
+
+          this.nuevoGameId = '';
+          this.cargar();
+        },
+        error: () => {
+          this.snackBar.open('Error al agregar el juego', 'Cerrar', {
+            duration: 3000,
+          });
+        },
       });
   }
 }

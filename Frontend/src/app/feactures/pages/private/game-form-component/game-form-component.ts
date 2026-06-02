@@ -14,7 +14,7 @@ import { IGame } from '../../../interfaces/public/Game';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
   ],
   templateUrl: './game-form-component.html',
   styleUrl: './game-form-component.scss',
@@ -30,7 +30,7 @@ export class GameFormComponent implements OnInit {
     description: ['', [Validators.required, Validators.minLength(10)]],
     price: [0, [Validators.required, Validators.min(0)]],
     releaseDate: ['', Validators.required],
-    genres: ['', Validators.required]
+    genres: ['', Validators.required],
   });
 
   ngOnInit() {
@@ -40,7 +40,7 @@ export class GameFormComponent implements OnInit {
         description: this.data.description,
         price: this.data.price,
         releaseDate: this.data.releaseDate,
-        genres: this.data.genres?.join(', ')
+        genres: this.data.genres?.join(', '),
       });
     }
   }
@@ -52,12 +52,16 @@ export class GameFormComponent implements OnInit {
     }
 
     const formValue = this.gameForm.value;
-    const genres = (formValue.genres as string).split(',').map(g => g.trim());
+
+    const genres = (formValue.genres ?? '')
+      .split(',')
+      .map((genre) => genre.trim())
+      .filter((genre) => genre.length > 0);
 
     this.dialogRef.close({
       ...this.data,
       ...formValue,
-      genres
+      genres,
     });
   }
 

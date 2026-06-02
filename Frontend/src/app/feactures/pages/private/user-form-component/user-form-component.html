@@ -1,10 +1,23 @@
 <div class="form-container">
-  <h2>{{ data ? 'Editar Usuario' : 'Crear Usuario' }}</h2>
+  <h2>
+    {{ data ? 'Editar Usuario' : 'Crear Usuario' }}
+  </h2>
 
-  <form [formGroup]="userForm">
+  <p class="form-subtitle">
+    {{ data ? 'Actualiza la información, rol o contraseña del usuario.' : 'Registra una nueva cuenta dentro de la plataforma.' }}
+  </p>
+
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Correo Electrónico</mat-label>
-      <input matInput type="email" formControlName="email" placeholder="usuario@email.com" />
+
+      <input
+        matInput
+        type="email"
+        formControlName="email"
+        placeholder="usuario@email.com"
+      />
+
       @if (userForm.get('email')?.hasError('required') && userForm.get('email')?.touched) {
         <mat-error>El correo es requerido</mat-error>
       } @else if (userForm.get('email')?.hasError('email') && userForm.get('email')?.touched) {
@@ -14,7 +27,13 @@
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Nombre de Usuario</mat-label>
-      <input matInput formControlName="username" placeholder="nombre_usuario" />
+
+      <input
+        matInput
+        formControlName="username"
+        placeholder="nombre_usuario"
+      />
+
       @if (userForm.get('username')?.hasError('required') && userForm.get('username')?.touched) {
         <mat-error>El nombre de usuario es requerido</mat-error>
       } @else if (userForm.get('username')?.hasError('minlength') && userForm.get('username')?.touched) {
@@ -24,17 +43,41 @@
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>País</mat-label>
-      <input matInput formControlName="country" placeholder="País" />
-      @if (userForm.get('country')?.hasError('required') && userForm.get('country')?.touched) {
-        <mat-error>El país es requerido</mat-error>
-      } @else if (userForm.get('country')?.hasError('minlength') && userForm.get('country')?.touched) {
+
+      <input
+        matInput
+        formControlName="country"
+        placeholder="País"
+      />
+
+      @if (userForm.get('country')?.hasError('minlength') && userForm.get('country')?.touched) {
         <mat-error>Mínimo 3 caracteres</mat-error>
       }
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>{{ data ? 'Nueva Contraseña (opcional)' : 'Contraseña' }}</mat-label>
-      <input matInput formControlName="password" type="password" placeholder="***************" />
+      <mat-label>
+        {{ data ? 'Nueva Contraseña (opcional)' : 'Contraseña' }}
+      </mat-label>
+
+      <input
+        matInput
+        formControlName="password"
+        [type]="showPassword ? 'text' : 'password'"
+        placeholder="***************"
+      />
+
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        (click)="showPassword = !showPassword"
+      >
+        <mat-icon>
+          {{ showPassword ? 'visibility_off' : 'visibility' }}
+        </mat-icon>
+      </button>
+
       @if (userForm.get('password')?.hasError('required') && userForm.get('password')?.touched) {
         <mat-error>La contraseña es requerida</mat-error>
       } @else if (userForm.get('password')?.hasError('minlength') && userForm.get('password')?.touched) {
@@ -44,21 +87,36 @@
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Rol</mat-label>
+
       <mat-select formControlName="role">
         @for (role of roles; track role) {
-          <mat-option [value]="role">{{ role | uppercase }}</mat-option>
+          <mat-option [value]="role">
+            {{ role | uppercase }}
+          </mat-option>
         }
       </mat-select>
+
       @if (userForm.get('role')?.hasError('required') && userForm.get('role')?.touched) {
         <mat-error>El rol es requerido</mat-error>
       }
     </mat-form-field>
 
     <div class="form-actions">
-      <button mat-raised-button color="primary" (click)="onSubmit()">
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="cancel()"
+      >
+        Cancelar
+      </button>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+      >
         {{ data ? 'Actualizar' : 'Crear' }}
       </button>
-      <button mat-stroked-button (click)="cancel()">Cancelar</button>
     </div>
   </form>
 </div>

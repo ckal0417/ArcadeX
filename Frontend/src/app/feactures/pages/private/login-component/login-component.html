@@ -1,79 +1,114 @@
-<!-- login.component.html -->
-
 <div class="login-container">
-  <!-- LEFT SIDE -->
-
   <div class="login-banner">
     <div class="overlay">
       <div class="banner-content">
         <span class="badge">ARCADEX GAMING</span>
 
-        <h1>Bienvenido de nuevo Gamer</h1>
+        <h1>La próxima generación del gaming digital</h1>
 
         <p>
-          Accede a tu biblioteca, descubre nuevos títulos y conecta con millones de jugadores
-          alrededor del mundo.
+          Accede a tu biblioteca, gestiona tus juegos y conecta con una plataforma
+          diseñada para jugadores, administradores y desarrolladores.
         </p>
 
         <div class="features">
           <div class="feature">
             <mat-icon>sports_esports</mat-icon>
-
-            <span>Más de 10,000 juegos</span>
+            <span>Biblioteca inteligente</span>
           </div>
 
           <div class="feature">
-            <mat-icon>groups</mat-icon>
-
-            <span>Comunidad online</span>
+            <mat-icon>admin_panel_settings</mat-icon>
+            <span>Panel seguro</span>
           </div>
 
           <div class="feature">
             <mat-icon>bolt</mat-icon>
-
-            <span>Descargas ultrarrápidas</span>
+            <span>Experiencia rápida</span>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- RIGHT SIDE -->
-
   <div class="login-form-section">
     <mat-card class="login-card">
       <div class="logo">
         <mat-icon>sports_esports</mat-icon>
-
-        <span>ArcadeX</span>
+        <span>ARCADEX</span>
       </div>
 
       <h2>Iniciar Sesión</h2>
 
-      <p class="subtitle">Ingresa tus credenciales para continuar</p>
+      <p class="subtitle">Ingresa tus credenciales para acceder a tu cuenta</p>
 
       <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="outline">
           <mat-label>Correo electrónico</mat-label>
 
-          <input matInput formControlName="email" type="email" placeholder="correo@email.com" />
+          <input
+            matInput
+            formControlName="email"
+            type="email"
+            placeholder="correo@email.com"
+          />
 
           <mat-icon matSuffix>mail</mat-icon>
+
+          @if (loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched) {
+            <mat-error>El correo es requerido</mat-error>
+          } @else if (loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched) {
+            <mat-error>Ingresa un correo válido</mat-error>
+          }
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Contraseña</mat-label>
 
-          <input matInput formControlName="password" type="password" placeholder="********" />
+          <input
+            matInput
+            formControlName="password"
+            [type]="showPass() ? 'text' : 'password'"
+            placeholder="********"
+          />
 
-          <mat-icon matSuffix>lock</mat-icon>
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="showPass.set(!showPass())"
+          >
+            <mat-icon>
+              {{ showPass() ? 'visibility_off' : 'visibility' }}
+            </mat-icon>
+          </button>
+
+          @if (loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched) {
+            <mat-error>La contraseña es requerida</mat-error>
+          } @else if (loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched) {
+            <mat-error>Mínimo 6 caracteres</mat-error>
+          }
         </mat-form-field>
 
         <div class="options">
-          <a href="#"> ¿Olvidaste tu contraseña? </a>
+          <a href="#">¿Olvidaste tu contraseña?</a>
         </div>
 
-        <button mat-raised-button color="primary" class="login-btn" type="submit">Entrar</button>
+        <button
+          mat-raised-button
+          color="primary"
+          class="login-btn"
+          type="submit"
+          [disabled]="loading()"
+        >
+          {{ loading() ? 'Ingresando...' : 'Entrar' }}
+        </button>
+
+        @if (error()) {
+          <div class="error-message">
+            {{ error() }}
+          </div>
+        }
       </form>
 
       <div class="divider">
@@ -81,22 +116,22 @@
       </div>
 
       <div class="social-buttons">
-        <button mat-stroked-button>
+        <button mat-stroked-button type="button">
           <img src="https://cdn-icons-png.flaticon.com/512/300/300221.png" alt="google" />
-
           Google
         </button>
 
-        <button mat-stroked-button>
+        <button mat-stroked-button type="button">
           <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" alt="discord" />
-
           Discord
         </button>
       </div>
 
       <div class="register-link">
         ¿No tienes cuenta?
-        <button matButton routerLink="/register">Crear cuenta</button>
+        <button mat-button routerLink="/register" type="button">
+          Crear cuenta
+        </button>
       </div>
     </mat-card>
   </div>

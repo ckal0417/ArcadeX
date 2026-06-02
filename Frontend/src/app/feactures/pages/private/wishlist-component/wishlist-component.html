@@ -2,7 +2,7 @@
   <div class="wishlist-header">
     <div>
       <h1>Lista de Deseos</h1>
-      <p>Juegos que quieres tener</p>
+      <p>Administra los juegos guardados como interés por el usuario</p>
     </div>
   </div>
 
@@ -10,19 +10,32 @@
     <div class="search-row">
       <mat-form-field appearance="outline" class="search-field">
         <mat-label>ID del Juego</mat-label>
-        <input matInput [(ngModel)]="nuevoGameId" placeholder="UUID del juego a agregar" />
+
+        <input
+          matInput
+          [(ngModel)]="nuevoGameId"
+          placeholder="UUID del juego a agregar"
+        />
+
         <mat-icon matSuffix>favorite</mat-icon>
       </mat-form-field>
-      <button mat-raised-button color="primary" (click)="agregar()">Agregar a Wishlist</button>
+
+      <button mat-raised-button color="primary" (click)="agregar()">
+        Agregar a Wishlist
+      </button>
     </div>
   </mat-card>
 
   @if (loading()) {
-    <div class="center"><mat-spinner></mat-spinner></div>
+    <div class="center">
+      <mat-spinner></mat-spinner>
+    </div>
   }
 
   @if (errorMessage()) {
-    <mat-card class="error-card">{{ errorMessage() }}</mat-card>
+    <mat-card class="error-card">
+      {{ errorMessage() }}
+    </mat-card>
   }
 
   @if (!loading() && !errorMessage()) {
@@ -38,16 +51,33 @@
                 <th>Acciones</th>
               </tr>
             </thead>
+
             <tbody>
               @for (item of items(); track item.gameId) {
                 <tr>
-                  <td>{{ item.title }}</td>
-                  <td>{{ item.price != null ? ('$' + item.price) : '—' }}</td>
-                  <td>{{ item.addedAt ? (item.addedAt | date:'shortDate') : '—' }}</td>
+                  <td class="game-title">
+                    {{ item.title }}
+                  </td>
+
+                  <td class="price-cell">
+                    {{ item.price != null ? ('$' + item.price) : '—' }}
+                  </td>
+
+                  <td class="date-cell">
+                    {{ item.addedAt ? (item.addedAt | date:'shortDate') : '—' }}
+                  </td>
+
                   <td>
-                    <button mat-icon-button color="warn" (click)="eliminar(item)" matTooltip="Quitar de wishlist">
-                      <mat-icon>favorite_border</mat-icon>
-                    </button>
+                    <div class="actions">
+                      <button
+                        mat-icon-button
+                        color="warn"
+                        matTooltip="Quitar de wishlist"
+                        (click)="eliminar(item)"
+                      >
+                        <mat-icon>favorite_border</mat-icon>
+                      </button>
+                    </div>
                   </td>
                 </tr>
               }
@@ -56,7 +86,7 @@
         } @else {
           <div class="no-data">
             <mat-icon>favorite_border</mat-icon>
-            <p>Tu lista de deseos está vacía</p>
+            <p>La lista de deseos está vacía</p>
           </div>
         }
       </div>

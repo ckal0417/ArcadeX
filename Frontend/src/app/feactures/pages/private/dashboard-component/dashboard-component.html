@@ -1,163 +1,114 @@
 <div class="dashboard-container">
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="logo">
-      <h2>ArcadeX</h2>
+
+  <div class="dashboard-header">
+    <div>
+      <h1>Dashboard</h1>
+      <p>
+        Resumen general de la plataforma ArcadeX
+      </p>
+    </div>
+  </div>
+
+  <div class="welcome-card">
+    <div class="welcome-content">
+      <span class="badge">
+        PRIVATE DASHBOARD
+      </span>
+
+      <h2>
+        Gestiona ArcadeX desde un solo lugar
+      </h2>
+
+      <p>
+        Controla usuarios, juegos, bibliotecas, ofertas,
+        reseñas y sesiones desde el panel administrativo.
+      </p>
     </div>
 
-    <nav>
-      <a routerLink="/admin/dashboard" routerLinkActive="active">
-        <mat-icon>dashboard</mat-icon>
-        <span>Dashboard</span>
-      </a>
+    <mat-icon>
+      admin_panel_settings
+    </mat-icon>
+  </div>
 
-      <a routerLink="/admin/games" routerLinkActive="active">
-        <mat-icon>sports_esports</mat-icon>
-        <span>Games</span>
-      </a>
+  <div class="stats-grid">
 
-      <a routerLink="/users" routerLinkActive="active">
-        <mat-icon>groups</mat-icon>
-        <span>Users</span>
-      </a>
+    <mat-card class="stat-card">
+      <mat-icon>sports_esports</mat-icon>
 
-      <a routerLink="/admin/orders" routerLinkActive="active">
-        <mat-icon>shopping_cart</mat-icon>
-        <span>Orders</span>
-      </a>
+      <h3>120</h3>
 
-      <a routerLink="/admin/library" routerLinkActive="active">
-        <mat-icon>video_library</mat-icon>
-        <span>Library</span>
-      </a>
+      <span>Total Juegos</span>
+    </mat-card>
 
-      <a routerLink="/admin/settings" routerLinkActive="active">
-        <mat-icon>settings</mat-icon>
-        <span>Settings</span>
-      </a>
-    </nav>
+    <mat-card class="stat-card">
+      <mat-icon>groups</mat-icon>
 
-    <div class="logout-section">
-      <button mat-raised-button color="warn">
-        <mat-icon>logout</mat-icon>
-        Logout
-      </button>
+      <h3>2450</h3>
+
+      <span>Usuarios</span>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-icon>local_offer</mat-icon>
+
+      <h3>860</h3>
+
+      <span>Ofertas</span>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-icon>favorite</mat-icon>
+
+      <h3>1340</h3>
+
+      <span>Wishlist</span>
+    </mat-card>
+
+  </div>
+
+  <mat-card class="activity-card">
+
+    <div class="card-header">
+      <div>
+        <h2>Actividad Reciente</h2>
+        <p>Últimos movimientos registrados</p>
+      </div>
+
+      <mat-icon>
+        history
+      </mat-icon>
     </div>
-  </aside>
 
-  <!-- Main Content -->
-  <main class="main-content">
-    <!-- Topbar -->
-    <header class="topbar">
-      <div class="search-box">
-        <mat-icon>search</mat-icon>
+    <table>
+      <thead>
+        <tr>
+          <th>Evento</th>
+          <th>Usuario</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
 
-        <input type="text" placeholder="Search games, users..." />
-      </div>
+      <tbody>
+        <tr>
+          <td>Nuevo juego registrado</td>
+          <td>admin@arcadex.com</td>
+          <td>Hace 5 min</td>
+        </tr>
 
-      <div class="topbar-actions">
-        <button mat-icon-button>
-          <mat-icon>notifications</mat-icon>
-        </button>
+        <tr>
+          <td>Oferta creada</td>
+          <td>developer@arcadex.com</td>
+          <td>Hace 20 min</td>
+        </tr>
 
-        <div class="profile">
-          <img src="https://i.pravatar.cc/150?img=12" alt="profile" />
+        <tr>
+          <td>Nuevo usuario registrado</td>
+          <td>user@email.com</td>
+          <td>Hace 1 hora</td>
+        </tr>
+      </tbody>
+    </table>
 
-          <div>
-            <h4>Admin</h4>
-            <span>Administrator</span>
-          </div>
-        </div>
-      </div>
-    </header>
+  </mat-card>
 
-    <!-- Dashboard Content -->
-    <section class="dashboard-content">
-      <div class="welcome-card">
-        <div>
-          <h1>Welcome Back 👋</h1>
-          <p>Manage your gaming platform easily from here.</p>
-        </div>
-
-        <img src="https://cdn-icons-png.flaticon.com/512/686/686589.png" alt="gaming" />
-      </div>
-
-      <!-- Stats -->
-      <div class="stats-grid">
-        <mat-card class="stat-card">
-          <mat-icon>sports_esports</mat-icon>
-
-          <div>
-            <h2>120</h2>
-            <p>Total Games</p>
-          </div>
-        </mat-card>
-
-        <mat-card class="stat-card">
-          <mat-icon>groups</mat-icon>
-
-          <div>
-            <h2>2,450</h2>
-            <p>Users</p>
-          </div>
-        </mat-card>
-
-        <mat-card class="stat-card">
-          <mat-icon>shopping_cart</mat-icon>
-
-          <div>
-            <h2>860</h2>
-            <p>Orders</p>
-          </div>
-        </mat-card>
-
-        <mat-card class="stat-card">
-          <mat-icon>attach_money</mat-icon>
-
-          <div>
-            <h2>$18K</h2>
-            <p>Revenue</p>
-          </div>
-        </mat-card>
-      </div>
-
-      <!-- Table -->
-      <mat-card class="table-card">
-        <div class="table-header">
-          <h2>Recent Purchases</h2>
-        </div>
-
-        <table>
-          <thead>
-            <tr>
-              <th>User</th>
-              <th>Game</th>
-              <th>Price</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr>
-              <td>Jefferson</td>
-              <td>Cyberpunk 2077</td>
-              <td>$59</td>
-              <td>
-                <span class="status completed"> Completed </span>
-              </td>
-            </tr>
-
-            <tr>
-              <td>Maria</td>
-              <td>EA Sports FC</td>
-              <td>$70</td>
-              <td>
-                <span class="status pending"> Pending </span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </mat-card>
-    </section>
-  </main>
 </div>

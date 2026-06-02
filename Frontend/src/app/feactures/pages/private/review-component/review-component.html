@@ -2,8 +2,9 @@
   <div class="review-header">
     <div>
       <h1>Gestión de Reseñas</h1>
-      <p>Administra las reseñas de los juegos</p>
+      <p>Administra valoraciones, comentarios y registros de opinión de los juegos</p>
     </div>
+
     <button mat-raised-button color="primary" (click)="crearResena()">
       <mat-icon>rate_review</mat-icon>
       Agregar Reseña
@@ -11,11 +12,15 @@
   </div>
 
   @if (loading()) {
-    <div class="center"><mat-spinner></mat-spinner></div>
+    <div class="center">
+      <mat-spinner></mat-spinner>
+    </div>
   }
 
   @if (errorMessage()) {
-    <mat-card class="error-card">{{ errorMessage() }}</mat-card>
+    <mat-card class="error-card">
+      {{ errorMessage() }}
+    </mat-card>
   }
 
   @if (!loading() && !errorMessage()) {
@@ -32,20 +37,47 @@
                 <th>Acciones</th>
               </tr>
             </thead>
+
             <tbody>
               @for (review of reviews(); track review.id) {
                 <tr>
-                  <td>{{ review.gameId }}</td>
-                  <td>{{ review.rating }} ⭐</td>
-                  <td>{{ review.comment ?? '—' }}</td>
-                  <td>{{ review.createdAt ? (review.createdAt | date:'shortDate') : '—' }}</td>
+                  <td class="game-id">
+                    {{ review.gameId }}
+                  </td>
+
                   <td>
-                    <button mat-icon-button matTooltip="Editar" (click)="editarResena(review)">
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                    <button mat-icon-button matTooltip="Eliminar" color="warn" (click)="eliminarResena(review)">
-                      <mat-icon>delete</mat-icon>
-                    </button>
+                    <span class="rating-badge">
+                      {{ review.rating }} ⭐
+                    </span>
+                  </td>
+
+                  <td class="review-comment">
+                    {{ review.comment ?? '—' }}
+                  </td>
+
+                  <td class="date-cell">
+                    {{ review.createdAt ? (review.createdAt | date:'shortDate') : '—' }}
+                  </td>
+
+                  <td>
+                    <div class="actions">
+                      <button
+                        mat-icon-button
+                        matTooltip="Editar reseña"
+                        (click)="editarResena(review)"
+                      >
+                        <mat-icon>edit</mat-icon>
+                      </button>
+
+                      <button
+                        mat-icon-button
+                        matTooltip="Eliminar reseña"
+                        color="warn"
+                        (click)="eliminarResena(review)"
+                      >
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
                   </td>
                 </tr>
               }

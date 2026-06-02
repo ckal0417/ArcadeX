@@ -2,8 +2,9 @@
   <div class="genre-header">
     <div>
       <h1>Gestión de Géneros</h1>
-      <p>Administra los géneros de juegos</p>
+      <p>Administra y clasifica los géneros disponibles para los juegos</p>
     </div>
+
     <button mat-raised-button color="primary" (click)="crearGenero()">
       <mat-icon>add</mat-icon>
       Agregar Género
@@ -11,11 +12,15 @@
   </div>
 
   @if (loading()) {
-    <div class="center"><mat-spinner></mat-spinner></div>
+    <div class="center">
+      <mat-spinner></mat-spinner>
+    </div>
   }
 
   @if (errorMessage()) {
-    <mat-card class="error-card">{{ errorMessage() }}</mat-card>
+    <mat-card class="error-card">
+      {{ errorMessage() }}
+    </mat-card>
   }
 
   @if (!loading() && !errorMessage()) {
@@ -26,14 +31,20 @@
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Nombre</th>
+                <th>Nombre del Género</th>
               </tr>
             </thead>
+
             <tbody>
               @for (genre of genres(); track genre.id) {
                 <tr>
-                  <td>{{ genre.id }}</td>
-                  <td>{{ genre.name }}</td>
+                  <td class="genre-id">{{ genre.id }}</td>
+                  <td>
+                    <span class="genre-name">
+                      <mat-icon>category</mat-icon>
+                      {{ genre.name }}
+                    </span>
+                  </td>
                 </tr>
               }
             </tbody>

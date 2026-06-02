@@ -2,8 +2,9 @@
   <div class="comment-header">
     <div>
       <h1>Comentarios de Reseñas</h1>
-      <p>Administra los comentarios de las reseñas</p>
+      <p>Administra las respuestas asociadas a reseñas de usuarios</p>
     </div>
+
     <button mat-raised-button color="primary" (click)="crearComentario()">
       <mat-icon>add_comment</mat-icon>
       Agregar Comentario
@@ -14,19 +15,32 @@
     <div class="search-row">
       <mat-form-field appearance="outline" class="search-field">
         <mat-label>ID de la Reseña</mat-label>
-        <input matInput [(ngModel)]="reviewIdFiltro" placeholder="UUID de la reseña" />
+
+        <input
+          matInput
+          [(ngModel)]="reviewIdFiltro"
+          placeholder="UUID de la reseña"
+        />
+
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
-      <button mat-raised-button color="primary" (click)="buscarPorResena()">Buscar</button>
+
+      <button mat-raised-button color="primary" (click)="buscarPorResena()">
+        Buscar
+      </button>
     </div>
   </mat-card>
 
   @if (loading()) {
-    <div class="center"><mat-spinner></mat-spinner></div>
+    <div class="center">
+      <mat-spinner></mat-spinner>
+    </div>
   }
 
   @if (errorMessage()) {
-    <mat-card class="error-card">{{ errorMessage() }}</mat-card>
+    <mat-card class="error-card">
+      {{ errorMessage() }}
+    </mat-card>
   }
 
   @if (!loading() && !errorMessage()) {
@@ -42,19 +56,41 @@
                 <th>Acciones</th>
               </tr>
             </thead>
+
             <tbody>
               @for (comment of comments(); track comment.id) {
                 <tr>
-                  <td>{{ comment.id }}</td>
-                  <td>{{ comment.comment }}</td>
-                  <td>{{ comment.createdAt ? (comment.createdAt | date:'shortDate') : '—' }}</td>
+                  <td class="comment-id">
+                    {{ comment.id }}
+                  </td>
+
+                  <td class="comment-text">
+                    {{ comment.comment }}
+                  </td>
+
+                  <td class="date-cell">
+                    {{ comment.createdAt ? (comment.createdAt | date:'shortDate') : '—' }}
+                  </td>
+
                   <td>
-                    <button mat-icon-button matTooltip="Editar" (click)="editarComentario(comment)">
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                    <button mat-icon-button matTooltip="Eliminar" color="warn" (click)="eliminarComentario(comment)">
-                      <mat-icon>delete</mat-icon>
-                    </button>
+                    <div class="actions">
+                      <button
+                        mat-icon-button
+                        matTooltip="Editar comentario"
+                        (click)="editarComentario(comment)"
+                      >
+                        <mat-icon>edit</mat-icon>
+                      </button>
+
+                      <button
+                        mat-icon-button
+                        matTooltip="Eliminar comentario"
+                        color="warn"
+                        (click)="eliminarComentario(comment)"
+                      >
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
                   </td>
                 </tr>
               }
@@ -63,7 +99,7 @@
         } @else {
           <div class="no-data">
             <mat-icon>comment</mat-icon>
-            <p>Ingresa un ID de reseña para ver sus comentarios</p>
+            <p>Ingresa un ID de reseña para visualizar sus comentarios</p>
           </div>
         }
       </div>

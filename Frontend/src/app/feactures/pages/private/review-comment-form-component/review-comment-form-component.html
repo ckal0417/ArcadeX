@@ -1,10 +1,23 @@
 <div class="form-container">
-  <h2>{{ data ? 'Editar Comentario' : 'Crear Comentario' }}</h2>
-  <form [formGroup]="form">
+  <h2>
+    {{ data ? 'Editar Comentario' : 'Crear Comentario' }}
+  </h2>
+
+  <p class="form-subtitle">
+    {{ data ? 'Actualiza el contenido del comentario seleccionado.' : 'Asocia un comentario a una reseña existente.' }}
+  </p>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
     @if (!data) {
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>ID de la Reseña</mat-label>
-        <input matInput formControlName="reviewId" placeholder="UUID de la reseña" />
+
+        <input
+          matInput
+          formControlName="reviewId"
+          placeholder="UUID de la reseña"
+        />
+
         @if (form.get('reviewId')?.hasError('required') && form.get('reviewId')?.touched) {
           <mat-error>El ID de la reseña es requerido</mat-error>
         }
@@ -13,7 +26,14 @@
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Comentario</mat-label>
-      <textarea matInput formControlName="comment" rows="4" placeholder="Escribe tu comentario..."></textarea>
+
+      <textarea
+        matInput
+        formControlName="comment"
+        rows="4"
+        placeholder="Escribe el comentario..."
+      ></textarea>
+
       @if (form.get('comment')?.hasError('required') && form.get('comment')?.touched) {
         <mat-error>El comentario es requerido</mat-error>
       } @else if (form.get('comment')?.hasError('minlength') && form.get('comment')?.touched) {
@@ -22,10 +42,21 @@
     </mat-form-field>
 
     <div class="form-actions">
-      <button mat-raised-button color="primary" (click)="onSubmit()">
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="cancel()"
+      >
+        Cancelar
+      </button>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+      >
         {{ data ? 'Actualizar' : 'Crear' }}
       </button>
-      <button mat-stroked-button (click)="cancel()">Cancelar</button>
     </div>
   </form>
 </div>

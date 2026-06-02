@@ -1,7 +1,7 @@
 <div class="form-container">
   <h2>{{ data ? 'Editar Juego' : 'Crear Juego' }}</h2>
 
-  <form [formGroup]="gameForm">
+  <form [formGroup]="gameForm" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Título</mat-label>
       <input matInput formControlName="title" placeholder="Nombre del juego" />
@@ -32,15 +32,19 @@
       <input
         matInput
         formControlName="genres"
-        placeholder="Acción, RPG, Aventura (separados por comas)"
+        placeholder="Acción, RPG, Aventura"
       />
     </mat-form-field>
 
     <div class="form-actions">
-      <button mat-raised-button color="primary" (click)="onSubmit()">
+      <button mat-raised-button color="primary" type="submit">
         {{ data ? 'Actualizar' : 'Crear' }}
       </button>
-      <button mat-stroked-button (click)="cancel()">Cancelar</button>
+
+      <button mat-stroked-button type="button" (click)="cancel()">
+        Cancelar
+      </button>
     </div>
   </form>
 </div>
+

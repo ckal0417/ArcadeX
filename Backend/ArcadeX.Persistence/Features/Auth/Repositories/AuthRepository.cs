@@ -1,3 +1,4 @@
+using ArcadeX.Application.Common.Security;
 using ArcadeX.Application.Features.Auth.DTOs;
 using ArcadeX.Application.Features.Auth.Interfaces;
 using ArcadeX.Persistence.Context;
@@ -9,14 +10,17 @@ public class AuthRepository : IAuthRepository
 {
     private readonly ArcadeXDbContext _context;
     private readonly IJwtService _jwtService;
+    private readonly IPasswordHasher _passwordHasher;
 
     public AuthRepository(
         ArcadeXDbContext context,
-        IJwtService jwtService
+        IJwtService jwtService,
+        IPasswordHasher passwordHasher
     )
     {
         _context = context;
         _jwtService = jwtService;
+        _passwordHasher = passwordHasher;
     }
 
     public async Task<AuthResponseDto?> LoginAsync(LoginDto dto)
@@ -26,7 +30,17 @@ public class AuthRepository : IAuthRepository
             .ThenInclude(userRole => userRole.Role)
             .FirstOrDefaultAsync(user => user.Email == dto.Email);
 
-        if (user is null || user.PasswordHash != dto.Password)
+        if (user is null)
+        {
+            return null;
+        }
+
+        var validPassword = _passwordHasher.Verify(
+            dto.Password,
+            user.PasswordHash
+        );
+
+        if (!validPassword)
         {
             return null;
         }

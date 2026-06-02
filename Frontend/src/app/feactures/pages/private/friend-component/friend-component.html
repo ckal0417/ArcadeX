@@ -1,56 +1,113 @@
-<div class="friend-container">
-  <div class="friend-header">
+<section class="admin-page">
+  <header class="admin-header">
     <div>
+      <span class="eyebrow">ADMIN PANEL</span>
       <h1>Gestión de Amigos</h1>
-      <p>Administra tus solicitudes y amigos</p>
+      <p>Administra solicitudes, conexiones y estados de amistad dentro de ArcadeX.</p>
     </div>
-  </div>
+  </header>
 
   <mat-card class="search-card">
+    <div class="search-info">
+      <mat-icon>person_add</mat-icon>
+
+      <div>
+        <h2>Enviar solicitud</h2>
+        <p>Ingresa el ID del usuario para enviar una nueva solicitud de amistad.</p>
+      </div>
+    </div>
+
     <div class="search-row">
       <mat-form-field appearance="outline" class="search-field">
-        <mat-label>ID del Usuario</mat-label>
-        <input matInput [(ngModel)]="nuevoAmigoId" placeholder="UUID del usuario a agregar" />
-        <mat-icon matSuffix>person_add</mat-icon>
+        <mat-label>ID del usuario</mat-label>
+
+        <input
+          matInput
+          [(ngModel)]="nuevoAmigoId"
+          placeholder="UUID del usuario a agregar"
+        />
+
+        <mat-icon matSuffix>badge</mat-icon>
       </mat-form-field>
-      <button mat-raised-button color="primary" (click)="enviarSolicitud()">Enviar Solicitud</button>
+
+      <button mat-raised-button class="primary-action" (click)="enviarSolicitud()">
+        <mat-icon>send</mat-icon>
+        Enviar solicitud
+      </button>
     </div>
   </mat-card>
 
   @if (loading()) {
-    <div class="center"><mat-spinner></mat-spinner></div>
+    <div class="state-card">
+      <mat-spinner></mat-spinner>
+      <p>Cargando amigos...</p>
+    </div>
   }
 
   @if (errorMessage()) {
-    <mat-card class="error-card">{{ errorMessage() }}</mat-card>
+    <mat-card class="error-card">
+      <mat-icon>error</mat-icon>
+      <span>{{ errorMessage() }}</span>
+    </mat-card>
   }
 
   @if (!loading() && !errorMessage()) {
-    <mat-card class="table-card">
-      <div class="table-wrapper">
-        @if (friends().length > 0) {
+    <mat-card class="admin-card">
+      <div class="card-header">
+        <div>
+          <h2>Listado de amigos</h2>
+          <p>Total registrado: {{ friends().length }}</p>
+        </div>
+
+        <mat-icon>groups</mat-icon>
+      </div>
+
+      @if (friends().length > 0) {
+        <div class="table-wrapper">
           <table>
             <thead>
               <tr>
                 <th>Usuario</th>
                 <th>Email</th>
                 <th>Estado</th>
-                <th>Acciones</th>
+                <th class="actions-column">Acciones</th>
               </tr>
             </thead>
+
             <tbody>
               @for (friend of friends(); track friend.id) {
                 <tr>
-                  <td>{{ friend.username }}</td>
+                  <td class="main-cell">{{ friend.username }}</td>
                   <td>{{ friend.email }}</td>
-                  <td><span [class]="'status ' + friend.status">{{ friend.status | uppercase }}</span></td>
+
                   <td>
+                    <span
+                      class="status-badge"
+                      [class.pending]="friend.status === 'pending'"
+                      [class.accepted]="friend.status === 'accepted'"
+                    >
+                      {{ friend.status | uppercase }}
+                    </span>
+                  </td>
+
+                  <td class="actions">
                     @if (friend.status === 'pending') {
-                      <button mat-icon-button matTooltip="Aceptar solicitud" color="primary" (click)="aceptar(friend)">
+                      <button
+                        mat-icon-button
+                        matTooltip="Aceptar solicitud"
+                        class="icon-action accept"
+                        (click)="aceptar(friend)"
+                      >
                         <mat-icon>check_circle</mat-icon>
                       </button>
                     }
-                    <button mat-icon-button matTooltip="Eliminar" color="warn" (click)="eliminar(friend)">
+
+                    <button
+                      mat-icon-button
+                      matTooltip="Eliminar amigo"
+                      class="icon-action danger"
+                      (click)="eliminar(friend)"
+                    >
                       <mat-icon>person_remove</mat-icon>
                     </button>
                   </td>
@@ -58,13 +115,14 @@
               }
             </tbody>
           </table>
-        } @else {
-          <div class="no-data">
-            <mat-icon>group</mat-icon>
-            <p>No tienes amigos aún</p>
-          </div>
-        }
-      </div>
+        </div>
+      } @else {
+        <div class="empty-state">
+          <mat-icon>group</mat-icon>
+          <h3>No tienes amigos aún</h3>
+          <p>Envía una solicitud para comenzar a crear conexiones.</p>
+        </div>
+      }
     </mat-card>
   }
-</div>
+</section>

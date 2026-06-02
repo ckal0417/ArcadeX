@@ -10,13 +10,23 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
 import { WishlistService } from '../../../services/private/wishlist.service';
 import { IWishlistItem } from '../../../interfaces/private/Wishlist';
 
 @Component({
   selector: 'app-wishlist-component',
-  imports: [CommonModule, FormsModule, MatCardModule, MatIconModule, MatButtonModule,
-            MatProgressSpinnerModule, MatTooltipModule, MatFormFieldModule, MatInputModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatCardModule,
+    MatIconModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    MatTooltipModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
   templateUrl: './wishlist-component.html',
   styleUrl: './wishlist-component.scss',
 })
@@ -37,31 +47,70 @@ export class WishlistComponent implements OnInit {
   cargar(): void {
     this.loading.set(true);
     this.errorMessage.set('');
-    this.wishlistService.getMine()
+
+    this.wishlistService
+      .getMine()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (data) => { this.items.set(data); this.loading.set(false); },
-        error: () => { this.errorMessage.set('Error al cargar la lista de deseos'); this.loading.set(false); }
+        next: (data) => {
+          this.items.set(data);
+          this.loading.set(false);
+        },
+        error: () => {
+          this.errorMessage.set('Error al cargar la lista de deseos');
+          this.loading.set(false);
+        },
       });
   }
 
   agregar(): void {
-    if (!this.nuevoGameId.trim()) return;
-    this.wishlistService.add(this.nuevoGameId.trim())
+    const gameId = this.nuevoGameId.trim();
+
+    if (!gameId) return;
+
+    this.wishlistService
+      .add(gameId)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: () => { this.snackBar.open('Juego agregado a la lista de deseos', 'Cerrar', { duration: 3000 }); this.nuevoGameId = ''; this.cargar(); },
-        error: () => this.snackBar.open('Error al agregar el juego', 'Cerrar', { duration: 3000 })
+        next: () => {
+          this.snackBar.open('Juego agregado a la lista de deseos', 'Cerrar', {
+            duration: 3000,
+          });
+
+          this.nuevoGameId = '';
+          this.cargar();
+        },
+        error: () => {
+          this.snackBar.open('Error al agregar el juego', 'Cerrar', {
+            duration: 3000,
+          });
+        },
       });
   }
 
   eliminar(item: IWishlistItem): void {
-    if (!confirm(`¿Eliminar "${item.title}" de tu lista de deseos?`)) return;
-    this.wishlistService.remove(item.gameId)
+    const confirmDelete = confirm(
+      `¿Eliminar "${item.title}" de la lista de deseos?`
+    );
+
+    if (!confirmDelete) return;
+
+    this.wishlistService
+      .remove(item.gameId)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: () => { this.snackBar.open('Juego eliminado de la lista', 'Cerrar', { duration: 3000 }); this.cargar(); },
-        error: () => this.snackBar.open('Error al eliminar el juego', 'Cerrar', { duration: 3000 })
+        next: () => {
+          this.snackBar.open('Juego eliminado de la lista', 'Cerrar', {
+            duration: 3000,
+          });
+
+          this.cargar();
+        },
+        error: () => {
+          this.snackBar.open('Error al eliminar el juego', 'Cerrar', {
+            duration: 3000,
+          });
+        },
       });
   }
 }

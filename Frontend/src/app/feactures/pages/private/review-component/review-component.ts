@@ -8,13 +8,21 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
 import { ReviewService } from '../../../services/private/review.service';
 import { ReviewFormComponent } from '../review-form-component/review-form-component';
 import { IReview } from '../../../interfaces/private/Review';
 
 @Component({
   selector: 'app-review-component',
-  imports: [CommonModule, MatCardModule, MatIconModule, MatButtonModule, MatProgressSpinnerModule, MatTooltipModule],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatIconModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    MatTooltipModule,
+  ],
   templateUrl: './review-component.html',
   styleUrl: './review-component.scss',
 })
@@ -35,49 +43,105 @@ export class ReviewComponent implements OnInit {
   cargar(): void {
     this.loading.set(true);
     this.errorMessage.set('');
-    this.reviewService.getAll()
+
+    this.reviewService
+      .getAll()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (data) => { this.reviews.set(data); this.loading.set(false); },
-        error: () => { this.errorMessage.set('Error al cargar las reseñas'); this.loading.set(false); }
+        next: (data) => {
+          this.reviews.set(data);
+          this.loading.set(false);
+        },
+        error: () => {
+          this.errorMessage.set('Error al cargar las reseñas');
+          this.loading.set(false);
+        },
       });
   }
 
   crearResena(): void {
-    const dialogRef = this.dialog.open(ReviewFormComponent, { width: '500px', data: null });
+    const dialogRef = this.dialog.open(ReviewFormComponent, {
+      width: '520px',
+      maxWidth: '95vw',
+      disableClose: true,
+      data: null,
+    });
+
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.reviewService.create(result)
-          .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe({
-            next: () => { this.snackBar.open('Reseña creada exitosamente', 'Cerrar', { duration: 3000 }); this.cargar(); },
-            error: () => this.snackBar.open('Error al crear la reseña', 'Cerrar', { duration: 3000 })
-          });
-      }
+      if (!result) return;
+
+      this.reviewService
+        .create(result)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: () => {
+            this.snackBar.open('Reseña creada exitosamente', 'Cerrar', {
+              duration: 3000,
+            });
+
+            this.cargar();
+          },
+          error: () => {
+            this.snackBar.open('Error al crear la reseña', 'Cerrar', {
+              duration: 3000,
+            });
+          },
+        });
     });
   }
 
   editarResena(review: IReview): void {
-    const dialogRef = this.dialog.open(ReviewFormComponent, { width: '500px', data: review });
+    const dialogRef = this.dialog.open(ReviewFormComponent, {
+      width: '520px',
+      maxWidth: '95vw',
+      disableClose: true,
+      data: review,
+    });
+
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.reviewService.update(review.id, result)
-          .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe({
-            next: () => { this.snackBar.open('Reseña actualizada', 'Cerrar', { duration: 3000 }); this.cargar(); },
-            error: () => this.snackBar.open('Error al actualizar la reseña', 'Cerrar', { duration: 3000 })
-          });
-      }
+      if (!result) return;
+
+      this.reviewService
+        .update(review.id, result)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: () => {
+            this.snackBar.open('Reseña actualizada', 'Cerrar', {
+              duration: 3000,
+            });
+
+            this.cargar();
+          },
+          error: () => {
+            this.snackBar.open('Error al actualizar la reseña', 'Cerrar', {
+              duration: 3000,
+            });
+          },
+        });
     });
   }
 
   eliminarResena(review: IReview): void {
-    if (!confirm('¿Eliminar esta reseña?')) return;
-    this.reviewService.delete(review.id)
+    const confirmDelete = confirm('¿Eliminar esta reseña?');
+
+    if (!confirmDelete) return;
+
+    this.reviewService
+      .delete(review.id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: () => { this.snackBar.open('Reseña eliminada', 'Cerrar', { duration: 3000 }); this.cargar(); },
-        error: () => this.snackBar.open('Error al eliminar la reseña', 'Cerrar', { duration: 3000 })
+        next: () => {
+          this.snackBar.open('Reseña eliminada', 'Cerrar', {
+            duration: 3000,
+          });
+
+          this.cargar();
+        },
+        error: () => {
+          this.snackBar.open('Error al eliminar la reseña', 'Cerrar', {
+            duration: 3000,
+          });
+        },
       });
   }
 }

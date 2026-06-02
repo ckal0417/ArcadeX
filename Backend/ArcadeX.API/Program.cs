@@ -45,6 +45,8 @@ using ArcadeX.Application.Features.GameSessions.Services;
 using ArcadeX.Persistence.Features.GameSessions.Repositories;
 using ArcadeX.Application.Common.Interfaces;
 using ArcadeX.Persistence.Common.UnitOfWork;
+using ArcadeX.Application.Common.Security;
+using ArcadeX.Infrastructure.Common.Security;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -120,6 +122,7 @@ builder.Services.AddScoped<IFriendRepository, FriendRepository>();
 builder.Services.AddScoped<IGameSessionService, GameSessionService>();
 builder.Services.AddScoped<IGameSessionRepository, GameSessionRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 
 
 

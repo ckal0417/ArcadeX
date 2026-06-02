@@ -7,8 +7,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { IUser } from '../../../interfaces/private/User';
 
+import { IUser } from '../../../interfaces/private/User';
 
 @Component({
   selector: 'app-user-form-component',
@@ -19,7 +19,7 @@ import { IUser } from '../../../interfaces/private/User';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    MatSelectModule
+    MatSelectModule,
   ],
   templateUrl: './user-form-component.html',
   styleUrl: './user-form-component.scss',
@@ -30,45 +30,59 @@ export class UserFormComponent implements OnInit {
 
   data = inject<IUser | null>(MAT_DIALOG_DATA);
 
+  showPassword = false;
+
+  roles = ['User', 'Admin', 'Developer', 'Publisher'];
+
   userForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     username: ['', [Validators.required, Validators.minLength(3)]],
     country: ['', [Validators.minLength(3)]],
     password: ['', [Validators.minLength(8)]],
-    role: ['User', Validators.required]
+    role: ['User', Validators.required],
   });
 
-  roles = ['User', 'Admin', 'Developer', 'Publisher'];
-
-  ngOnInit() {
+  ngOnInit(): void {
     if (this.data) {
       this.userForm.patchValue({
         email: this.data.email,
         username: this.data.username,
         country: this.data.country ?? '',
-        role: this.data.roles[0]
+        role: this.data.roles?.[0] ?? 'User',
       });
-    } else {
-      this.userForm.get('password')!.addValidators(Validators.required);
-      this.userForm.get('password')!.updateValueAndValidity();
+
+      return;
     }
+
+    const passwordControl = this.userForm.get('password');
+
+    passwordControl?.addValidators(Validators.required);
+    passwordControl?.updateValueAndValidity();
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.userForm.invalid) {
       this.userForm.markAllAsTouched();
       return;
     }
 
-    const { role, password, ...rest } = this.userForm.value;
-    const payload: any = { ...this.data, ...rest, roles: [role] };
+    const { role, password, ...userData } = this.userForm.getRawValue();
+
+    const selectedRole = role ?? 'User';
+
+    const payload: any = {
+      ...this.data,
+      ...userData,
+      roles: [selectedRole],
+    };
+
     if (password) {
       payload.password = password;
     }
+
     this.dialogRef.close(payload);
   }
-
-  cancel() {
+  cancel(): void {
     this.dialogRef.close();
   }
 }

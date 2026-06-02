@@ -1,5 +1,6 @@
 using ArcadeX.Application.Common.Exceptions;
 using ArcadeX.Application.Common.Interfaces;
+using ArcadeX.Application.Common.Security;
 using ArcadeX.Application.Features.Users.DTOs;
 using ArcadeX.Application.Features.Users.Interfaces;
 
@@ -9,14 +10,17 @@ public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IPasswordHasher _passwordHasher;
 
     public UserService(
         IUserRepository userRepository,
-        IUnitOfWork unitOfWork
+        IUnitOfWork unitOfWork,
+        IPasswordHasher passwordHasher
     )
     {
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
+        _passwordHasher = passwordHasher;
     }
 
     public async Task<List<UserResponseDto>> GetAllAsync()
@@ -54,7 +58,16 @@ public class UserService : IUserService
                 throw new BadRequestException("One or more roles do not exist");
             }
 
-            var user = await _userRepository.CreateAsync(dto, requestedRoles);
+            var secureDto = new CreateUserDto
+            {
+                Username = dto.Username,
+                Email = dto.Email,
+                Password = _passwordHasher.Hash(dto.Password),
+                Country = dto.Country,
+                Roles = dto.Roles
+            };
+
+            var user = await _userRepository.CreateAsync(secureDto, requestedRoles);
 
             await _unitOfWork.SaveChangesAsync();
             await _unitOfWork.CommitAsync();

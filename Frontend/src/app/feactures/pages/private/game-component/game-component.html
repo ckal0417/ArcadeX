@@ -1,71 +1,118 @@
-<div class="games-container">
-  <!-- Header -->
-  <div class="games-header">
+<section class="admin-page">
+  <header class="admin-header">
     <div>
+      <span class="eyebrow">ADMIN PANEL</span>
       <h1>Gestión de Juegos</h1>
-      <p>Administra todos los juegos disponibles</p>
+      <p>Administra el catálogo de juegos disponibles en ArcadeX.</p>
     </div>
-    <button mat-raised-button color="primary" (click)="crearJuego()">
-      <mat-icon>add</mat-icon>
-      Agregar Juego
-    </button>
-  </div>
 
-  <!-- Search -->
+    <button mat-raised-button class="primary-action" (click)="crearJuego()">
+      <mat-icon>add</mat-icon>
+      Agregar juego
+    </button>
+  </header>
+
   <mat-card class="search-card">
-    <mat-form-field appearance="outline" class="full-width">
+    <div class="search-info">
+      <mat-icon>manage_search</mat-icon>
+
+      <div>
+        <h2>Buscar juegos</h2>
+        <p>Filtra por título o descripción dentro del catálogo.</p>
+      </div>
+    </div>
+
+    <mat-form-field appearance="outline" class="search-field">
       <mat-label>Buscar juegos...</mat-label>
-      <input matInput [ngModel]="searchQuery()" (ngModelChange)="buscar($event)" />
+
+      <input
+        matInput
+        [ngModel]="searchQuery()"
+        (ngModelChange)="buscar($event)"
+        placeholder="Ej: Cyberpunk, RPG, aventura..."
+      />
+
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
   </mat-card>
 
-  <!-- Loading -->
   @if (loading()) {
-    <div class="center">
+    <div class="state-card">
       <mat-spinner></mat-spinner>
+      <p>Cargando juegos...</p>
     </div>
   }
 
-  <!-- Error -->
   @if (errorMessage()) {
     <mat-card class="error-card">
-      {{ errorMessage() }}
+      <mat-icon>error</mat-icon>
+      <span>{{ errorMessage() }}</span>
     </mat-card>
   }
 
-  <!-- Table -->
   @if (!loading() && !errorMessage()) {
-    <mat-card class="table-card">
-      <div class="table-wrapper">
-        @if (filteredGames().length > 0) {
+    <mat-card class="admin-card">
+      <div class="card-header">
+        <div>
+          <h2>Catálogo de juegos</h2>
+          <p>Total mostrado: {{ filteredGames().length }}</p>
+        </div>
+
+        <mat-icon>sports_esports</mat-icon>
+      </div>
+
+      @if (filteredGames().length > 0) {
+        <div class="table-wrapper">
           <table>
             <thead>
               <tr>
                 <th>Título</th>
                 <th>Descripción</th>
                 <th>Precio</th>
-                <th>Fecha de Lanzamiento</th>
+                <th>Fecha de lanzamiento</th>
                 <th>Géneros</th>
-                <th>Acciones</th>
+                <th class="actions-column">Acciones</th>
               </tr>
             </thead>
+
             <tbody>
               @for (game of filteredGames(); track game.id) {
                 <tr>
-                  <td>{{ game.title }}</td>
-                  <td>{{ game.description | slice: 0 : 50 }}...</td>
-                  <td>${{ game.price }}</td>
-                  <td>{{ game.releaseDate | date: 'short' }}</td>
-                  <td>{{ game.genres.join(', ') }}</td>
+                  <td class="main-cell">{{ game.title }}</td>
+
                   <td>
-                    <button mat-icon-button matTooltip="Editar" (click)="editarJuego(game)">
-                      <mat-icon>edit</mat-icon>
-                    </button>
+                    {{ game.description ? (game.description | slice: 0 : 70) : 'Sin descripción' }}
+                    @if (game.description && game.description.length > 70) {
+                      ...
+                    }
+                  </td>
+
+                  <td>
+                    <span class="price-badge">${{ game.price }}</span>
+                  </td>
+
+                  <td>{{ game.releaseDate | date: 'shortDate' }}</td>
+
+                  <td>
+                    <span class="genre-text">
+                      {{ game.genres.join(', ') }}
+                    </span>
+                  </td>
+
+                  <td class="actions">
                     <button
                       mat-icon-button
-                      matTooltip="Eliminar"
-                      color="warn"
+                      matTooltip="Editar juego"
+                      class="icon-action edit"
+                      (click)="editarJuego(game)"
+                    >
+                      <mat-icon>edit</mat-icon>
+                    </button>
+
+                    <button
+                      mat-icon-button
+                      matTooltip="Eliminar juego"
+                      class="icon-action danger"
                       (click)="eliminarJuego(game)"
                     >
                       <mat-icon>delete</mat-icon>
@@ -75,13 +122,14 @@
               }
             </tbody>
           </table>
-        } @else {
-          <div class="no-data">
-            <mat-icon>videogame_asset</mat-icon>
-            <p>No hay juegos disponibles</p>
-          </div>
-        }
-      </div>
+        </div>
+      } @else {
+        <div class="empty-state">
+          <mat-icon>videogame_asset</mat-icon>
+          <h3>No hay juegos disponibles</h3>
+          <p>Crea un nuevo juego o prueba con otra búsqueda.</p>
+        </div>
+      }
     </mat-card>
   }
-</div>
+</section>

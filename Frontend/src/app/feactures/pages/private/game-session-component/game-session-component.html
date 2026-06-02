@@ -10,7 +10,7 @@
     <div class="search-row">
       <mat-form-field appearance="outline" class="search-field">
         <mat-label>ID del Juego</mat-label>
-        <input matInput [(ngModel)]="nuevoGameId" placeholder="UUID del juego a iniciar" />
+        <mat-select matInput [(ngModel)]="nuevoGameId" placeholder="UUID del juego a iniciar" />
         <mat-icon matSuffix>videogame_asset</mat-icon>
       </mat-form-field>
       <button mat-raised-button color="primary" (click)="iniciarSesion()">Iniciar Sesión</button>

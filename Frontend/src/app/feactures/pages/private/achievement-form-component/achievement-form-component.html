@@ -1,17 +1,34 @@
-<div class="form-container">
-  <h2>Crear Logro</h2>
-  <form [formGroup]="form">
+<div class="admin-form">
+  <div class="form-header">
+    <div class="icon-box">
+      <mat-icon>emoji_events</mat-icon>
+    </div>
+
+    <div>
+      <span class="eyebrow">NUEVO LOGRO</span>
+      <h2>Crear logro</h2>
+      <p>Asocia un logro a un juego y define su descripción.</p>
+    </div>
+  </div>
+
+  <form [formGroup]="form" class="form-content">
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Juego</mat-label>
+
       <mat-select formControlName="gameId" [disabled]="loadingGames()">
-        <mat-option value="">-- Seleccionar juego --</mat-option>
+        <mat-option value="">Seleccionar juego</mat-option>
+
         @if (loadingGames()) {
           <mat-option disabled>Cargando juegos...</mat-option>
         }
+
         @for (game of games(); track game.id) {
-          <mat-option [value]="game.id">{{ game.title }}</mat-option>
+          <mat-option [value]="game.id">
+            {{ game.title }}
+          </mat-option>
         }
       </mat-select>
+
       @if (form.get('gameId')?.hasError('required') && form.get('gameId')?.touched) {
         <mat-error>Selecciona un juego</mat-error>
       }
@@ -19,7 +36,13 @@
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Título</mat-label>
-      <input matInput formControlName="title" placeholder="Nombre del logro" />
+
+      <input
+        matInput
+        formControlName="title"
+        placeholder="Nombre del logro"
+      />
+
       @if (form.get('title')?.hasError('required') && form.get('title')?.touched) {
         <mat-error>El título es requerido</mat-error>
       } @else if (form.get('title')?.hasError('minlength') && form.get('title')?.touched) {
@@ -28,18 +51,24 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Descripción (opcional)</mat-label>
+      <mat-label>Descripción</mat-label>
+
       <textarea
         matInput
         formControlName="description"
-        rows="3"
+        rows="4"
         placeholder="Describe cómo obtener este logro"
       ></textarea>
     </mat-form-field>
 
     <div class="form-actions">
-      <button mat-raised-button color="primary" (click)="onSubmit()">Crear</button>
-      <button mat-stroked-button (click)="cancel()">Cancelar</button>
+      <button mat-stroked-button type="button" class="cancel-btn" (click)="cancel()">
+        Cancelar
+      </button>
+
+      <button mat-raised-button type="button" class="submit-btn" (click)="onSubmit()">
+        Crear logro
+      </button>
     </div>
   </form>
 </div>
