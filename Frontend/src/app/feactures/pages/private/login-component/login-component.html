@@ -7,8 +7,8 @@
         <h1>La próxima generación del gaming digital</h1>
 
         <p>
-          Accede a tu biblioteca, gestiona tus juegos y conecta con una plataforma
-          diseñada para jugadores, administradores y desarrolladores.
+          Accede a tu biblioteca, gestiona tus juegos y conecta con una plataforma diseñada para
+          jugadores, administradores y desarrolladores.
         </p>
 
         <div class="features">
@@ -46,18 +46,15 @@
         <mat-form-field appearance="outline">
           <mat-label>Correo electrónico</mat-label>
 
-          <input
-            matInput
-            formControlName="email"
-            type="email"
-            placeholder="correo@email.com"
-          />
+          <input matInput formControlName="email" type="email" placeholder="correo@email.com" />
 
           <mat-icon matSuffix>mail</mat-icon>
 
           @if (loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched) {
             <mat-error>El correo es requerido</mat-error>
-          } @else if (loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched) {
+          } @else if (
+            loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched
+          ) {
             <mat-error>Ingresa un correo válido</mat-error>
           }
         </mat-form-field>
@@ -72,20 +69,19 @@
             placeholder="********"
           />
 
-          <button
-            mat-icon-button
-            matSuffix
-            type="button"
-            (click)="showPass.set(!showPass())"
-          >
+          <button mat-icon-button matSuffix type="button" (click)="showPass.set(!showPass())">
             <mat-icon>
               {{ showPass() ? 'visibility_off' : 'visibility' }}
             </mat-icon>
           </button>
 
-          @if (loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched) {
+          @if (
+            loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched
+          ) {
             <mat-error>La contraseña es requerida</mat-error>
-          } @else if (loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched) {
+          } @else if (
+            loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched
+          ) {
             <mat-error>Mínimo 6 caracteres</mat-error>
           }
         </mat-form-field>
@@ -124,13 +120,6 @@
         <button mat-stroked-button type="button">
           <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" alt="discord" />
           Discord
-        </button>
-      </div>
-
-      <div class="register-link">
-        ¿No tienes cuenta?
-        <button mat-button routerLink="/register" type="button">
-          Crear cuenta
         </button>
       </div>
     </mat-card>

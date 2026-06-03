@@ -20,7 +20,6 @@ import { AuthService } from '../../../services/private/auth.service';
     MatInputModule,
     MatButtonModule,
     MatCheckboxModule,
-    RouterLink,
     ReactiveFormsModule,
   ],
   templateUrl: './login-component.html',
