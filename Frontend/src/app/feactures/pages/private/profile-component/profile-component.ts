@@ -101,11 +101,10 @@ export class ProfileComponent implements OnInit {
     const email = this.profileForm.value.email?.trim() ?? '';
     const avatar = this.profileForm.value.avatar?.trim() ?? '';
 
-    const payload: Partial<IUser> = {
+    const payload = {
       username,
       email,
       avatarUrl: avatar || undefined,
-      roles: this.auth.roles(),
     };
 
     this.userService.updateMe(payload).subscribe({
@@ -137,10 +136,16 @@ export class ProfileComponent implements OnInit {
           window.location.reload();
         }, 700);
       },
-      error: () => {
-        this.snackBar.open('Error al actualizar el perfil', 'Cerrar', {
-          duration: 3000,
-        });
+      error: (error) => {
+        console.log('ERROR ACTUALIZAR PERFIL:', error);
+
+        this.snackBar.open(
+          error?.error?.message ?? 'Error al actualizar el perfil',
+          'Cerrar',
+          {
+            duration: 5000,
+          }
+        );
       },
     });
   }

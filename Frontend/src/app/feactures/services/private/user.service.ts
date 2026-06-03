@@ -31,7 +31,7 @@ export class UserService {
     return this.http.put<IUser>(`${this.url}/${id}`, payload);
   }
 
-  updateMe(payload: Partial<IUser>): Observable<IUser> {
+  updateMe(payload: { username: string; email: string; avatarUrl?: string }): Observable<IUser> {
     return this.http.put<IUser>(`${this.url}/me`, payload);
   }
 
