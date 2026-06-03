@@ -15,12 +15,14 @@ import { AuthService } from '../../../services/private/auth.service';
   selector: 'app-login-component',
   imports: [
     MatIconModule,
+    RouterLink,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     MatCheckboxModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
+
   ],
   templateUrl: './login-component.html',
   styleUrl: './login-component.scss',

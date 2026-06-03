@@ -286,3 +286,22 @@
     flex-direction: column;
   }
 }
+.register-section {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #9ca3af;
+
+  a {
+    margin-left: 0.35rem;
+    color: #a855f7;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.2s;
+  }
+
+  a:hover {
+    color: #c084fc;
+    text-decoration: underline;
+  }
+}

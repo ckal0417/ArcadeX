@@ -141,17 +141,23 @@
 }
 
 button[mat-stroked-button] {
+
   min-height: 46px;
   padding: 0 20px;
   border-radius: 14px !important;
-  color: rgba(255, 255, 255, 0.8) !important;
+  color: rgba(255, 255, 255, 0.82) !important;
   border-color: rgba(255, 255, 255, 0.18) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
   font-weight: 700;
+  transition: all 0.25s ease;
 }
 
 button[mat-stroked-button]:hover:not([disabled]) {
-  border-color: rgba(255, 0, 212, 0.4) !important;
+  
+  background: rgba(161, 0, 255, 0.12) !important;
+  border-color: rgba(161, 0, 255, 0.45) !important;
   color: #ffffff !important;
+  transform: translateY(-2px);
 }
 
 .submit-btn {

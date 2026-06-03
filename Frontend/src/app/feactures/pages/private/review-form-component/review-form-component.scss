@@ -1,7 +1,6 @@
 .form-container {
   min-width: 520px;
   padding: 28px;
-
   color: #ffffff;
 
   background:
@@ -51,10 +50,8 @@ textarea {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
-
   margin-top: 8px;
   padding-top: 20px;
-
   border-top: 1px solid rgba(161, 0, 255, 0.22);
 }
 
@@ -66,12 +63,14 @@ button {
 }
 
 button[mat-stroked-button] {
-  color: rgba(255, 255, 255, 0.8) !important;
+  color: rgba(255, 255, 255, 0.82) !important;
   border-color: rgba(255, 255, 255, 0.18) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
 }
 
 button[mat-stroked-button]:hover {
-  border-color: rgba(255, 0, 212, 0.4) !important;
+  background: rgba(161, 0, 255, 0.12) !important;
+  border-color: rgba(255, 0, 212, 0.45) !important;
   color: #ffffff !important;
 }
 
@@ -135,17 +134,45 @@ button[mat-raised-button]:hover {
   color: #a100ff !important;
 }
 
+/* Select desplegable */
 ::ng-deep .mat-mdc-select-panel {
-  background: #0c0c12 !important;
-  border: 1px solid rgba(161, 0, 255, 0.25);
+  background: #111827 !important;
+  border: 1px solid rgba(161, 0, 255, 0.55) !important;
+  border-radius: 14px !important;
+  padding: 8px !important;
+
+  box-shadow:
+    0 0 28px rgba(161, 0, 255, 0.28),
+    0 0 55px rgba(255, 0, 212, 0.1) !important;
 }
 
 ::ng-deep .mat-mdc-option {
+  min-height: 46px !important;
+  border-radius: 10px !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+::ng-deep .mat-mdc-option .mdc-list-item__primary-text {
   color: #ffffff !important;
 }
 
 ::ng-deep .mat-mdc-option:hover {
-  background: rgba(161, 0, 255, 0.18) !important;
+  background: rgba(161, 0, 255, 0.28) !important;
+}
+
+::ng-deep .mat-mdc-option.mdc-list-item--selected {
+  background: rgba(161, 0, 255, 0.35) !important;
+}
+
+::ng-deep .mat-mdc-option.mdc-list-item--selected .mdc-list-item__primary-text {
+  color: #ffffff !important;
+}
+
+::ng-deep .mat-pseudo-checkbox-checked,
+::ng-deep .mat-mdc-option .mat-pseudo-checkbox-checked {
+  background: #a100ff !important;
+  border-color: #a100ff !important;
 }
 
 @media (max-width: 600px) {

@@ -54,6 +54,8 @@ export class FriendComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (data) => {
+          console.log('FRIENDS:', data);
+
           this.friends.set(data);
           this.loading.set(false);
         },

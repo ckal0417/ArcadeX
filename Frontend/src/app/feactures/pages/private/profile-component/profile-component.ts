@@ -111,12 +111,54 @@ export class ProfileComponent implements OnInit {
   }
 
   saveProfile(): void {
-    this.snackBar.open(
-      'El guardado real depende de que el backend desplegado tenga PUT /api/Users/me',
-      'Cerrar',
-      {
-        duration: 4000,
-      }
-    );
+    if (this.profileForm.invalid) {
+      this.profileForm.markAllAsTouched();
+
+      this.snackBar.open('Revisa los campos del formulario', 'Cerrar', {
+        duration: 3000,
+      });
+
+      return;
+    }
+
+    const payload = {
+      username: this.profileForm.value.username?.trim() ?? '',
+      email: this.profileForm.value.email?.trim() ?? '',
+      avatarUrl: this.profileForm.value.avatar?.trim() ?? '',
+    };
+
+    this.userService.updateMe(payload).subscribe({
+      next: (user) => {
+        const avatarUrl = user.avatarUrl?.trim() ?? '';
+
+        localStorage.setItem('arcadex_username', user.username);
+        localStorage.setItem('arcadex_email', user.email);
+
+        if (avatarUrl !== '') {
+          localStorage.setItem('arcadex_avatar', avatarUrl);
+        } else {
+          localStorage.removeItem('arcadex_avatar');
+        }
+
+        this.profileForm.patchValue({
+          username: user.username,
+          email: user.email,
+          avatar: avatarUrl,
+        });
+
+        this.previewAvatar.set(
+          avatarUrl !== '' ? avatarUrl : this.defaultAvatar
+        );
+
+        this.snackBar.open('Perfil actualizado correctamente', 'Cerrar', {
+          duration: 3000,
+        });
+      },
+      error: () => {
+        this.snackBar.open('Error al actualizar el perfil', 'Cerrar', {
+          duration: 3000,
+        });
+      },
+    });
   }
 }

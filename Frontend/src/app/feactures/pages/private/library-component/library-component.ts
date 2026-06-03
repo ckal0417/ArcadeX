@@ -1,10 +1,14 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
+
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
 import { LibraryService } from '../../../services/private/library.service';
 import { ILibraryItem } from '../../../interfaces/private/Library';
 
@@ -15,12 +19,15 @@ import { ILibraryItem } from '../../../interfaces/private/Library';
     MatCardModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    MatButtonModule,
   ],
   templateUrl: './library-component.html',
   styleUrl: './library-component.scss',
 })
 export class LibraryComponent implements OnInit {
   items = signal<ILibraryItem[]>([]);
+  selectedItem = signal<ILibraryItem | null>(null);
+
   loading = signal(false);
   errorMessage = signal('');
   nuevoGameId = '';
@@ -75,5 +82,13 @@ export class LibraryComponent implements OnInit {
           });
         },
       });
+  }
+
+  openDetails(item: ILibraryItem): void {
+    this.selectedItem.set(item);
+  }
+
+  closeDetails(): void {
+    this.selectedItem.set(null);
   }
 }

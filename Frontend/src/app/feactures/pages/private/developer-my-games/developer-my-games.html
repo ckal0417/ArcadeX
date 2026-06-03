@@ -32,6 +32,7 @@
         <mat-icon>sports_esports</mat-icon>
         <h3>Aún no has publicado juegos</h3>
         <p>Crea tu primer juego y aparecerá aquí.</p>
+
         <button mat-raised-button class="publish-btn" (click)="goCreate()">
           <mat-icon>add</mat-icon>
           Publicar primer juego
@@ -40,7 +41,7 @@
     } @else {
       <div class="games-grid">
         @for (game of games(); track game.id) {
-          <article class="game-card">
+          <article class="game-card" (click)="openDetails(game)">
             <div class="card-cover">
               @if (game.coverImageUrl) {
                 <img [src]="game.coverImageUrl" [alt]="game.title" loading="lazy" />
@@ -86,5 +87,73 @@
         }
       </div>
     }
+  }
+
+  @if (selectedGame()) {
+    <div class="detail-backdrop" (click)="closeDetails()">
+      <div class="detail-modal" (click)="$event.stopPropagation()">
+        <button mat-icon-button class="close-btn" type="button" (click)="closeDetails()">
+          <mat-icon>close</mat-icon>
+        </button>
+
+        <div class="detail-cover">
+          @if (selectedGame()?.coverImageUrl) {
+            <img
+              [src]="selectedGame()?.coverImageUrl"
+              [alt]="selectedGame()?.title"
+            />
+          } @else {
+            <div class="cover-placeholder detail-placeholder">
+              <mat-icon>sports_esports</mat-icon>
+            </div>
+          }
+        </div>
+
+        <div class="detail-content">
+          <span class="eyebrow">DETALLE DEL JUEGO</span>
+
+          <h2>{{ selectedGame()?.title }}</h2>
+
+          <p class="detail-description">
+            {{ selectedGame()?.description || 'Sin descripción disponible.' }}
+          </p>
+
+          <div class="detail-chips">
+            @for (genre of selectedGame()?.genres ?? []; track genre) {
+              <span class="genre-chip">{{ genre }}</span>
+            }
+          </div>
+
+          <div class="detail-grid">
+            <div class="detail-item">
+              <span>Precio</span>
+              <strong>${{ selectedGame()?.price }}</strong>
+            </div>
+
+            <div class="detail-item">
+              <span>Lanzamiento</span>
+              <strong>
+                {{ selectedGame()?.releaseDate | date: 'mediumDate' }}
+              </strong>
+            </div>
+
+            <div class="detail-item">
+              <span>Developer</span>
+              <strong>{{ selectedGame()?.ownerUsername || 'Sin developer' }}</strong>
+            </div>
+
+            <div class="detail-item">
+              <span>ID del juego</span>
+              <strong>{{ selectedGame()?.id }}</strong>
+            </div>
+
+            <div class="detail-item full">
+              <span>URL de portada</span>
+              <strong>{{ selectedGame()?.coverImageUrl || 'Sin imagen' }}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   }
 </section>

@@ -86,9 +86,7 @@
           }
         </mat-form-field>
 
-        <div class="options">
-          <a href="#">¿Olvidaste tu contraseña?</a>
-        </div>
+
 
         <button
           mat-raised-button
@@ -99,6 +97,14 @@
         >
           {{ loading() ? 'Ingresando...' : 'Entrar' }}
         </button>
+
+        <div class="register-section">
+          <span>¿No tienes una cuenta?</span>
+
+          <a routerLink="/register">
+            Regístrate aquí
+          </a>
+        </div>
 
         @if (error()) {
           <div class="error-message">
@@ -112,15 +118,31 @@
       </div>
 
       <div class="social-buttons">
-        <button mat-stroked-button type="button">
-          <img src="https://cdn-icons-png.flaticon.com/512/300/300221.png" alt="google" />
+        <a
+          mat-stroked-button
+          href="https://accounts.google.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/300/300221.png"
+            alt="google"
+          />
           Google
-        </button>
+        </a>
 
-        <button mat-stroked-button type="button">
-          <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" alt="discord" />
+        <a
+          mat-stroked-button
+          href="https://discord.com/login"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/733/733553.png"
+            alt="discord"
+          />
           Discord
-        </button>
+        </a>
       </div>
     </mat-card>
   </div>

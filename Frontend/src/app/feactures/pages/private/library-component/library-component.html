@@ -25,7 +25,7 @@
     @if (items().length > 0) {
       <div class="items-grid">
         @for (item of items(); track item.gameId) {
-          <article class="item-card">
+          <article class="item-card" (click)="openDetails(item)">
             <div class="item-cover">
               <mat-icon>sports_esports</mat-icon>
             </div>
@@ -57,5 +57,48 @@
         <p>Visita la tienda para añadir juegos a tu colección.</p>
       </div>
     }
+  }
+
+  @if (selectedItem()) {
+    <div class="detail-backdrop" (click)="closeDetails()">
+      <div class="detail-modal" (click)="$event.stopPropagation()">
+        <button mat-icon-button class="close-btn" type="button" (click)="closeDetails()">
+          <mat-icon>close</mat-icon>
+        </button>
+
+        <div class="detail-cover">
+          <div class="detail-placeholder">
+            <mat-icon>sports_esports</mat-icon>
+          </div>
+        </div>
+
+        <div class="detail-content">
+          <span class="eyebrow">DETALLE DE BIBLIOTECA</span>
+
+          <h2>{{ selectedItem()?.title }}</h2>
+
+          <p class="detail-description">
+            {{ selectedItem()?.description || 'Sin descripción disponible.' }}
+          </p>
+
+          <div class="detail-grid">
+            <div class="detail-item">
+              <span>ID del juego</span>
+              <strong>{{ selectedItem()?.gameId }}</strong>
+            </div>
+
+            <div class="detail-item">
+              <span>Fecha de adquisición</span>
+              <strong>{{ selectedItem()?.addedAt | date:'mediumDate' }}</strong>
+            </div>
+
+            <div class="detail-item full">
+              <span>Descripción completa</span>
+              <strong>{{ selectedItem()?.description || 'Sin descripción disponible.' }}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   }
 </section>

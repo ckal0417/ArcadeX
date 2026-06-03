@@ -104,7 +104,7 @@
                   </td>
 
                   <td class="actions">
-                    @if (friend.direction === 'incoming') {
+                    @if (friend.status === 'pending' && friend.direction === 'incoming') {
                       <button
                         mat-icon-button
                         matTooltip="Aceptar solicitud"
@@ -124,7 +124,7 @@
                       </button>
                     }
 
-                    @if (friend.direction === 'outgoing') {
+                    @if (friend.status === 'pending' && friend.direction === 'outgoing') {
                       <button
                         mat-icon-button
                         matTooltip="Cancelar solicitud"
@@ -135,7 +135,7 @@
                       </button>
                     }
 
-                    @if (friend.direction === 'accepted') {
+                    @if (friend.status === 'accepted') {
                       <button
                         mat-icon-button
                         matTooltip="Eliminar amigo"
@@ -146,6 +146,8 @@
                       </button>
                     }
                   </td>
+
+                  
                 </tr>
               }
             </tbody>
