@@ -59,11 +59,17 @@
       <span class="spacer"></span>
 
       <div class="topbar-profile">
-        <mat-icon>shield_person</mat-icon>
+        <div class="profile-avatar">
+          <img
+            [src]="avatarUrl()"
+            alt="Avatar del usuario"
+            (error)="setDefaultAvatar($event)"
+          />
+        </div>
 
         <div>
-          <strong>User</strong>
-          <small>Usuario Final</small>
+          <strong>{{ username() }}</strong>
+          <small>{{ mainRole() }}</small>
         </div>
       </div>
     </mat-toolbar>

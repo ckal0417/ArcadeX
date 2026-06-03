@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { environment } from "../../../../enviroment/enroment";
 import { IUser } from "../../interfaces/private/User";
-
+import { RegisterRequest } from "../../interfaces/private/Register";
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -18,7 +18,7 @@ export class UserService {
     return this.http.get<IUser>(`${this.url}/${id}`);
   }
 
-  create(payload: Omit<IUser, 'id'>): Observable<IUser> {
+  create(payload: RegisterRequest): Observable<IUser> {
     return this.http.post<IUser>(this.url, payload);
   }
 

@@ -49,7 +49,7 @@ public class UserService : IUserService
                 throw new BadRequestException("Username or email already exists");
             }
 
-            var requestedRoles = NormalizeRoles(dto.Roles);
+            var requestedRoles = new List<string> { "User" };
 
             var rolesExist = await _userRepository.RolesExistAsync(requestedRoles);
 

@@ -23,7 +23,8 @@ interface NavItem {
     MatButtonModule,
     MatIconModule,
     MatListModule,
-    MatTooltipModule,],
+    MatTooltipModule,
+  ],
   templateUrl: './user-layout.html',
   styleUrl: './user-layout.scss',
 })
@@ -32,6 +33,12 @@ export class UserLayout {
   private router = inject(Router);
 
   collapsed = signal(false);
+
+  defaultAvatar = 'assets/branding/logo.png';
+
+  username = this.auth.username;
+  mainRole = this.auth.mainRole;
+  avatar = this.auth.avatar;
 
   navItems: NavItem[] = [
     { icon: 'dashboard', label: 'Dashboard', route: '/dashboard/user/dashboard' },
@@ -42,6 +49,21 @@ export class UserLayout {
     { icon: 'group', label: 'Amigos', route: '/dashboard/user/friends' },
     { icon: 'videogame_asset', label: 'Sesiones', route: '/dashboard/user/game-sessions' },
   ];
+
+  avatarUrl(): string {
+    const avatar = this.avatar();
+
+    if (!avatar || avatar.trim() === '') {
+      return this.defaultAvatar;
+    }
+
+    return avatar;
+  }
+
+  setDefaultAvatar(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    img.src = this.defaultAvatar;
+  }
 
   toggle(): void {
     this.collapsed.set(!this.collapsed());

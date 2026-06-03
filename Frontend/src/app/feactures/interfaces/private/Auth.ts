@@ -5,14 +5,17 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   token: string;
+  roles: string[];
   username: string;
   email: string;
-  roles: string[];
 }
 
 export interface JwtPayload {
-    sub: number;
-    email: string;
-    iat: number;
-    exp?: number;
+  sub: string;
+  email?: string;
+  username?: string;
+  name?: string;
+  avatar?: string | null;
+  exp?: number;
+  iat?: number;
 }
