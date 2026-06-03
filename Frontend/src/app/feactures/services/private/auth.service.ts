@@ -84,12 +84,13 @@ export class AuthService {
       .pipe(
         tap((res) => {
           localStorage.setItem(this.TOKEN_KEY, res.token);
-          localStorage.setItem(this.ROLES_KEY, JSON.stringify(res.roles ?? []));
+          const normalizedRoles = this.normalizeRoles(res.roles ?? []);
+          localStorage.setItem(this.ROLES_KEY, JSON.stringify(normalizedRoles));
           localStorage.setItem(this.USERNAME_KEY, res.username);
           localStorage.setItem(this.EMAIL_KEY, res.email);
 
           this._token.set(res.token);
-          this._roles.set(res.roles ?? []);
+          this._roles.set(normalizedRoles);
           this._username.set(res.username);
           this._email.set(res.email);
         })
@@ -132,9 +133,14 @@ export class AuthService {
     return !!this._token();
   }
 
+  private normalizeRoles(roles: string[]): string[] {
+    return roles.map(r => r.charAt(0).toUpperCase() + r.slice(1).toLowerCase());
+  }
+
   private loadRoles(): string[] {
     try {
-      return JSON.parse(localStorage.getItem(this.ROLES_KEY) ?? '[]');
+      const stored = JSON.parse(localStorage.getItem(this.ROLES_KEY) ?? '[]');
+      return this.normalizeRoles(stored);
     } catch {
       return [];
     }
