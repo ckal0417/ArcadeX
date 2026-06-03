@@ -3,30 +3,38 @@ import { roleGuard } from './core/guards/role.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
+
   {
-    path: 'home', loadChildren: () =>
-      import('./feactures/routes/public/home.route').then(m => m.homeRoute)
+    path: 'home',
+    loadChildren: () =>
+      import('./feactures/routes/public/home.route').then(m => m.homeRoute),
   },
   {
-    path: 'contact', loadChildren: () =>
-      import('./feactures/routes/public/contact.ruote').then(m => m.contactRoute)
+    path: 'contact',
+    loadChildren: () =>
+      import('./feactures/routes/public/contact.ruote').then(m => m.contactRoute),
   },
   {
-    path: 'about', loadChildren: () =>
-      import('./feactures/routes/public/about.route').then(m => m.aboutRoute)
+    path: 'about',
+    loadChildren: () =>
+      import('./feactures/routes/public/about.route').then(m => m.aboutRoute),
   },
   {
-    path: 'store', loadChildren: () =>
-      import('./feactures/routes/public/game.route').then(m => m.gameRoute)
+    path: 'store',
+    loadChildren: () =>
+      import('./feactures/routes/public/game.route').then(m => m.gameRoute),
   },
   {
-    path: 'register', loadChildren: () =>
-      import('./feactures/routes/public/register.route').then(m => m.regiterRoute)
+    path: 'register',
+    loadChildren: () =>
+      import('./feactures/routes/public/register.route').then(m => m.regiterRoute),
   },
   {
-    path: 'login', loadChildren: () =>
-      import('./feactures/routes/private/login.route').then(m => m.loginRoute)
+    path: 'login',
+    loadChildren: () =>
+      import('./feactures/routes/private/login.route').then(m => m.loginRoute),
   },
+
   {
     path: 'admin',
     canActivate: [roleGuard(['Admin'])],
@@ -94,12 +102,19 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./feactures/pages/private/game-session-component/game-session-component').then(m => m.GameSessionComponent),
       },
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('./feactures/pages/private/profile-component/profile-component').then(m => m.ProfileComponent),
+      },
     ],
   },
+
   {
     path: 'dashboard',
     children: [
       { path: 'admin', redirectTo: '/admin/dashboard', pathMatch: 'full' },
+
       {
         path: 'developer',
         canActivate: [roleGuard(['Developer'])],
@@ -132,8 +147,14 @@ export const routes: Routes = [
             loadComponent: () =>
               import('./feactures/pages/private/review-component/review-component').then(m => m.ReviewComponent),
           },
+          {
+            path: 'profile',
+            loadComponent: () =>
+              import('./feactures/pages/private/profile-component/profile-component').then(m => m.ProfileComponent),
+          },
         ],
       },
+
       {
         path: 'user',
         canActivate: [roleGuard(['User'])],
@@ -175,6 +196,11 @@ export const routes: Routes = [
             path: 'game-sessions',
             loadComponent: () =>
               import('./feactures/pages/private/game-session-component/game-session-component').then(m => m.GameSessionComponent),
+          },
+          {
+            path: 'profile',
+            loadComponent: () =>
+              import('./feactures/pages/private/profile-component/profile-component').then(m => m.ProfileComponent),
           },
         ],
       },

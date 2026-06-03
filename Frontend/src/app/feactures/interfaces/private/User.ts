@@ -4,6 +4,7 @@ export interface IUser {
   username: string;
   country?: string;
   roles: string[];
+  avatarUrl?: string;
   createdAt?: string;
   lastLogin?: string;
 }

@@ -40,6 +40,12 @@ export class AdminLayouts {
 
   collapsed = signal(false);
 
+  defaultAvatar = 'assets/branding/default-avatar.png';
+
+  username = this.auth.username;
+  mainRole = this.auth.mainRole;
+  avatar = this.auth.avatar;
+
   navItems: NavItem[] = [
     { icon: 'dashboard', label: 'Dashboard', route: '/admin/dashboard' },
     { icon: 'people', label: 'Usuarios', route: '/admin/users' },
@@ -52,8 +58,24 @@ export class AdminLayouts {
     { icon: 'group', label: 'Amigos', route: '/admin/friends' },
     { icon: 'library_books', label: 'Biblioteca', route: '/admin/library' },
     { icon: 'favorite', label: 'Lista de Deseos', route: '/admin/wishlist' },
+    { icon: 'person', label: 'Mi Perfil', route: '/admin/profile' },
     { icon: 'videogame_asset', label: 'Sesiones', route: '/admin/game-sessions' },
   ];
+
+  avatarUrl(): string {
+    const avatar = this.avatar();
+
+    if (!avatar || avatar.trim() === '') {
+      return this.defaultAvatar;
+    }
+
+    return avatar;
+  }
+
+  setDefaultAvatar(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    img.src = this.defaultAvatar;
+  }
 
   toggle(): void {
     this.collapsed.set(!this.collapsed());

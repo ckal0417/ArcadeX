@@ -1,6 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
+
 import { environment } from "../../../../enviroment/enroment";
 import { IUser } from "../../interfaces/private/User";
 import { RegisterRequest } from "../../interfaces/private/Register";
@@ -14,6 +15,10 @@ export class UserService {
     return this.http.get<IUser[]>(this.url);
   }
 
+  getMe(): Observable<IUser> {
+    return this.http.get<IUser>(`${this.url}/me`);
+  }
+
   getById(id: string): Observable<IUser> {
     return this.http.get<IUser>(`${this.url}/${id}`);
   }
@@ -24,6 +29,10 @@ export class UserService {
 
   update(id: string, payload: Partial<IUser>): Observable<IUser> {
     return this.http.put<IUser>(`${this.url}/${id}`, payload);
+  }
+
+  updateMe(payload: Partial<IUser>): Observable<IUser> {
+    return this.http.put<IUser>(`${this.url}/me`, payload);
   }
 
   delete(id: string): Observable<void> {

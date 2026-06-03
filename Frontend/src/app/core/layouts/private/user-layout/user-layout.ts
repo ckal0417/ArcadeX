@@ -47,6 +47,7 @@ export class UserLayout {
     { icon: 'favorite', label: 'Lista de Deseos', route: '/dashboard/user/wishlist' },
     { icon: 'rate_review', label: 'Reseñas', route: '/dashboard/user/reviews' },
     { icon: 'group', label: 'Amigos', route: '/dashboard/user/friends' },
+    { icon: 'person', label: 'Mi Perfil', route: '/dashboard/user/profile' },
     { icon: 'videogame_asset', label: 'Sesiones', route: '/dashboard/user/game-sessions' },
   ];
 

@@ -13,14 +13,16 @@ import {
   providedIn: 'root',
 })
 export class AuthService {
-
-  private readonly USERNAME_KEY = 'arcadex_username';
   private readonly API = environment.apiUrl;
   private readonly TOKEN_KEY = environment.tokenKey;
   private readonly ROLES_KEY = 'arcadex_roles';
+  private readonly USERNAME_KEY = 'arcadex_username';
+  private readonly EMAIL_KEY = 'arcadex_email';
 
   private _token = signal<string | null>(localStorage.getItem(this.TOKEN_KEY));
   private _roles = signal<string[]>(this.loadRoles());
+  private _username = signal<string | null>(localStorage.getItem(this.USERNAME_KEY));
+  private _email = signal<string | null>(localStorage.getItem(this.EMAIL_KEY));
 
   isAuthenticated = computed(() => !!this._token());
   token = computed(() => this._token());
@@ -31,19 +33,22 @@ export class AuthService {
     return token ? this.decodeToken(token) : null;
   });
 
-  userEmail = computed(() => this.payload()?.email ?? null);
+  userEmail = computed(() => {
+    return (
+      this._email() ??
+      this.payload()?.email ??
+      null
+    );
+  });
+
   userId = computed(() => this.payload()?.sub ?? null);
 
   username = computed(() => {
-    const payload: any = this.payload();
-
     return (
-      payload?.username ??
-      payload?.userName ??
-      payload?.name ??
-      payload?.unique_name ??
-      payload?.given_name ??
-      payload?.email ??
+      this._username() ??
+      this.payload()?.username ??
+      this.payload()?.name ??
+      this.userEmail() ??
       'Usuario'
     );
   });
@@ -56,6 +61,7 @@ export class AuthService {
       payload?.avatarUrl ??
       payload?.imageUrl ??
       payload?.picture ??
+      localStorage.getItem('arcadex_avatar') ??
       null
     );
   });
@@ -63,33 +69,44 @@ export class AuthService {
   mainRole = computed(() => {
     const role = this._roles()[0];
 
-    if (role === 'User') return 'Usuario Final';
+    if (role === 'User') return 'Usuario';
     if (role === 'Admin') return 'Administrador';
     if (role === 'Developer') return 'Desarrollador';
 
-    return 'Usuario Final';
+    return 'Usuario';
   });
 
   constructor(private http: HttpClient) {}
 
   login(credentials: LoginRequest) {
-    return this.http.post<LoginResponse>(`${this.API}/Auth/login`, credentials).pipe(
-      tap((res) => {
-        localStorage.setItem(this.TOKEN_KEY, res.token);
-        localStorage.setItem(this.ROLES_KEY, JSON.stringify(res.roles ?? []));
+    return this.http
+      .post<LoginResponse>(`${this.API}/Auth/login`, credentials)
+      .pipe(
+        tap((res) => {
+          localStorage.setItem(this.TOKEN_KEY, res.token);
+          localStorage.setItem(this.ROLES_KEY, JSON.stringify(res.roles ?? []));
+          localStorage.setItem(this.USERNAME_KEY, res.username);
+          localStorage.setItem(this.EMAIL_KEY, res.email);
 
-        this._token.set(res.token);
-        this._roles.set(res.roles ?? []);
-      })
-    );
+          this._token.set(res.token);
+          this._roles.set(res.roles ?? []);
+          this._username.set(res.username);
+          this._email.set(res.email);
+        })
+      );
   }
 
   logout(router: any): void {
     localStorage.removeItem(this.TOKEN_KEY);
     localStorage.removeItem(this.ROLES_KEY);
+    localStorage.removeItem(this.USERNAME_KEY);
+    localStorage.removeItem(this.EMAIL_KEY);
+    localStorage.removeItem('arcadex_avatar');
 
     this._token.set(null);
     this._roles.set([]);
+    this._username.set(null);
+    this._email.set(null);
 
     router.navigate(['/login']);
   }
@@ -132,9 +149,14 @@ export class AuthService {
       if (parsed.exp && parsed.exp * 1000 < Date.now()) {
         localStorage.removeItem(this.TOKEN_KEY);
         localStorage.removeItem(this.ROLES_KEY);
+        localStorage.removeItem(this.USERNAME_KEY);
+        localStorage.removeItem(this.EMAIL_KEY);
+        localStorage.removeItem('arcadex_avatar');
 
         this._token.set(null);
         this._roles.set([]);
+        this._username.set(null);
+        this._email.set(null);
 
         return null;
       }

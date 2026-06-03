@@ -39,13 +39,35 @@ export class DeveloperLayout {
 
   collapsed = signal(false);
 
+  defaultAvatar = 'assets/branding/default-avatar.png';
+
+  username = this.auth.username;
+  mainRole = this.auth.mainRole;
+  avatar = this.auth.avatar;
+
   navItems: NavItem[] = [
     { icon: 'dashboard', label: 'Dashboard', route: '/dashboard/developer/dashboard' },
     { icon: 'add_circle', label: 'Publicar Juego', route: '/dashboard/developer/create' },
     { icon: 'sports_esports', label: 'Mis Juegos', route: '/dashboard/developer/my-games' },
     { icon: 'emoji_events', label: 'Logros', route: '/dashboard/developer/achievements' },
     { icon: 'rate_review', label: 'Reseñas', route: '/dashboard/developer/reviews' },
+    { icon: 'person', label: 'Mi Perfil', route: '/dashboard/developer/profile' },
   ];
+
+  avatarUrl(): string {
+    const avatar = this.avatar();
+
+    if (!avatar || avatar.trim() === '') {
+      return this.defaultAvatar;
+    }
+
+    return avatar;
+  }
+
+  setDefaultAvatar(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    img.src = this.defaultAvatar;
+  }
 
   toggle(): void {
     this.collapsed.set(!this.collapsed());

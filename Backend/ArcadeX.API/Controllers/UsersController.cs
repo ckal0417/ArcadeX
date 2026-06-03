@@ -40,6 +40,21 @@ public class UsersController : ControllerBase
         return Ok(user);
     }
 
+    [HttpPut("me")]
+    public async Task<IActionResult> UpdateMe(UpdateUserDto dto)
+    {
+        var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+        var user = await _userService.UpdateAsync(userId, dto);
+
+        if (user is null)
+        {
+            return NotFound(new { message = "User not found" });
+        }
+
+        return Ok(user);
+    }
+
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
