@@ -68,17 +68,30 @@
             <thead>
               <tr>
                 <th>Usuario</th>
-                <th>Email</th>
+                <th>Tipo</th>
                 <th>Estado</th>
                 <th class="actions-column">Acciones</th>
               </tr>
             </thead>
 
             <tbody>
-              @for (friend of friends(); track friend.id) {
+              @for (friend of friends(); track friend.friendId) {
                 <tr>
-                  <td class="main-cell">{{ friend.username }}</td>
-                  <td>{{ friend.email }}</td>
+                  <td class="main-cell">{{ friend.friendUsername }}</td>
+
+                  <td>
+                    @if (friend.direction === 'incoming') {
+                      Solicitud recibida
+                    }
+
+                    @if (friend.direction === 'outgoing') {
+                      Solicitud enviada
+                    }
+
+                    @if (friend.direction === 'accepted') {
+                      Amigo
+                    }
+                  </td>
 
                   <td>
                     <span
@@ -91,7 +104,7 @@
                   </td>
 
                   <td class="actions">
-                    @if (friend.status === 'pending') {
+                    @if (friend.direction === 'incoming') {
                       <button
                         mat-icon-button
                         matTooltip="Aceptar solicitud"
@@ -100,16 +113,38 @@
                       >
                         <mat-icon>check_circle</mat-icon>
                       </button>
+
+                      <button
+                        mat-icon-button
+                        matTooltip="Rechazar solicitud"
+                        class="icon-action danger"
+                        (click)="rechazar(friend)"
+                      >
+                        <mat-icon>cancel</mat-icon>
+                      </button>
                     }
 
-                    <button
-                      mat-icon-button
-                      matTooltip="Eliminar amigo"
-                      class="icon-action danger"
-                      (click)="eliminar(friend)"
-                    >
-                      <mat-icon>person_remove</mat-icon>
-                    </button>
+                    @if (friend.direction === 'outgoing') {
+                      <button
+                        mat-icon-button
+                        matTooltip="Cancelar solicitud"
+                        class="icon-action danger"
+                        (click)="cancelar(friend)"
+                      >
+                        <mat-icon>undo</mat-icon>
+                      </button>
+                    }
+
+                    @if (friend.direction === 'accepted') {
+                      <button
+                        mat-icon-button
+                        matTooltip="Eliminar amigo"
+                        class="icon-action danger"
+                        (click)="eliminar(friend)"
+                      >
+                        <mat-icon>person_remove</mat-icon>
+                      </button>
+                    }
                   </td>
                 </tr>
               }

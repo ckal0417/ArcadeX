@@ -64,6 +64,16 @@ public class FriendService : IFriendService
         return friend;
     }
 
+    public async Task<bool> RejectRequestAsync(Guid userId, Guid friendId)
+    {
+        return await _friendRepository.RejectRequestAsync(userId, friendId);
+    }
+
+    public async Task<bool> CancelRequestAsync(Guid userId, Guid friendId)
+    {
+        return await _friendRepository.CancelRequestAsync(userId, friendId);
+    }
+
     public async Task<bool> DeleteAsync(Guid userId, Guid friendId)
     {
         return await _friendRepository.DeleteAsync(userId, friendId);

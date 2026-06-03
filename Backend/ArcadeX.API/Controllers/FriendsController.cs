@@ -53,6 +53,46 @@ public class FriendsController : ControllerBase
         return Ok(friend);
     }
 
+    [HttpDelete("{friendId:guid}/reject")]
+    public async Task<IActionResult> RejectRequest(Guid friendId)
+    {
+        var userId = Guid.Parse(
+            User.FindFirstValue(ClaimTypes.NameIdentifier)!
+        );
+
+        var deleted = await _friendService.RejectRequestAsync(userId, friendId);
+
+        if (!deleted)
+        {
+            return NotFound(new
+            {
+                message = "Friend request not found"
+            });
+        }
+
+        return NoContent();
+    }
+
+    [HttpDelete("{friendId:guid}/cancel")]
+    public async Task<IActionResult> CancelRequest(Guid friendId)
+    {
+        var userId = Guid.Parse(
+            User.FindFirstValue(ClaimTypes.NameIdentifier)!
+        );
+
+        var deleted = await _friendService.CancelRequestAsync(userId, friendId);
+
+        if (!deleted)
+        {
+            return NotFound(new
+            {
+                message = "Friend request not found"
+            });
+        }
+
+        return NoContent();
+    }
+
     [HttpDelete("{friendId:guid}")]
     public async Task<IActionResult> Delete(Guid friendId)
     {

@@ -1,7 +1,9 @@
-export interface IFriend {
-  id: string;
+export interface FriendInterface {
+  userId: string;
   username: string;
-  email: string;
-  country?: string;
-  status: 'pending' | 'accepted';
+  friendId: string;
+  friendUsername: string;
+  status: string;
+  direction: 'incoming' | 'outgoing' | 'accepted';
+  createdAt: string;
 }

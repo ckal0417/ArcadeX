@@ -10,7 +10,6 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AuthService } from '../../../services/private/auth.service';
 import { UserService } from '../../../services/private/user.service';
-import { IUser } from '../../../interfaces/private/User';
 
 @Component({
   selector: 'app-profile-component',
@@ -32,11 +31,11 @@ export class ProfileComponent implements OnInit {
   private userService = inject(UserService);
   private snackBar = inject(MatSnackBar);
 
-  defaultAvatar = 'assets/branding/default-avatar.png';
+  defaultAvatar = 'assets/branding/logo.png';
 
+  userId = signal<string>('');
   username = this.auth.username;
   email = this.auth.userEmail;
-  userId = this.auth.userId;
   role = this.auth.mainRole;
 
   previewAvatar = signal(this.defaultAvatar);
@@ -56,24 +55,38 @@ export class ProfileComponent implements OnInit {
       next: (user) => {
         const avatarUrl = user.avatarUrl?.trim() ?? '';
 
+        this.userId.set(user.id);
+
         this.profileForm.patchValue({
           username: user.username,
           email: user.email,
           avatar: avatarUrl,
         });
 
-        this.previewAvatar.set(avatarUrl || this.defaultAvatar);
+        this.previewAvatar.set(
+          avatarUrl !== '' ? avatarUrl : this.defaultAvatar
+        );
 
         localStorage.setItem('arcadex_username', user.username);
         localStorage.setItem('arcadex_email', user.email);
 
-        if (avatarUrl) {
+        if (avatarUrl !== '') {
           localStorage.setItem('arcadex_avatar', avatarUrl);
         } else {
           localStorage.removeItem('arcadex_avatar');
         }
       },
       error: () => {
+        this.userId.set(this.auth.userId() ?? '');
+
+        this.profileForm.patchValue({
+          username: this.username(),
+          email: this.email() ?? '',
+          avatar: '',
+        });
+
+        this.previewAvatar.set(this.defaultAvatar);
+
         this.snackBar.open('Error al cargar el perfil', 'Cerrar', {
           duration: 3000,
         });
@@ -83,7 +96,13 @@ export class ProfileComponent implements OnInit {
 
   previewAvatarChange(): void {
     const avatar = this.profileForm.value.avatar?.trim() ?? '';
-    this.previewAvatar.set(avatar || this.defaultAvatar);
+
+    if (avatar === '') {
+      this.previewAvatar.set(this.defaultAvatar);
+      return;
+    }
+
+    this.previewAvatar.set(avatar);
   }
 
   setDefaultAvatar(event: Event): void {
@@ -92,61 +111,12 @@ export class ProfileComponent implements OnInit {
   }
 
   saveProfile(): void {
-    if (this.profileForm.invalid) {
-      this.profileForm.markAllAsTouched();
-      return;
-    }
-
-    const username = this.profileForm.value.username?.trim() ?? '';
-    const email = this.profileForm.value.email?.trim() ?? '';
-    const avatar = this.profileForm.value.avatar?.trim() ?? '';
-
-    const payload = {
-      username,
-      email,
-      avatarUrl: avatar || undefined,
-    };
-
-    this.userService.updateMe(payload).subscribe({
-      next: (user) => {
-        const avatarUrl = user.avatarUrl?.trim() ?? '';
-
-        localStorage.setItem('arcadex_username', user.username);
-        localStorage.setItem('arcadex_email', user.email);
-
-        if (avatarUrl) {
-          localStorage.setItem('arcadex_avatar', avatarUrl);
-        } else {
-          localStorage.removeItem('arcadex_avatar');
-        }
-
-        this.profileForm.patchValue({
-          username: user.username,
-          email: user.email,
-          avatar: avatarUrl,
-        });
-
-        this.previewAvatar.set(avatarUrl || this.defaultAvatar);
-
-        this.snackBar.open('Perfil actualizado correctamente', 'Cerrar', {
-          duration: 2500,
-        });
-
-        setTimeout(() => {
-          window.location.reload();
-        }, 700);
-      },
-      error: (error) => {
-        console.log('ERROR ACTUALIZAR PERFIL:', error);
-
-        this.snackBar.open(
-          error?.error?.message ?? 'Error al actualizar el perfil',
-          'Cerrar',
-          {
-            duration: 5000,
-          }
-        );
-      },
-    });
+    this.snackBar.open(
+      'El guardado real depende de que el backend desplegado tenga PUT /api/Users/me',
+      'Cerrar',
+      {
+        duration: 4000,
+      }
+    );
   }
 }

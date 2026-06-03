@@ -26,11 +26,28 @@ public class FriendRepository : IFriendRepository
             .Include(friend => friend.FriendUser)
             .Select(friend => new FriendResponseDto
             {
-                UserId = friend.UserId,
-                Username = friend.User.Username,
-                FriendId = friend.FriendId,
-                FriendUsername = friend.FriendUser.Username,
+                UserId = userId,
+
+                Username = friend.UserId == userId
+                    ? friend.User.Username
+                    : friend.FriendUser.Username,
+
+                FriendId = friend.UserId == userId
+                    ? friend.FriendId
+                    : friend.UserId,
+
+                FriendUsername = friend.UserId == userId
+                    ? friend.FriendUser.Username
+                    : friend.User.Username,
+
                 Status = friend.Status,
+
+                Direction = friend.Status == "accepted"
+                    ? "accepted"
+                    : friend.UserId == userId
+                        ? "outgoing"
+                        : "incoming",
+
                 CreatedAt = friend.CreatedAt
             })
             .ToListAsync();
@@ -50,7 +67,7 @@ public class FriendRepository : IFriendRepository
 
         await _context.SaveChangesAsync();
 
-        return await GetRelationshipAsync(userId, friendId);
+        return await GetRelationshipForUserAsync(userId, friendId);
     }
 
     public async Task<FriendResponseDto?> AcceptRequestAsync(Guid userId, Guid friendId)
@@ -71,18 +88,62 @@ public class FriendRepository : IFriendRepository
 
         await _context.SaveChangesAsync();
 
-        return await GetRelationshipAsync(friend.UserId, friend.FriendId);
+        return await GetRelationshipForUserAsync(userId, friendId);
+    }
+
+    public async Task<bool> RejectRequestAsync(Guid userId, Guid friendId)
+    {
+        var friend = await _context.Friends
+            .FirstOrDefaultAsync(friend =>
+                friend.UserId == friendId &&
+                friend.FriendId == userId &&
+                friend.Status == "pending"
+            );
+
+        if (friend is null)
+        {
+            return false;
+        }
+
+        _context.Friends.Remove(friend);
+
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+
+    public async Task<bool> CancelRequestAsync(Guid userId, Guid friendId)
+    {
+        var friend = await _context.Friends
+            .FirstOrDefaultAsync(friend =>
+                friend.UserId == userId &&
+                friend.FriendId == friendId &&
+                friend.Status == "pending"
+            );
+
+        if (friend is null)
+        {
+            return false;
+        }
+
+        _context.Friends.Remove(friend);
+
+        await _context.SaveChangesAsync();
+
+        return true;
     }
 
     public async Task<bool> DeleteAsync(Guid userId, Guid friendId)
     {
         var friend = await _context.Friends
             .FirstOrDefaultAsync(friend =>
+                friend.Status == "accepted" &&
                 (
                     friend.UserId == userId &&
                     friend.FriendId == friendId
                 )
                 ||
+                friend.Status == "accepted" &&
                 (
                     friend.UserId == friendId &&
                     friend.FriendId == userId
@@ -123,22 +184,49 @@ public class FriendRepository : IFriendRepository
             );
     }
 
-    private async Task<FriendResponseDto?> GetRelationshipAsync(Guid userId, Guid friendId)
+    private async Task<FriendResponseDto?> GetRelationshipForUserAsync(
+        Guid userId,
+        Guid friendId
+    )
     {
         return await _context.Friends
             .Where(friend =>
-                friend.UserId == userId &&
-                friend.FriendId == friendId
+                (
+                    friend.UserId == userId &&
+                    friend.FriendId == friendId
+                )
+                ||
+                (
+                    friend.UserId == friendId &&
+                    friend.FriendId == userId
+                )
             )
             .Include(friend => friend.User)
             .Include(friend => friend.FriendUser)
             .Select(friend => new FriendResponseDto
             {
-                UserId = friend.UserId,
-                Username = friend.User.Username,
-                FriendId = friend.FriendId,
-                FriendUsername = friend.FriendUser.Username,
+                UserId = userId,
+
+                Username = friend.UserId == userId
+                    ? friend.User.Username
+                    : friend.FriendUser.Username,
+
+                FriendId = friend.UserId == userId
+                    ? friend.FriendId
+                    : friend.UserId,
+
+                FriendUsername = friend.UserId == userId
+                    ? friend.FriendUser.Username
+                    : friend.User.Username,
+
                 Status = friend.Status,
+
+                Direction = friend.Status == "accepted"
+                    ? "accepted"
+                    : friend.UserId == userId
+                        ? "outgoing"
+                        : "incoming",
+
                 CreatedAt = friend.CreatedAt
             })
             .FirstOrDefaultAsync();

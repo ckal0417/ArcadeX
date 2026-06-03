@@ -13,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { FriendService } from '../../../services/private/friend.service';
-import { IFriend } from '../../../interfaces/private/Friend';
+import { FriendInterface } from '../../../interfaces/private/Friend';
 
 @Component({
   selector: 'app-friend-component',
@@ -32,7 +32,7 @@ import { IFriend } from '../../../interfaces/private/Friend';
   styleUrl: './friend-component.scss',
 })
 export class FriendComponent implements OnInit {
-  friends = signal<IFriend[]>([]);
+  friends = signal<FriendInterface[]>([]);
   loading = signal(false);
   errorMessage = signal('');
   nuevoAmigoId = '';
@@ -95,9 +95,9 @@ export class FriendComponent implements OnInit {
       });
   }
 
-  aceptar(friend: IFriend): void {
+  aceptar(friend: FriendInterface): void {
     this.friendService
-      .accept(friend.id)
+      .accept(friend.friendId)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
@@ -115,11 +115,51 @@ export class FriendComponent implements OnInit {
       });
   }
 
-  eliminar(friend: IFriend): void {
-    if (!confirm(`¿Eliminar a "${friend.username}" de tus amigos?`)) return;
+  rechazar(friend: FriendInterface): void {
+    this.friendService
+      .reject(friend.friendId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.snackBar.open('Solicitud rechazada', 'Cerrar', {
+            duration: 3000,
+          });
+
+          this.cargar();
+        },
+        error: () => {
+          this.snackBar.open('Error al rechazar la solicitud', 'Cerrar', {
+            duration: 3000,
+          });
+        },
+      });
+  }
+
+  cancelar(friend: FriendInterface): void {
+    this.friendService
+      .cancel(friend.friendId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.snackBar.open('Solicitud cancelada', 'Cerrar', {
+            duration: 3000,
+          });
+
+          this.cargar();
+        },
+        error: () => {
+          this.snackBar.open('Error al cancelar la solicitud', 'Cerrar', {
+            duration: 3000,
+          });
+        },
+      });
+  }
+
+  eliminar(friend: FriendInterface): void {
+    if (!confirm(`¿Eliminar a "${friend.friendUsername}" de tus amigos?`)) return;
 
     this.friendService
-      .remove(friend.id)
+      .remove(friend.friendId)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {

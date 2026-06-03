@@ -39,7 +39,7 @@ export class DeveloperLayout {
 
   collapsed = signal(false);
 
-  defaultAvatar = 'assets/branding/default-avatar.png';
+  defaultAvatar = 'assets/branding/logo.png';
 
   username = this.auth.username;
   mainRole = this.auth.mainRole;
