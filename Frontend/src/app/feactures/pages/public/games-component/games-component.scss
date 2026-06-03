@@ -126,4 +126,23 @@
 
 .search-field {
   width: 100%;
+  color: #ffffff !important;
+  caret-color: #ffffff;
+}
+mat-label{
+  color: rgba(255, 255, 255, 0.68);
+}
+.imput-search {
+  color: #ffffff;
+}
+::ng-deep .search-field .mdc-text-field__input {
+  color: #ffffff !important;
+}
+
+::ng-deep .search-field .mdc-text-field__input::placeholder {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+::ng-deep .search-field .mat-mdc-form-field-icon-suffix {
+  color: #ffffff !important;
 }
