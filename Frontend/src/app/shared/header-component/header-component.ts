@@ -1,25 +1,25 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
-import { MatAnchor, MatButtonModule } from "@angular/material/button";
-import { NgModel } from '@angular/forms';
-
 
 @Component({
   selector: 'app-header-component',
-  imports: [MatToolbarModule, MatIconModule, RouterLink, MatAnchor, MatButtonModule],
+  imports: [
+    MatToolbarModule,
+    MatIconModule,
+    RouterLink,
+    MatButtonModule,
+  ],
   templateUrl: './header-component.html',
   styleUrl: './header-component.scss',
 })
 export class HeaderComponent {
-  searchQuery = '';
-  searchFocused = false;
-
   @Input() navbarVisible = true;
   @Output() toggleNavbarEvent = new EventEmitter<void>();
 
-  toggleNavbar() {
+  toggleNavbar(): void {
     this.toggleNavbarEvent.emit();
   }
 }

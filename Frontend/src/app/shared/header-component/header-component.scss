@@ -1,11 +1,10 @@
 .topbar {
   width: 100%;
   min-height: 86px;
-  height: auto;
   padding: 0 clamp(16px, 3vw, 42px);
 
   display: grid;
-  grid-template-columns: auto minmax(220px, 1fr) auto;
+  grid-template-columns: auto auto minmax(280px, 1fr) auto;
   align-items: center;
   column-gap: clamp(16px, 3vw, 34px);
 
@@ -18,6 +17,30 @@
   z-index: 100;
 }
 
+.toggle-navbar {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  padding: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(161, 0, 255, 0.16);
+  border: 1px solid rgba(161, 0, 255, 0.55);
+  border-radius: 10px;
+
+  color: #fff;
+  cursor: pointer;
+}
+
+.toggle-navbar mat-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
 .brand {
   display: flex;
   align-items: center;
@@ -25,17 +48,17 @@
 }
 
 .brand-logo {
-  width: clamp(140px, 18vw, 250px);
+  width: clamp(140px, 16vw, 230px);
   height: auto;
   display: block;
   object-fit: contain;
 }
 
 .search-box {
-  justify-self: center;
+  justify-self: end;
 
   width: 100%;
-  max-width: 650px;
+  max-width: 560px;
   height: 50px;
 
   padding: 0 18px;
@@ -63,14 +86,11 @@
 .search-box input {
   width: 100%;
   min-width: 0;
-
   border: none;
   outline: none;
-
   background: transparent;
   color: #fff;
-
-  font-size: clamp(14px, 1.4vw, 18px);
+  font-size: 15px;
 }
 
 .search-box input::placeholder {
@@ -85,13 +105,13 @@
 
 .login {
   min-height: 42px;
-  padding: 0 clamp(14px, 2vw, 22px);
+  padding: 0 22px;
 
   border: 1px solid rgba(161, 0, 255, 0.6);
   border-radius: 14px;
 
-  background: linear-gradient(135deg, #7c3aed, #a100ff);
-  color: #fff;
+  background: linear-gradient(135deg, #7c3aed, #a100ff) !important;
+  color: #fff !important;
 
   font-weight: 800;
   white-space: nowrap;
@@ -100,30 +120,30 @@
 }
 
 .login:hover {
-  background: linear-gradient(135deg, #a100ff, #ff00d4);
+  background: linear-gradient(135deg, #a100ff, #ff00d4) !important;
   box-shadow: 0 0 18px rgba(161, 0, 255, 0.75);
   transform: translateY(-2px);
 }
 
-@media (max-width: 760px) {
+@media (max-width: 900px) {
+  .topbar {
+    grid-template-columns: auto auto 1fr;
+  }
+
+  .search-box {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
   .topbar {
     min-height: 74px;
     padding: 0 12px;
-    grid-template-columns: auto auto minmax(220px, 1fr) auto;
     column-gap: 10px;
   }
 
   .brand-logo {
-    width: clamp(90px, 24vw, 135px);
-  }
-
-  .search-box {
-    height: 40px;
-    padding: 0 10px;
-  }
-
-  .search-box input {
-    font-size: 13px;
+    width: 120px;
   }
 
   .login {
@@ -131,29 +151,4 @@
     padding: 0 10px;
     font-size: 12px;
   }
-}
-
-.toggle-navbar {
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
-  padding: 0;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  background: rgba(161, 0, 255, 0.16);
-  border: 1px solid rgba(161, 0, 255, 0.55);
-  border-radius: 10px;
-
-  color: #fff;
-  cursor: pointer;
-}
-
-.toggle-navbar mat-icon {
-  font-size: 24px;
-  width: 24px;
-  height: 24px;
-  line-height: 24px;
 }
